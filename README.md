@@ -35,7 +35,7 @@ _The `data` folder is important for database volume mapping, and data persistanc
 
 ## **Frontend**
 
-### **Before launching containers, install dependencies in each folder (front && back)**
+### **Before building or launching containers, install dependencies in each folder (front && back)**
 
 <br>
 
