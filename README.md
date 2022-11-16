@@ -5,20 +5,20 @@ You will find the backend repo [here](https://github.com/WildCodeSchool/2209-wns
 
 ## _Technos_
 
--   Frontend:
+- Frontend:
 
-    -   React
-    -   Typescript
-    -   Vite
-    -   Apollo Client
-    -   GraphQL
+  - React
+  - Typescript
+  - Vite
+  - Apollo Client
+  - GraphQL
 
--   Backend:
-    -   PostgreSQL
-    -   TypeORM
-    -   Apollo server
-    -   GraphQL
-    -   Typescript
+- Backend:
+  - PostgreSQL
+  - TypeORM
+  - Apollo server
+  - GraphQL
+  - Typescript
 
 ## **Directory structure**
 
@@ -44,7 +44,7 @@ _The `data` folder is important for database volume mapping, and data persistanc
 From within the front directory run :
 
 ```bash
-docker compose -f docker-compose.dev.yml up
+docker compose -f docker-compose.dev.yml up --build
 ```
 
 _add '-d' flag to dismiss logs and free up terminal window if necessary_  
