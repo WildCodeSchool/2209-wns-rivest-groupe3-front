@@ -5,6 +5,7 @@ import Blogs from './routes/blogs'
 import Home from './routes/home'
 import Login from './routes/login'
 import NotFound from './routes/notFound'
+import Profil from './routes/profile'
 import Register from './routes/register'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Blogs />} path="/blogs" />
+        <Route element={<Profil />} path="/profile" />
         <Route element={<Register />} path="/register" />
         <Route element={<Login />} path="/login" />
         <Route element={<NotFound />} path="*" />
