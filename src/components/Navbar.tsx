@@ -7,13 +7,10 @@ const Navbar = () => {
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Logo
         </Link>
+        <Link to="/discover" className="btn btn-ghost normal-case text-xl">
+          Découvrir
+        </Link>
       </div>
-      <Link to="/blogs" className="btn btn-ghost normal-case text-xl">
-        Blogs
-      </Link>
-      <Link to="/" className="btn btn-ghost normal-case text-xl">
-        Articles
-      </Link>
       <div className="flex-none gap-2">
         <Link to="/register" className="btn btn-ghost">
           Register
