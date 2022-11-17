@@ -31,7 +31,7 @@ You will find the backend repo [here](https://github.com/WildCodeSchool/2209-wns
           | .git
 ```
 
-_The `data` folder is important for database volume mapping, and data persistance in your dev process_
+_The `data` folder is important for database volume mapping, and data persistance in your dev process. You must create it yourself_
 
 ## **Frontend**
 
