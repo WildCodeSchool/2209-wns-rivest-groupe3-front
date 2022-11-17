@@ -3,7 +3,9 @@ import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import Blogs from './routes/blogs'
 import Home from './routes/home'
+import Login from './routes/login'
 import NotFound from './routes/notFound'
+import Register from './routes/register'
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Blogs />} path="/blogs" />
+        <Route element={<Register />} path="/register" />
+        <Route element={<Login />} path="/login" />
         <Route element={<NotFound />} path="*" />
       </Routes>
 

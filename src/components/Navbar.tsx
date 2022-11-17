@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom"
+
 const Navbar = () => {
   return (
     <nav className="navbar bg-base-100 w-full">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">Logo</a>
+        <Link to="/" className="btn btn-ghost normal-case text-xl">Logo</Link>
       </div>
       <div className="flex-none gap-2">
-      <button className="btn btn-ghost">Sign in</button>
-      <button className="btn">Login</button>
+      <Link to="/register" className="btn btn-ghost">Register</Link>
+      <Link to="/login" className="btn">Login</Link>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">

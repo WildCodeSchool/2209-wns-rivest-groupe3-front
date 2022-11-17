@@ -1,6 +1,5 @@
+import { Link } from 'react-router-dom'
 import Card from '../components/Card'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
@@ -71,7 +70,7 @@ const Home = () => {
           <Card />
           <Card />
         </article>
-        <a className="link link-hover text-xl">Voir plus</a>
+        <Link to="/blogs" className="link link-hover text-xl">Voir plus</Link>
       </section>
     </>
   )
