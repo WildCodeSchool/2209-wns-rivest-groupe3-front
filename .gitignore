@@ -25,4 +25,4 @@ dist-ssr
 .DS_Store
 
 # github template directory
-.github
+docs
