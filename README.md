@@ -36,6 +36,10 @@ _The `data` folder is important for database volume mapping, and data persistanc
 
 <br>
 
+➜ To make your code editor happy, remember to install dependencies locally in both folders
+
+<br>
+
 ### Running docker containers for development
 
 From within the front directory run :
