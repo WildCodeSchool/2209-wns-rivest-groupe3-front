@@ -38,44 +38,44 @@ const Profil = () => {
       <section className="card flex flex-col gap-8">
         <h2 className="text-5xl font-bold text-center">Mes informations</h2>
 
-        <label>
+        <label className='space-y-4'>
           <span className="card-title">Nom</span>
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full w-full"
           />
         </label>
-        <label>
+        <label className='space-y-4'>
           <span className="card-title">Prénom</span>
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full w-full"
           />
         </label>
-        <label>
+        <label className='space-y-4'>
           <span className="card-title">Ville</span>
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full w-full"
           />
         </label>
-        <label>
+        <label className='space-y-4'>
           <span className="card-title">E-mail</span>
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full w-full"
           />
         </label>
-        <label>
+        <label className='space-y-4'>
           <span className="card-title">Mot de passe</span>
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full w-full"
           />
         </label>
         <button className="btn btn-primary">Edit</button>

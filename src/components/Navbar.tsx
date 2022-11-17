@@ -1,14 +1,26 @@
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
-    <nav className="navbar bg-base-100 w-full">
+    <nav className="navbar bg-base-100 w-full justify-between">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">Logo</Link>
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
+          Logo
+        </Link>
       </div>
+      <Link to="/blogs" className="btn btn-ghost normal-case text-xl">
+        Blogs
+      </Link>
+      <Link to="/" className="btn btn-ghost normal-case text-xl">
+        Articles
+      </Link>
       <div className="flex-none gap-2">
-      <Link to="/register" className="btn btn-ghost">Register</Link>
-      <Link to="/login" className="btn">Login</Link>
+        <Link to="/register" className="btn btn-ghost">
+          Register
+        </Link>
+        <Link to="/login" className="btn">
+          Login
+        </Link>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
