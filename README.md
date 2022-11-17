@@ -31,11 +31,8 @@ You will find the backend repo [here](https://github.com/WildCodeSchool/2209-wns
           | .git
 ```
 
+_Directory names must be 'front' and 'back'_  
 _The `data` folder is important for database volume mapping, and data persistance in your dev process. You must create it yourself_
-
-## **Frontend**
-
-### **Before building or launching containers, install dependencies in each folder (front && back)**
 
 <br>
 
@@ -47,8 +44,12 @@ From within the front directory run :
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-_add '-d' flag to dismiss logs and free up terminal window if necessary_  
+_add '-d' flag to dismiss logs and free up terminal window if necessary_
+
+## **Frontend**
+
 <br>
+
 Once docker compose is up, frontend app will be accessible at [http://localhost:8080](http://localhost:8080)
 
 ## **Backend**
