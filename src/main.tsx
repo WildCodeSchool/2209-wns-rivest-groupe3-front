@@ -9,6 +9,7 @@ import {
   ApolloProvider,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { UserProvider } from './contexts/UserContext'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:5000/',
@@ -21,7 +22,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `${token}` : '',
     },
   }
 })
@@ -34,7 +35,9 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </ApolloProvider>
   </React.StrictMode>
 )
