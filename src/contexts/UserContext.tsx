@@ -24,7 +24,7 @@ export const UserContext = createContext<IUserContext>({
 const localUser = JSON.parse(localStorage.getItem("user") || "{}")
 
 export const UserProvider = ({ children }: { children: JSX.Element }) => {
-    const [user, setUser] = useState<IUser | null>(localUser.length ? localUser : null);
+    const [user, setUser] = useState<IUser | null>(localUser || null);
     return (
         <UserContext.Provider value={{ user, setUser}}>
             {children}
