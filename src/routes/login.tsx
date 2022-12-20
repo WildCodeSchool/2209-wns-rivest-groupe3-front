@@ -26,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [isValid, setIsValid] = useState(false)
 
-  const { setUser } =  useContext(UserContext)
+  const { setUser } = useContext(UserContext)
 
   const navigate = useNavigate()
   const [loadToken] = useMutation(GET_TOKEN)
@@ -47,7 +47,7 @@ const Login = () => {
         }
         localStorage.setItem('user', JSON.stringify(localUser))
         setUser(res.data.login.user)
-        
+
         navigate('/')
       })
       .catch((err) => console.error(err))
@@ -58,9 +58,12 @@ const Login = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Connexion</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Bienvenue sur notre application ! Pour accéder à toutes les
+            fonctionnalités, veuillez vous connecter en utilisant vos
+            identifiants de connexion. Si vous n'avez pas encore de compte, vous
+            pouvez en créer un en cliquant sur le bouton "Inscription" en haut à
+            droite de la page. Nous espérons que vous apprécierez votre
+            expérience sur notre application !
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -96,7 +99,7 @@ const Login = () => {
               </span>
             )}
             <button type="submit" className="btn btn-primary mt-6">
-              Login
+              Connexion
             </button>
           </form>
         </div>

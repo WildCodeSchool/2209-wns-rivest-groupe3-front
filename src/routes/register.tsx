@@ -29,10 +29,10 @@ const Register = () => {
       setUser({ ...user, [e.target.id]: e.target.value })
     }
   }
-  
+
   const submitUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    if(confirmPassword === user?.password){
+    if (confirmPassword === user?.password) {
       addUser({ variables: { ...user } })
         .then(() => {
           alert('Vous avez été enregistré avec succès !')
@@ -53,9 +53,13 @@ const Register = () => {
             Créez votre compte maintenant !
           </h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Vous souhaitez créer votre propre blog ? Inscrivez-vous dès
+            maintenant sur notre plateforme ! L'inscription est simple et
+            rapide, et vous donne accès à toutes les fonctionnalités de notre
+            service de blogging. Vous pourrez personnaliser votre blog selon vos
+            goûts et vos besoins, et partager vos passions et vos idées avec le
+            monde entier. N'attendez plus, inscrivez-vous dès maintenant et
+            lancez-vous dans l'aventure du blogging !
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

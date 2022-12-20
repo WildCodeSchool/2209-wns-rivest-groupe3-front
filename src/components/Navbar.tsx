@@ -56,7 +56,7 @@ const Navbar = () => {
               </li>
               <li>
                 <button className="btn btn-secondary" onClick={logout}>
-                  Logout
+                  Déconnexion
                 </button>
               </li>
             </ul>
