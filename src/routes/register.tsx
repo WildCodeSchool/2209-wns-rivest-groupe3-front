@@ -1,46 +1,131 @@
-import { Link } from "react-router-dom"
+import { gql, useMutation } from '@apollo/client'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+interface IUser {
+  nickname?: string
+  email?: string
+  password?: string
+}
+
+const ADD_USER = gql`
+  mutation Mutation($nickname: String!, $password: String!, $email: String!) {
+    createUser(nickname: $nickname, password: $password, email: $email) {
+      nickname
+    }
+  }
+`
 
 const Register = () => {
+  const [user, setUser] = useState<IUser>({})
+  const [addUser] = useMutation(ADD_USER)
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [isValid, setIsValid] = useState(true)
+
+  const changeField = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.id === 'confirm-password') {
+      setConfirmPassword(e.target.value)
+    } else {
+      setUser({ ...user, [e.target.id]: e.target.value })
+    }
+  }
+
+  const submitUser = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    if (confirmPassword === user?.password) {
+      addUser({ variables: { ...user } })
+        .then(() => {
+          alert('Vous avez été enregistré avec succès !')
+        })
+        .catch((err) => {
+          console.error(err)
+          alert('Erreur')
+        })
+    } else {
+      setIsValid(false)
+    }
+  }
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Create your account now !</h1>
+          <h1 className="text-5xl font-bold">
+            Créez votre compte maintenant !
+          </h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Vous souhaitez créer votre propre blog ? Inscrivez-vous dès
+            maintenant sur notre plateforme ! L'inscription est simple et
+            rapide, et vous donne accès à toutes les fonctionnalités de notre
+            service de blogging. Vous pourrez personnaliser votre blog selon vos
+            goûts et vos besoins, et partager vos passions et vos idées avec le
+            monde entier. N'attendez plus, inscrivez-vous dès maintenant et
+            lancez-vous dans l'aventure du blogging !
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
+          <form className="card-body" onSubmit={submitUser}>
+            <label className="form-control">
+              <span className="label label-text">Email</span>
               <input
-                type="text"
-                placeholder="email"
+                id="email"
+                type="email"
+                placeholder="Email"
                 className="input input-bordered"
+                value={user?.email}
+                onChange={changeField}
+                required
               />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
+            </label>
+            <label className="form-control">
+              <span className="label label-text">Mot de passe</span>
               <input
-                type="text"
-                placeholder="password"
+                id="password"
+                type="password"
+                placeholder="Mot de passe"
                 className="input input-bordered"
+                value={user?.password}
+                onChange={changeField}
+                required
               />
-            </div>
+            </label>
+            <label className="form-control">
+              <span className="label label-text">
+                Confirmation du mot de passe
+              </span>
+              <input
+                id="confirm-password"
+                type="password"
+                placeholder="Mot de passe"
+                className="input input-bordered"
+                value={confirmPassword}
+                onChange={changeField}
+                required
+              />
+            </label>
+            <label className="form-control">
+              <span className="label label-text">Pseudo</span>
+              <input
+                id="nickname"
+                type="text"
+                placeholder="Pseudo"
+                className="input input-bordered"
+                value={user?.nickname}
+                onChange={changeField}
+                required
+              />
+            </label>
             <Link to="/login" className="label-text-alt link link-hover">
-              Already member ?
+              Déjà membre ?
             </Link>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary">Sign Up</button>
-            </div>
-          </div>
+            {!isValid && (
+              <span className="text-red-500">
+                Confirmation différente du mot de passe
+              </span>
+            )}
+            <button type="submit" className="btn btn-primary mt-6">
+              Enregistrer
+            </button>
+          </form>
         </div>
       </div>
     </div>
