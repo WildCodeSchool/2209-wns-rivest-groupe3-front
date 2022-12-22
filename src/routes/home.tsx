@@ -11,7 +11,7 @@ const Home = () => {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md space-y-16">
-            <h1 className="text-5xl font-bold">Bienvenue !</h1>
+            <h1 className="text-5xl font-bold font-lobster">Bienvenue !</h1>
             <p>
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
