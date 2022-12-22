@@ -10,6 +10,7 @@ import {
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { UserProvider } from './contexts/UserContext'
+import { NotificationProvider } from './contexts/NotificationContext'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:5000/',
@@ -35,9 +36,11 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <UserProvider>
-        <App />
-      </UserProvider>
+      <NotificationProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </NotificationProvider>
     </ApolloProvider>
   </React.StrictMode>
 )
