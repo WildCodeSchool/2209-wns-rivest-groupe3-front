@@ -42,7 +42,6 @@ const Login = () => {
   const [loadToken] = useMutation(GET_TOKEN)
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data)
     loadToken({
       variables: {
         email: data.email,
@@ -55,7 +54,6 @@ const Login = () => {
           id: res.data.login.user.id,
           nickname: res.data.login.user.nickname,
         }
-        console.log(localUser)
         localStorage.setItem('user', JSON.stringify(localUser))
         setUser(res.data.login.user)
 

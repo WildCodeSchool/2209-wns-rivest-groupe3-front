@@ -31,7 +31,6 @@ const Register = () => {
       email: data.email,
       password: data.password,
     }
-    console.log(user)
     addUser({ variables: { ...user } })
       .then(() => {
         alert('Ok')
