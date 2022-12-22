@@ -12,6 +12,39 @@
 	src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
 }
 
-.button-class {
-	@apply bg-primary border-2 border-red-500;
+.btn-primary, .btn-secondary, .btn-square  {
+	@apply text-white;
+}
+
+.btn {
+	@apply rounded-md
+}
+
+.card {
+	@apply rounded-md
+}
+
+body {
+	@apply scrollbar
+}
+
+@layer utilities {
+	.scrollbar::-webkit-scrollbar {
+		width: 12px;
+		height: 10px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		background: rgba(0, 0, 0, 0)
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		background: #09243452;
+		border-radius: 80vh;
+		/* border: 3px solid #f6f7ed; */
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #092434;
+	}
 }

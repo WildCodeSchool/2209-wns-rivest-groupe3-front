@@ -21,7 +21,7 @@ const Home = () => {
               pour créer votre propre blog de voyage et raconter vos aventures.
               Bon voyage !
             </p>
-            <button className="btn btn-secondary w-96">Créer ton blog</button>
+            <button className="btn btn-secondary w-96">Crée ton blog</button>
           </div>
           <div className="w-1/2 h-full overflow-hidden">
             <iframe
@@ -36,10 +36,10 @@ const Home = () => {
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Comment ca marche ?</h2>
         <article className="flex justify-center items-center gap-16">
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
             <div className="card-body">
               <h2 className="card-title">
-                Crée ou connecte-toi à ton compte utilisateur
+                Inscris-toi ou connecte-toi
               </h2>
               <p>
                 Créer ton espace personnel et afin de disposer de toutes les
@@ -47,7 +47,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl -rotate-6">
             <div className="card-body">
               <h2 className="card-title">
                 Crée ton blog et rédige tes articles
@@ -58,7 +58,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
             <div className="card-body">
               <h2 className="card-title">Publie et partage ton blog</h2>
               <p>
