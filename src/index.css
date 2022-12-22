@@ -11,3 +11,7 @@
 	font-family: "Roboto Condensed";
 	src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
 }
+
+.button-class {
+	@apply bg-primary border-2 border-red-500;
+}
