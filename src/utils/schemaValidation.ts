@@ -1,4 +1,8 @@
 import * as yup from 'yup'
+import {
+  RegisterFormProps,
+  LoginFormProps,
+} from '../components/inputs/inputsInterfaces'
 
 yup.setLocale({
   mixed: {
@@ -11,11 +15,11 @@ const registerSchema: any = yup
     email: yup
       .string()
       .email()
+      .required('Merci de renseigner un email')
       .matches(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         'Merci de renseigner une adresse mail valide'
-      )
-      .required('Merci de renseigner un email'),
+      ),
     password: yup
       .string()
       .required('Merci de renseigner un mot de passe')
@@ -33,5 +37,18 @@ const registerSchema: any = yup
     nickname: yup.string().required('Merci de renseigner un pseudo'),
   })
   .required()
+  .defined()
 
-export { registerSchema }
+const loginSchema: any = yup.object({
+  email: yup
+    .string()
+    .email()
+    .matches(
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+      'Merci de renseigner une adresse mail valide'
+    )
+    .required('Merci de renseigner un email'),
+  password: yup.string().required('Merci de renseigner un mot de passe'),
+})
+
+export { registerSchema, loginSchema }

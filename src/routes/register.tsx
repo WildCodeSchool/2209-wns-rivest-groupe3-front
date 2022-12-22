@@ -60,7 +60,7 @@ const Register = () => {
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 card-body">
-          <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <label className="form-control">
               <span className="label label-text">Email</span>
               <input
@@ -123,13 +123,13 @@ const Register = () => {
               <p className="text text-error">{errors.nickname?.message}</p>
             </label>
           </form>
-          <Link to="/login" className="label-text-alt link link-hover">
+          <Link to="/login" className="label-text-alt link link-hover mt-6">
             Déjà membre ?
           </Link>
           <button
             onClick={handleSubmit(onSubmit)}
             type="submit"
-            className="btn btn-primary mt-6"
+            className="btn btn-primary"
           >
             Enregistrer
           </button>
