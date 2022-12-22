@@ -12,22 +12,24 @@ interface IUser {
 }
 
 interface IUserContext {
-  user: IUser | null;
+  user: IUser | null
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
 export const UserContext = createContext<IUserContext>({
   user: null,
-  setUser: () => {}
-});
+  setUser: () => {},
+})
 
-const localUser = JSON.parse(localStorage.getItem("user") || "{}")
+const localUser = localStorage.getItem('user')
+  ? JSON.parse(localStorage.getItem('user') as string)
+  : null
 
 export const UserProvider = ({ children }: { children: JSX.Element }) => {
-    const [user, setUser] = useState<IUser | null>(localUser || null);
-    return (
-        <UserContext.Provider value={{ user, setUser}}>
-            {children}
-        </UserContext.Provider>
-    )
+  const [user, setUser] = useState<IUser | null>(localUser || null)
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  )
 }
