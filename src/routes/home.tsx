@@ -5,52 +5,79 @@ const Home = () => {
   return (
     <>
       <section
-        className="hero min-h-screen"
-        style={{ backgroundImage: `url("https://placeimg.com/1000/800/arch")` }}
+        className="hero min-h-screen bg-gradient-to-r from-primary to-neutral text-white"
+        style={{ backgroundImage: `url("src/assets/bg-dark.png")` }}
       >
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md space-y-16">
-            <h1 className="text-5xl font-bold">Bienvenue !</h1>
+        <div className="h-full w-full text-start flex justify-around items-center">
+          <div className="max-w-xl space-y-16 mx-auto">
+            <h1 className="text-7xl font-bold font-lobster">
+              Raconte nous tes aventures !
+              <div className="h-px w-96 bg-white mt-4" />
+            </h1>
             <p>
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              Si vous êtes passionné de voyage et que vous avez envie de
+              partager vos expériences avec le monde entier, alors vous êtes au
+              bon endroit. Notre site vous offre tout ce dont vous avez besoin
+              pour créer votre propre blog de voyage et raconter vos aventures.
+              Bon voyage !
             </p>
-            <Link to="./createblog" className="btn btn-primary">
-              Get Started
-            </Link>
+            <Link to="./createblog" className="btn btn-secondary w-96">Crée ton blog</Link>
+          </div>
+          <div className="w-1/2 h-full overflow-hidden">
+            <iframe
+              src="https://my.spline.design/untitled-18ba1390b53bebdecb84a2fb59aca0ec/"
+              frameBorder="0"
+              width="100%"
+              height="100%"
+            ></iframe>
           </div>
         </div>
       </section>
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Comment ca marche ?</h2>
         <article className="flex justify-center items-center gap-16">
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
             <div className="card-body">
-              <h2 className="card-title">Step 1</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <h2 className="card-title">Inscris-toi ou connecte-toi</h2>
+              <p>
+                Créer ton espace personnel et afin de disposer de toutes les
+                fonctionnalités nécessaires pour créer et gérer ton blog.
+              </p>
+              <img
+                src="src/assets/login.svg"
+                alt="login"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl -rotate-6">
             <div className="card-body">
-              <h2 className="card-title">Step 2</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <h2 className="card-title">
+                Crée ton blog et rédige tes articles
+              </h2>
+              <p>
+                Choisis un thème et un titre pour ton blog puis rédige et
+                alimente-le de contenu: photos, articles, vidéos...
+              </p>
+              <img
+                src="src/assets/write.svg"
+                alt="write"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl">
+          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
             <div className="card-body">
-              <h2 className="card-title">Step 3</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <h2 className="card-title">Publie et partage ton blog</h2>
+              <p>
+                Rends ton blog visible via les réseaux sociaux. Les autres
+                utilisateurs pourront te laisser des commentaires.
+              </p>
+              <img
+                src="src/assets/share.svg"
+                alt="share"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
         </article>
@@ -67,7 +94,7 @@ const Home = () => {
 
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Découvre des blogs</h2>
-        <article className="flex justify-center items-center gap-16">
+        <article className="flex justify-center items-center            Get Started gap-16">
           <Card />
           <Card />
           <Card />
