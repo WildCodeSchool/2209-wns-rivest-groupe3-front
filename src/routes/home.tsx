@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <section
-        className="hero min-h-screen bg-gradient-to-r from-primary to-black text-white"
+        className="hero min-h-screen bg-gradient-to-r from-primary to-neutral text-white"
         style={{ backgroundImage: `url("src/assets/bg-dark.png")` }}
       >
         <div className="h-full w-full text-start flex justify-around items-center">
@@ -38,13 +38,16 @@ const Home = () => {
         <article className="flex justify-center items-center gap-16">
           <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
             <div className="card-body">
-              <h2 className="card-title">
-                Inscris-toi ou connecte-toi
-              </h2>
+              <h2 className="card-title">Inscris-toi ou connecte-toi</h2>
               <p>
                 Créer ton espace personnel et afin de disposer de toutes les
                 fonctionnalités nécessaires pour créer et gérer ton blog.
               </p>
+              <img
+                src="src/assets/login.svg"
+                alt="login"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
           <div className="card w-96 h-96 bg-base-100 shadow-xl -rotate-6">
@@ -56,6 +59,11 @@ const Home = () => {
                 Choisis un thème et un titre pour ton blog puis rédige et
                 alimente-le de contenu: photos, articles, vidéos...
               </p>
+              <img
+                src="src/assets/write.svg"
+                alt="write"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
           <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
@@ -65,6 +73,11 @@ const Home = () => {
                 Rends ton blog visible via les réseaux sociaux. Les autres
                 utilisateurs pourront te laisser des commentaires.
               </p>
+              <img
+                src="src/assets/share.svg"
+                alt="share"
+                className="w-40 h-40 m-auto"
+              />
             </div>
           </div>
         </article>
