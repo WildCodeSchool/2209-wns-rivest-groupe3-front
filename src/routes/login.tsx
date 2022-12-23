@@ -26,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [isValid, setIsValid] = useState(false)
 
-  const { setUser } = useContext(UserContext)
+  const { setUser, isCreatingBlog } = useContext(UserContext)
 
   const navigate = useNavigate()
   const [loadToken] = useMutation(GET_TOKEN)
@@ -48,7 +48,7 @@ const Login = () => {
         localStorage.setItem('user', JSON.stringify(localUser))
         setUser(res.data.login.user)
 
-        navigate('/')
+        isCreatingBlog ? navigate('/createblog') : navigate('/')
       })
       .catch((err) => console.error(err))
   }

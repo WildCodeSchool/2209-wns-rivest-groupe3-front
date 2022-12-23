@@ -1,6 +1,6 @@
 const ProgressionBar = ({ step }: { step: string }) => {
   return (
-    <ul className="steps my-10">
+    <ul className="steps my-10 w-5/6">
       {step === 'first' ? (
         <li className="step step-primary">
           Je m'enregistre ou crée mon compte
