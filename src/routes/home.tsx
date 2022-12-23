@@ -11,13 +11,15 @@ const Home = () => {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md space-y-16">
-            <h1 className="text-5xl font-bold">Hello there</h1>
+            <h1 className="text-5xl font-bold">Bienvenue !</h1>
             <p>
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.
             </p>
-            <button className="btn btn-primary">Get Started</button>
+            <Link to="./createblog" className="btn btn-primary">
+              Get Started
+            </Link>
           </div>
         </div>
       </section>
@@ -70,7 +72,9 @@ const Home = () => {
           <Card />
           <Card />
         </article>
-        <Link to="/blogs" className="link link-hover text-xl">Voir plus</Link>
+        <Link to="/blogs" className="link link-hover text-xl">
+          Voir plus
+        </Link>
       </section>
     </>
   )
