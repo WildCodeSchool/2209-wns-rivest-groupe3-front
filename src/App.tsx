@@ -9,12 +9,16 @@ import Login from './routes/login'
 import NotFound from './routes/notFound'
 import Profil from './routes/profile'
 import Register from './routes/register'
+import Toaster from './components/Toaster'
+import { NotificationContext } from './contexts/NotificationContext'
+import { useContext } from 'react'
 
 function App() {
+  const { message } = useContext(NotificationContext)
   return (
     <BrowserRouter>
       <Navbar />
-
+      {message && <Toaster />}
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Discover />} path="/discover" />

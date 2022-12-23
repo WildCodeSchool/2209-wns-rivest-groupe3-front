@@ -1,9 +1,15 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext)
+  const location = useLocation()
+
+  const defaultNavClass =
+    'navbar bg-white text-neutral w-full justify-between'
+  const heroNavClass =
+    'navbar bg-transparent text-white w-full justify-between absolute top-0 z-50'
 
   const logout = () => {
     localStorage.removeItem('token')
@@ -12,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar bg-base-100 w-full justify-between">
+    <nav className={location.pathname === "/" ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Logo
@@ -23,7 +29,7 @@ const Navbar = () => {
       </div>
       <div className="flex-none gap-2">
         {user ? (
-          <span className="text-xl font-bold">{user.nickname}</span>
+          <span className="text-xl font-bold mr-2">{user.nickname}</span>
         ) : (
           <>
             <Link to="/register" className="btn btn-ghost">
@@ -36,7 +42,7 @@ const Navbar = () => {
         )}
 
         {user && (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end text-neutral">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img src="https://placeimg.com/80/80/people" />
