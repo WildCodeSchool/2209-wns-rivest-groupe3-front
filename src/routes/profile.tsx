@@ -1,6 +1,7 @@
 import { useQuery, gql } from '@apollo/client'
 import { IUser } from '../utils/interfaces'
 import Card from '../components/Card'
+import { useState, useEffect } from 'react'
 
 const GET_ONE_USER = gql`
   query getOneUser($nickname: String!) {
@@ -13,12 +14,16 @@ const GET_ONE_USER = gql`
 `
 
 const Profil = () => {
+  const [user, setUser] = useState<IUser>({})
   const { loading, error, data } = useQuery(GET_ONE_USER, {
     variables: {
       nickname: 'test',
     },
   })
-  const user = data.getOneUser
+
+  useEffect(() => {
+    setUser(data.getOneUser)
+  }, [data])
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
