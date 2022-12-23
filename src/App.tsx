@@ -3,6 +3,7 @@ import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import Articles from './routes/articles'
 import Blogs from './routes/blogs'
+import CreateBlog from './routes/createblog'
 import Discover from './routes/discover'
 import Home from './routes/home'
 import Login from './routes/login'
@@ -27,6 +28,7 @@ function App() {
         <Route element={<Profil />} path="/profile" />
         <Route element={<Register />} path="/register" />
         <Route element={<Login />} path="/login" />
+        <Route element={<CreateBlog />} path="/createblog" />
         <Route element={<NotFound />} path="*" />
       </Routes>
 
