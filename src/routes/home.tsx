@@ -21,7 +21,7 @@ const Home = () => {
               pour créer votre propre blog de voyage et raconter vos aventures.
               Bon voyage !
             </p>
-            <button className="btn btn-secondary w-96">Crée ton blog</button>
+            <Link to="./createblog" className="btn btn-secondary w-96">Crée ton blog</Link>
           </div>
           <div className="w-1/2 h-full overflow-hidden">
             <iframe
@@ -94,7 +94,7 @@ const Home = () => {
 
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Découvre des blogs</h2>
-        <article className="flex justify-center items-center gap-16">
+        <article className="flex justify-center items-center            Get Started gap-16">
           <Card />
           <Card />
           <Card />
