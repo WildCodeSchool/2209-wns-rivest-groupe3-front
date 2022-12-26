@@ -85,7 +85,7 @@ const Home = () => {
 
       <section className="py-16 flex flex-col items-center justify-center gap-16 bg-gray-300">
         <h2 className="text-5xl font-bold text-center">Choisis ton template</h2>
-        <article className="flex justify-center items-center gap-16">
+        <article className="flex justify-center items-center gap-16 mx-8">
           <Card />
           <Card />
           <Card />
@@ -94,7 +94,7 @@ const Home = () => {
 
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Découvre des blogs</h2>
-        <article className="flex justify-center items-center            Get Started gap-16">
+        <article className="flex justify-center items-center mx-8 gap-16">
           <Card />
           <Card />
           <Card />

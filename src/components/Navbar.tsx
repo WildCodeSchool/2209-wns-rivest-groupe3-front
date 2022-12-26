@@ -7,7 +7,7 @@ const Navbar = () => {
   const location = useLocation()
 
   const defaultNavClass =
-    'navbar bg-white text-neutral w-full justify-between'
+    'navbar bg-white text-neutral w-full justify-between fixed top-0 z-50'
   const heroNavClass =
     'navbar bg-transparent text-white w-full justify-between absolute top-0 z-50'
 

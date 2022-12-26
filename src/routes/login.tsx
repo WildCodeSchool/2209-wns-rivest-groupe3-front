@@ -114,7 +114,7 @@ const Login = () => {
             type="submit"
             className="btn btn-primary"
           >
-            Enregistrer
+            Connexion
           </button>
         </div>
       </div>
