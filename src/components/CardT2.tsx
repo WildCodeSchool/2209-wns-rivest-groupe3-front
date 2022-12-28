@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const CardT2 = () => {
   return (
-    <Link to="/blogs/blogname" className="w-full group card card-side bg-base-100 m-auto hover:shadow-2xl cursor-pointer transition-all duration-300">
+    <Link to="/blogs/blogname" className="w-full group card card-side bg-base-100 m-auto shadow-article cursor-pointer transition-all duration-300">
       <figure className="relative w-full overflow-hidden">
         <img src="https://placeimg.com/400/225/arch" alt="Shoes" className="w-full group-hover:scale-110 transition-all duration-300"/>
         {/* <span className="absolute right-0 bottom-0 bg-primary text-white p-2">5 commentaires</span> */}

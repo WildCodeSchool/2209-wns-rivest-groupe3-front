@@ -2,7 +2,11 @@ import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 
-const BlogT1 = () => {
+const BlogT1 = ({
+  setIsEditing,
+}: {
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -24,6 +28,12 @@ const BlogT1 = () => {
             <SearchBar />
           </div>
           <div className="flex gap-2">
+            <button
+              className="btn btn-info"
+              onClick={() => setIsEditing((isEditing) => !isEditing)}
+            >
+              Modifier
+            </button>
             <button className="btn btn-outline">Suivre</button>
             <button className="btn btn-outline">Partager</button>
           </div>
@@ -50,7 +60,7 @@ const BlogT1 = () => {
           </div>
           <div className="space-y-4 max-w-2xl">
             <h2 className="font-lobster text-5xl">A propos</h2>
-            <p className='text-3xl'>
+            <p className="text-3xl">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
               quia beatae quaerat explicabo, quisquam blanditiis ut repellendus
               velit cum doloribus tenetur aperiam nihil perspiciatis dignissimos

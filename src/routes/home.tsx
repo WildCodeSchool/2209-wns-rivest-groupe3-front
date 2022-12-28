@@ -36,7 +36,7 @@ const Home = () => {
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Comment ca marche ?</h2>
         <article className="flex justify-center items-center gap-16">
-          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
+          <div className="card w-96 h-96 bg-base-100 shadow-card rotate-6">
             <div className="card-body">
               <h2 className="card-title">Inscris-toi ou connecte-toi</h2>
               <p>
@@ -50,7 +50,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl -rotate-6">
+          <div className="card w-96 h-96 bg-base-100 shadow-card -rotate-6">
             <div className="card-body">
               <h2 className="card-title">
                 Crée ton blog et rédige tes articles
@@ -66,7 +66,7 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className="card w-96 h-96 bg-base-100 shadow-xl rotate-6">
+          <div className="card w-96 h-96 bg-base-100 shadow-card rotate-6">
             <div className="card-body">
               <h2 className="card-title">Publie et partage ton blog</h2>
               <p>

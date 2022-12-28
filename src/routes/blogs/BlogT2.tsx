@@ -2,7 +2,11 @@ import Pagination from '../../components/buttons/Pagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
 
-const BlogT1 = () => {
+const BlogT1 = ({
+  setIsEditing,
+}: {
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -34,13 +38,19 @@ const BlogT1 = () => {
                 perspiciatis dignissimos iste, ipsa veniam dolor accusamus?
               </p>
               <div className="flex gap-2">
+                <button
+                  className="btn btn-info"
+                  onClick={() => setIsEditing((isEditing) => !isEditing)}
+                >
+                  Modifier
+                </button>
                 <button className="btn btn-outline">Suivre</button>
                 <button className="btn btn-outline">Partager</button>
               </div>
             </div>
           </aside>
-          <article className='flex flex-col items-center'>
-            <nav className="navbar bg-white p-4 gap-8 justify-between sticky top-16 z-50">
+          <article className="flex flex-col items-center">
+            <nav className="navbar bg-white p-4 gap-8 justify-between sticky top-16 z-30">
               <button className="btn btn-outline">Filtre</button>
               <SearchBar />
             </nav>
@@ -55,7 +65,7 @@ const BlogT1 = () => {
               <CardT2 />
               <CardT2 />
             </div>
-              <Pagination />
+            <Pagination />
           </article>
         </section>
       </main>
