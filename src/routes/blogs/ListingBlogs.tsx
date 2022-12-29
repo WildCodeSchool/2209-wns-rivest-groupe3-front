@@ -1,8 +1,8 @@
-import Pagination from '../components/buttons/Pagination'
-import Card from '../components/Card'
-import SearchBar from '../components/inputs/SearchBar'
+import Pagination from '../../components/buttons/Pagination'
+import Card from '../../components/Card'
+import SearchBar from '../../components/inputs/SearchBar'
 
-const Blogs = () => {
+const ListingBlogs = () => {
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
@@ -45,4 +45,4 @@ const Blogs = () => {
   )
 }
 
-export default Blogs
+export default ListingBlogs

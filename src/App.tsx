@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import Articles from './routes/articles'
-import Blogs from './routes/blogs'
+import Blogs from './routes/blogs/blogs'
 import CreateBlog from './routes/createblog'
 import Discover from './routes/discover'
 import Home from './routes/home'
@@ -13,6 +13,7 @@ import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
 import { useContext } from 'react'
+import BlogName from './routes/blogs/BlogT1'
 
 function App() {
   const { message } = useContext(NotificationContext)
@@ -22,8 +23,9 @@ function App() {
       {message && <Toaster />}
       <Routes>
         <Route element={<Home />} path="/" />
+        <Route element={<BlogName />} path="/test" />
         <Route element={<Discover />} path="/discover" />
-        <Route element={<Blogs />} path="/blogs" />
+        <Route element={<Blogs />} path="/blogs/*" />
         <Route element={<Articles />} path="/articles" />
         <Route element={<Profil />} path="/profile" />
         <Route element={<Register />} path="/register" />
