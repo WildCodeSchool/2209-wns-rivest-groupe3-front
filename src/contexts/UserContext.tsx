@@ -25,12 +25,12 @@ export const UserContext = createContext<IUserContext>({
   setIsCreatingBlog: () => {},
 })
 
-const localUser = JSON.parse(localStorage.getItem('user') || '{}')
+const stringUser = localStorage.getItem('user')
+
+const localUser: IUser | undefined = stringUser && JSON.parse(stringUser)
 
 export const UserProvider = ({ children }: { children: JSX.Element }) => {
-  const [user, setUser] = useState<IUser | null>(
-    localUser.length ? localUser : null
-  )
+  const [user, setUser] = useState<IUser | null>(localUser || null)
   const [isCreatingBlog, setIsCreatingBlog] = useState(false)
 
   return (

@@ -12,7 +12,7 @@
 	src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
 }
 
-.btn-primary, .btn-secondary, .btn-square  {
+.btn-primary, .btn-secondary, .btn-square, .btn-info {
 	@apply text-white;
 }
 
@@ -27,6 +27,20 @@
 body {
 	@apply scrollbar
 }
+
+.shadow-card {
+	@apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]
+}
+
+.shadow-card:hover {
+	@apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]
+}
+
+.shadow-article:hover {
+	@apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]
+}
+
+
 
 @layer utilities {
 	.scrollbar::-webkit-scrollbar {

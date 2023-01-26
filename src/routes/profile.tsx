@@ -4,7 +4,7 @@ const Profil = () => {
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profile</h1>
-      <section className="card lg:card-side bg-base-100 shadow-xl">
+      <section className="card lg:card-side bg-base-100 shadow-card">
         <figure>
           <img src="https://placeimg.com/400/400/arch" alt="Album" />
         </figure>

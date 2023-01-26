@@ -58,7 +58,7 @@ const Register = () => {
             lancez-vous dans l'aventure du blogging !
           </p>
         </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 card-body">
+        <div className="card flex-shrink-0 w-full max-w-sm shadow-article bg-base-100 card-body">
           <form>
             <label className="form-control">
               <span className="label label-text">Email</span>

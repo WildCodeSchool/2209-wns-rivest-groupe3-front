@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
 import ProgressionBar from '../components/inputs/ProgressionBar'
 import Login from './login'
@@ -13,9 +13,10 @@ const CreateBlog = () => {
   const [step, setStep] = useState<string>('first')
   const [name, setName] = useState<string | null>(null)
   const [description, setDescription] = useState<string | null>(null)
-  const [template, setTemplate] = useState<number | null>(null)
+  const [template, setTemplate] = useState<number | null>(1)
 
   const { user, setIsCreatingBlog } = useContext(UserContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setIsCreatingBlog(true)
@@ -66,7 +67,7 @@ const CreateBlog = () => {
   }
 
   const CREATE_BLOG = gql`
-    mutation Mutation($description: String!, $name: String!, $template: Float) {
+    mutation Mutation($description: String!, $name: String!, $template: Float!) {
       createBlog(description: $description, name: $name, template: $template) {
         name
         id
@@ -92,6 +93,9 @@ const CreateBlog = () => {
         alert(
           `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`
         )
+
+        navigate(`/blogs/${blogName}`)
+        
       })
       .catch((err) => {
         console.log(err)
@@ -99,7 +103,7 @@ const CreateBlog = () => {
   }
 
   return (
-    <section className="flex justify-center items-center flex-col m-8 w-full">
+    <section className="min-h-screen flex justify-center items-center flex-col m-8 w-full">
       <ProgressionBar step={step}></ProgressionBar>
       {step === 'first' ? <Login></Login> : null}
       {/* 
@@ -128,16 +132,14 @@ const CreateBlog = () => {
           </button>
         ) : null}
         {step === 'third' ? (
-          <Link
-            // TODO Remplacer '/' par le lien du nouveau blog créé
-            to={template ? '/' : '/createblog'}
+          <div
             className="btn"
             onClick={() => {
               template ? createNewBlog() : templateAlert()
             }}
           >
             Voir mon blog
-          </Link>
+          </div>
         ) : null}
       </div>
     </section>
