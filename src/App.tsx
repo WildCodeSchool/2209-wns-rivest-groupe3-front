@@ -13,7 +13,6 @@ import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
 import { useContext } from 'react'
-import BlogName from './routes/blogs/BlogT1'
 
 function App() {
   const { message } = useContext(NotificationContext)
@@ -23,7 +22,6 @@ function App() {
       {message && <Toaster />}
       <Routes>
         <Route element={<Home />} path="/" />
-        <Route element={<BlogName />} path="/test" />
         <Route element={<Discover />} path="/discover" />
         <Route element={<Blogs />} path="/blogs/*" />
         <Route element={<Articles />} path="/articles" />

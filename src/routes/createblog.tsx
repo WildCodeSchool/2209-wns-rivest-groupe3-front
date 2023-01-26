@@ -78,7 +78,6 @@ const CreateBlog = () => {
 
   const createNewBlog = () => {
     setIsCreatingBlog(false)
-    console.log(user)
     createBlog({
       variables: {
         name,
