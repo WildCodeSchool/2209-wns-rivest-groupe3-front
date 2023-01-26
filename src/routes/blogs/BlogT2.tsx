@@ -2,7 +2,7 @@ import Pagination from '../../components/buttons/Pagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
 
-const BlogT1 = ({
+const BlogT2 = ({
   setIsEditing,
 }: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
@@ -73,4 +73,4 @@ const BlogT1 = ({
   )
 }
 
-export default BlogT1
+export default BlogT2
