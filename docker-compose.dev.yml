@@ -54,6 +54,8 @@ services:
 
   frontend:
     container_name: frontend
+    env_file:
+      - .env  
     build:
       context: .
       dockerfile: Dockerfile.dev
