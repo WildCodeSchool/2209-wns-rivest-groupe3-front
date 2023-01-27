@@ -1,21 +1,25 @@
 import { useContext, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
+
 import ProgressionBar from '../components/inputs/ProgressionBar'
-import Login from './login'
+import Register from './register'
 import StepThree from '../components/createblog/StepThree'
 import StepTwo from '../components/createblog/StepTwo'
 
 import { UserContext } from '../contexts/UserContext'
-import { blogSchema } from '../utils/blogValidation'
+import { nameValidation, descriptionValidation } from '../utils/blogValidation'
 
 const CreateBlog = () => {
   const [step, setStep] = useState<string>('first')
   const [name, setName] = useState<string | null>(null)
   const [description, setDescription] = useState<string | null>(null)
   const [template, setTemplate] = useState<number | null>(1)
-
+  const [nameAlert, setNameAlert] = useState<string | null>(null);
+  const [descriptionAlert, setDescriptionAlert] = useState<string | null>(null);
+  
   const { user, setIsCreatingBlog } = useContext(UserContext)
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -26,23 +30,38 @@ const CreateBlog = () => {
   }, [user])
 
   const validateBlog = () => {
-    let blogData = {
-      name,
-      description,
-    }
 
-    blogSchema
-      .validate(blogData)
+    let nameInput = {name};
+    let descriptionInput = {description};
+
+    nameValidation
+      .validate(nameInput)
       .then(() => {
-        setStep('third')
+        setNameAlert(null)
+        !descriptionAlert && setStep('third')
       })
       .catch((err: any) => {
-        // TODO Toaster qui affiche le message d'erreur
         const messages = err.errors
         messages.map((message: string) => {
-          alert(message)
+          setNameAlert(message)
         })
       })
+
+    descriptionValidation
+      .validate(descriptionInput)
+      .then(() => {
+        setDescriptionAlert(null)
+        !nameAlert && setStep('third')
+      })
+      .catch((err: any) => {
+        const messages = err.errors
+        messages.map((message: string) => {
+          setDescriptionAlert(message)
+        })
+      })
+    
+
+
   }
 
   const nextStep = () => {
@@ -102,20 +121,24 @@ const CreateBlog = () => {
       })
   }
 
+
   return (
-    <section className="min-h-screen flex justify-center items-center flex-col m-8 w-full">
+    <section className="min-h-screen max-w-screen flex justify-center items-center flex-col m-8">
+      <article className='flex justify-center items-center w-5/6 flex-col'>
+
       <ProgressionBar step={step}></ProgressionBar>
-      {step === 'first' ? <Login></Login> : null}
+
+      {step === 'first' ? <Register></Register> : null}
       {/* 
       Remplacer par le composant de login ou de register, et non la page entière */}
       {step === 'second' ? (
-        <StepTwo setName={setName} setDescription={setDescription}></StepTwo>
+        <StepTwo setName={setName} setDescription={setDescription} nameAlert={nameAlert} descriptionAlert={descriptionAlert}></StepTwo>
       ) : null}
       {step === 'third' ? (
         <StepThree setTemplate={setTemplate} template={template}></StepThree>
       ) : null}
 
-      <div className="group">
+      <div className="group flex w-full justify-end">
         {step === 'first' ? null : (
           <button className="btn btn-ghost" onClick={() => previousStep()}>
             Précédent
@@ -123,25 +146,26 @@ const CreateBlog = () => {
         )}
         {step === 'second' ? (
           <button
-            className="btn"
-            onClick={() => {
-              step === 'second' ? validateBlog() : nextStep()
-            }}
+          className="btn"
+          onClick={() => {
+            step === 'second' ? validateBlog() : nextStep()
+          }}
           >
             Etape suivante
           </button>
         ) : null}
         {step === 'third' ? (
           <div
-            className="btn"
-            onClick={() => {
-              template ? createNewBlog() : templateAlert()
-            }}
+          className="btn"
+          onClick={() => {
+            template ? createNewBlog() : templateAlert()
+          }}
           >
             Voir mon blog
           </div>
         ) : null}
       </div>
+        </article>
     </section>
   )
 }
