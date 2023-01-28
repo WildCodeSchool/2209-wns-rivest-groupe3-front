@@ -28,8 +28,6 @@ const ImageHandler = () => {
       preview: URL.createObjectURL(event.target.files[0]),
     })
   }
-  console.log('cloudname', import.meta.env.VITE_TEST)
-
 
   const handleImageUpload = async () => {
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || ''

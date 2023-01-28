@@ -16,7 +16,6 @@ import { useContext } from 'react'
 
 function App() {
   const { message } = useContext(NotificationContext)
-  console.log('cloudname', import.meta.env.VITE_TEST)
 
   return (
     <BrowserRouter>

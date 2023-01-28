@@ -100,7 +100,7 @@ const EditDrag = ({
         <button type="button" className="btn btn-info self-center w-full">
           + Ajouter un article
         </button>
-        {/* <div className="flex justify-between text-white mx-auto w-full">
+        <div className="flex justify-between text-white mx-auto w-full">
           <label
             className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer rounded py-2 px-6 w-1/2 ${
               blog.template === 1 ? 'btn-info' : 'btn-ghost'
@@ -131,7 +131,7 @@ const EditDrag = ({
               onClick={() => setBlog({ ...blog, template: 2 })}
             />
           </label>
-        </div> */}
+        </div>
         <div className='flex justify-center gap-4 w-full py-4'>
           <button type="submit" className="btn btn-info w-2/5">
             Sauvegarder
