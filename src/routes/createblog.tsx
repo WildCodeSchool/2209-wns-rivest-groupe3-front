@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
 
 import ProgressionBar from '../components/inputs/ProgressionBar'
@@ -79,7 +79,6 @@ const CreateBlog = () => {
   const { setMessage } = useContext(NotificationContext)
 
   const templateAlert = () => {
-    // TODO Toaster d'alerte 'Tu n'as pas choisi de template'
     alert("Tu n'as pas choisi de template")
   }
 
@@ -128,8 +127,7 @@ const CreateBlog = () => {
         <ProgressionBar step={step}></ProgressionBar>
 
         {step === 'first' ? <Register></Register> : null}
-        {/* 
-      Remplacer par le composant de login ou de register, et non la page entière */}
+
         {step === 'second' ? (
           <StepTwo
             setName={setName}
@@ -138,6 +136,7 @@ const CreateBlog = () => {
             descriptionAlert={descriptionAlert}
           ></StepTwo>
         ) : null}
+        
         {step === 'third' ? (
           <StepThree setTemplate={setTemplate} template={template}></StepThree>
         ) : null}
