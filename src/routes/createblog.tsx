@@ -9,6 +9,7 @@ import StepTwo from '../components/createblog/StepTwo'
 
 import { UserContext } from '../contexts/UserContext'
 import { nameValidation, descriptionValidation } from '../utils/blogValidation'
+import { NotificationContext } from '../contexts/NotificationContext'
 
 const CreateBlog = () => {
   const [step, setStep] = useState<string>('first')
@@ -19,7 +20,6 @@ const CreateBlog = () => {
   const [descriptionAlert, setDescriptionAlert] = useState<string | null>(null)
 
   const { user, setIsCreatingBlog } = useContext(UserContext)
-
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -76,6 +76,8 @@ const CreateBlog = () => {
     }
   }
 
+  const { setMessage } = useContext(NotificationContext)
+
   const templateAlert = () => {
     alert("Tu n'as pas choisi de template")
   }
@@ -107,9 +109,10 @@ const CreateBlog = () => {
         const blogName = res.data.createBlog.name
         const userName = user?.nickname
 
-        alert(
-          `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`
-        )
+        setMessage({
+          text: `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`,
+          type: 'success',
+        })
 
         navigate(`/blogs/${blogName}`)
       })

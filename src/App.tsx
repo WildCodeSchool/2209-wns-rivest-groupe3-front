@@ -13,13 +13,16 @@ import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
 import { useContext } from 'react'
+import Modal from './components/Modal'
 
 function App() {
   const { message } = useContext(NotificationContext)
+
   return (
     <BrowserRouter>
+      <Modal />
+
       <Navbar />
-      {message && <Toaster />}
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Discover />} path="/discover" />
@@ -33,6 +36,7 @@ function App() {
       </Routes>
 
       <Footer />
+      {message && <Toaster />}
     </BrowserRouter>
   )
 }
