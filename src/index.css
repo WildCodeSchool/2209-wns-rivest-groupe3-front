@@ -3,62 +3,67 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: "Lobster";
-	src: url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+  font-family: 'Lobster';
+  src: url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 }
 
 @font-face {
-	font-family: "Roboto Condensed";
-	src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
+  font-family: 'Roboto Condensed';
+  src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
 }
 
-.btn-primary, .btn-secondary, .btn-square, .btn-info {
-	@apply text-white;
+.btn-primary,
+.btn-secondary,
+.btn-square,
+.btn-info {
+  @apply text-white;
 }
 
 .btn {
-	@apply rounded-md
+  @apply rounded-md;
+}
+
+.btn-circle {
+  @apply rounded-full;
 }
 
 .card {
-	@apply rounded-md
+  @apply rounded-md;
 }
 
 body {
-	@apply scrollbar
+  @apply scrollbar;
 }
 
 .shadow-card {
-	@apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]
+  @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px];
 }
 
 .shadow-card:hover {
-	@apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]
+  @apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px];
 }
 
 .shadow-article:hover {
-	@apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]
+  @apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px];
 }
 
-
-
 @layer utilities {
-	.scrollbar::-webkit-scrollbar {
-		width: 12px;
-		height: 10px;
-	}
+  .scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+  }
 
-	.scrollbar::-webkit-scrollbar-track {
-		background: rgba(0, 0, 0, 0)
-	}
+  .scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+  }
 
-	.scrollbar::-webkit-scrollbar-thumb {
-		background: #09243452;
-		border-radius: 80vh;
-		/* border: 3px solid #f6f7ed; */
-	}
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #09243452;
+    border-radius: 80vh;
+    /* border: 3px solid #f6f7ed; */
+  }
 
-	.scrollbar::-webkit-scrollbar-thumb:hover {
-		background: #092434;
-	}
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #092434;
+  }
 }
