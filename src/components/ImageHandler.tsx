@@ -30,18 +30,23 @@ const ImageHandler = () => {
   }
 
   const handleImageUpload = async () => {
-    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || ''
-    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || ''
-
     const formData = new FormData()
-    if (selectedImage.image) formData.append('file', selectedImage.image)
-    formData.append('upload_preset', uploadPreset)
+    if (selectedImage.image)
+      formData.append('file', selectedImage.image, selectedImage.image.name)
+
+    const token = localStorage.getItem('token')
     try {
       const { data } = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        formData
+        `http://localhost:8000/upload`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       )
-      setSelectedImage({ ...selectedImage, imageUrl: data.url })
+      console.log(data)
+      setSelectedImage({ ...selectedImage, imageUrl: data.filename })
     } catch (err) {
       console.error(err)
     }
