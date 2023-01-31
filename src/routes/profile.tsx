@@ -1,6 +1,16 @@
+import { useContext } from 'react'
+import { gql, useMutation } from '@apollo/client'
+
+import { UserContext } from '../contexts/UserContext'
+
 import Card from '../components/Card'
+import { DeleteUser } from '../components/buttons/DeleteUser'
 
 const Profil = () => {
+  // const userToken: String = localStorage.token
+
+  // console.log(userToken)
+
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profile</h1>
@@ -38,7 +48,7 @@ const Profil = () => {
       <section className="card flex flex-col gap-8">
         <h2 className="text-5xl font-bold text-center">Mes informations</h2>
 
-        <label className='space-y-4'>
+        <label className="space-y-4">
           <span className="card-title">Nom</span>
           <input
             type="text"
@@ -46,7 +56,7 @@ const Profil = () => {
             className="input input-bordered w-full w-full"
           />
         </label>
-        <label className='space-y-4'>
+        <label className="space-y-4">
           <span className="card-title">Prénom</span>
           <input
             type="text"
@@ -54,7 +64,7 @@ const Profil = () => {
             className="input input-bordered w-full w-full"
           />
         </label>
-        <label className='space-y-4'>
+        <label className="space-y-4">
           <span className="card-title">Ville</span>
           <input
             type="text"
@@ -62,7 +72,7 @@ const Profil = () => {
             className="input input-bordered w-full w-full"
           />
         </label>
-        <label className='space-y-4'>
+        <label className="space-y-4">
           <span className="card-title">E-mail</span>
           <input
             type="text"
@@ -70,7 +80,7 @@ const Profil = () => {
             className="input input-bordered w-full w-full"
           />
         </label>
-        <label className='space-y-4'>
+        <label className="space-y-4">
           <span className="card-title">Mot de passe</span>
           <input
             type="text"
@@ -80,6 +90,7 @@ const Profil = () => {
         </label>
         <button className="btn btn-primary">Edit</button>
       </section>
+      <DeleteUser />
     </main>
   )
 }
