@@ -10,11 +10,11 @@ const DELETE_USER = gql`
   }
 `
 
-export function DeleteUser() {
+const DeleteUser = () => {
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
   const { message, setMessage } = useContext(NotificationContext)
-  const [deleteCurrentUser] = useMutation(DELETE_USER)
+  const [deleteCurrentUser, { loading, error }] = useMutation(DELETE_USER)
 
   async function deleteUserOnClick() {
     try {
@@ -25,12 +25,15 @@ export function DeleteUser() {
       navigate('/')
     } catch (error) {
       setMessage({
-        text: 'Erreur lors de la suppression du compte, veuillez réessayer plus tard.',
+        text: 'Error while deleting the account, please try again later.',
         type: 'error',
       })
       console.error(error)
     }
   }
+
+  if (loading) return <p>Chargement...</p>
+  if (error) return <p>Erreur lors de l'action </p>
 
   return (
     <>
@@ -60,3 +63,5 @@ export function DeleteUser() {
     </>
   )
 }
+
+export default DeleteUser

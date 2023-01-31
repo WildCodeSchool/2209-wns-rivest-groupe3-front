@@ -18,7 +18,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className={location.pathname === "/" ? heroNavClass : defaultNavClass}>
+    <nav className={location.pathname === '/' ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Logo
@@ -54,11 +54,13 @@ const Navbar = () => {
             >
               <li>
                 <Link to="/profile" className="justify-between">
-                  Profile
+                  Voir le profil
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/settings" className="justify-between">
+                  Paramètres de compte
+                </Link>
               </li>
               <li>
                 <button className="btn btn-secondary" onClick={logout}>
