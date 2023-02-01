@@ -1,9 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { Route, Routes } from 'react-router-dom'
-import BlogT1 from './BlogT1'
-import BlogT2 from './BlogT2'
-import EditDrag from './EditDrag'
 import ListingBlogs from './ListingBlogs'
+import Blog from './singleblog'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
 
@@ -35,12 +33,10 @@ const Blogs = () => {
     return <></>
   }
   return (
-    <>
-    {isEditing && <EditDrag setIsEditing={setIsEditing} />}
     <Routes>
-        <Route element={<ListingBlogs />} path="/" />
-        <Route element={<BlogT2 setIsEditing={setIsEditing} />} path="/:blogname" />
-        <Route element={<BlogT1 setIsEditing={setIsEditing} />} path="/:blogname/T1" />
+      <Route element={<ListingBlogs blogs={data.getAllBlogs} />} path="/" />
+      <Route element={<Blog />} path="/:slug" />
+      <Route element={<Article />} path="/:blogSlug/:slug" />
     </Routes>
   )
 }
