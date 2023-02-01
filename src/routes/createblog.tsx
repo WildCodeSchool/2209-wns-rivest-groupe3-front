@@ -78,10 +78,6 @@ const CreateBlog = () => {
 
   const { setMessage } = useContext(NotificationContext)
 
-  const templateAlert = () => {
-    alert("Tu n'as pas choisi de template")
-  }
-
   const CREATE_BLOG = gql`
     mutation Mutation(
       $description: String!
@@ -91,34 +87,39 @@ const CreateBlog = () => {
       createBlog(description: $description, name: $name, template: $template) {
         name
         id
+        slug
       }
     }
   `
   const [createBlog] = useMutation(CREATE_BLOG)
 
-  const createNewBlog = () => {
-    setIsCreatingBlog(false)
-    createBlog({
-      variables: {
-        name,
-        description,
-        template,
-      },
-    })
-      .then((res) => {
-        const blogName = res.data.createBlog.name
-        const userName = user?.nickname
-
-        setMessage({
-          text: `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`,
-          type: 'success',
-        })
-
-        navigate(`/blogs/${blogName}`)
+  const createNewBlog = async () => {
+    try {
+      setIsCreatingBlog(false)
+      const result = await createBlog({
+        variables: {
+          name,
+          description,
+          template,
+        },
       })
-      .catch((err) => {
-        console.log(err)
+
+      const userName = user?.nickname
+
+      const createdBlog = result.data.createBlog
+      const blogName = createdBlog.name
+      const slug = createdBlog.slug
+
+      setMessage({
+        text: `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`,
+        type: 'success',
       })
+
+      template === 1 && navigate(`/blogs/${slug}/T1`)
+      template === 2 && navigate(`/blogs/${slug}`)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -136,7 +137,7 @@ const CreateBlog = () => {
             descriptionAlert={descriptionAlert}
           ></StepTwo>
         ) : null}
-        
+
         {step === 'third' ? (
           <StepThree setTemplate={setTemplate} template={template}></StepThree>
         ) : null}
@@ -158,12 +159,7 @@ const CreateBlog = () => {
             </button>
           ) : null}
           {step === 'third' ? (
-            <div
-              className="btn"
-              onClick={() => {
-                template ? createNewBlog() : templateAlert()
-              }}
-            >
+            <div className="btn" onClick={createNewBlog}>
               Voir mon blog
             </div>
           ) : null}

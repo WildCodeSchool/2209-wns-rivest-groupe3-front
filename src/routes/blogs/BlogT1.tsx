@@ -1,12 +1,15 @@
 import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
+import { useParams } from 'react-router-dom'
 
 const BlogT1 = ({
   setIsEditing,
 }: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+  const { blogslug } = useParams()
+
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
