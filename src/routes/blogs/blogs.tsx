@@ -4,6 +4,7 @@ import ListingBlogs from './ListingBlogs'
 import Blog from './singleblog'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
+import Article from '../singleArticle'
 
 const Blogs = () => {
   const { setMessage } = useContext(NotificationContext)
