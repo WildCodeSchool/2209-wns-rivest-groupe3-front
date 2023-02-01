@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
 import ProgressionBar from '../components/inputs/ProgressionBar'
 import Login from './login'
@@ -7,6 +7,7 @@ import StepThree from '../components/createblog/StepThree'
 import StepTwo from '../components/createblog/StepTwo'
 
 import { UserContext } from '../contexts/UserContext'
+import { NotificationContext } from '../contexts/NotificationContext'
 import { blogSchema } from '../utils/blogValidation'
 
 const CreateBlog = () => {
@@ -16,6 +17,7 @@ const CreateBlog = () => {
   const [template, setTemplate] = useState<number | null>(1)
 
   const { user, setIsCreatingBlog } = useContext(UserContext)
+  const { setMessage } = useContext(NotificationContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,11 +39,7 @@ const CreateBlog = () => {
         setStep('third')
       })
       .catch((err: any) => {
-        // TODO Toaster qui affiche le message d'erreur
-        const messages = err.errors
-        messages.map((message: string) => {
-          alert(message)
-        })
+        setMessage({ text: err.errors[0].message, type: 'error' })
       })
   }
 
@@ -62,15 +60,19 @@ const CreateBlog = () => {
   }
 
   const templateAlert = () => {
-    // TODO Toaster d'alerte 'Tu n'as pas choisi de template'
-    alert("Tu n'as pas choisi de template")
+    setMessage({ text: "Tu n'as pas choisi de template", type: 'error' })
   }
 
   const CREATE_BLOG = gql`
-    mutation Mutation($description: String!, $name: String!, $template: Float!) {
+    mutation Mutation(
+      $description: String!
+      $name: String!
+      $template: Float!
+    ) {
       createBlog(description: $description, name: $name, template: $template) {
         name
         id
+        slug
       }
     }
   `
@@ -86,19 +88,22 @@ const CreateBlog = () => {
       },
     })
       .then((res) => {
-        const blogName = res.data.createBlog.name
+        const { name, slug } = res.data.createBlog
         const userName = user?.nickname
-        // TODO : concaténation pour définir l'URL de la page du blog ?
 
-        alert(
-          `Félicitations ${userName}, tu viens de créer ton blog ${blogName} !`
-        )
+        setMessage({
+          text: `Félicitations ${userName}, tu viens de créer ton blog ${name} !`,
+          type: 'success',
+        })
 
-        navigate(`/blogs/${blogName}`)
-        
+        navigate(`/blogs/${slug}`)
       })
       .catch((err) => {
-        console.log(err)
+        setMessage({
+          text: "Une erreur s'est produite...",
+          type: 'error',
+        })
+        console.error(err)
       })
   }
 
