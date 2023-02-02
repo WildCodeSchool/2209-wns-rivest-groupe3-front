@@ -8,6 +8,7 @@ import {
 } from '../../utils/userInformationsValidation'
 import { GET_USER } from '../../routes/userSettings'
 import { UserContext, IUserContext } from '../../contexts/UserContext'
+import { NotificationContext } from '../../contexts/NotificationContext'
 
 const UPDATE_USER = gql`
   mutation UpdateUser(
@@ -45,6 +46,7 @@ const EditUserForm = ({
   setShowUserInformations,
 }: any) => {
   const { user } = useContext<IUserContext>(UserContext)
+  const { message, setMessage } = useContext(NotificationContext)
 
   const onClick = () => {
     setShowUserInformations(true)
@@ -81,12 +83,19 @@ const EditUserForm = ({
     console.log(newUserDatas)
     updateUser({ variables: { ...newUserDatas } })
       .then(() => {
+        setMessage({
+          text: `Profil mis à jour avec succès !`,
+          type: 'success',
+        })
         setShowUserInformations(true)
         setShowEditUserForm(false)
       })
       .catch((err) => {
+        setMessage({
+          text: `Erreur : impossible de mettre à jour le profil utilisateur. ${err}.`,
+          type: 'error',
+        })
         console.error(err)
-        alert('Erreur')
       })
   }
 
