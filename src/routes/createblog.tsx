@@ -20,6 +20,7 @@ const CreateBlog = () => {
   const [descriptionAlert, setDescriptionAlert] = useState<string | null>(null)
 
   const { user, setIsCreatingBlog } = useContext(UserContext)
+  const { setMessage } = useContext(NotificationContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -76,7 +77,9 @@ const CreateBlog = () => {
     }
   }
 
-  const { setMessage } = useContext(NotificationContext)
+  const templateAlert = () => {
+    setMessage({ text: "Tu n'as pas choisi de template", type: 'error' })
+  }
 
   const CREATE_BLOG = gql`
     mutation Mutation(
@@ -118,7 +121,11 @@ const CreateBlog = () => {
       template === 1 && navigate(`/blogs/${slug}/T1`)
       template === 2 && navigate(`/blogs/${slug}`)
     } catch (err) {
-      console.log(err)
+      console.error(err)
+      setMessage({
+        text: `Une erreur s'est produite`,
+        type: 'error',
+      })
     }
   }
 

@@ -23,17 +23,20 @@ function App() {
       <Modal />
 
       <Navbar />
-      <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<Discover />} path="/discover" />
-        <Route element={<Blogs />} path="/blogs/*" />
-        <Route element={<Articles />} path="/articles" />
-        <Route element={<Profil />} path="/profile" />
-        <Route element={<Register />} path="/register" />
-        <Route element={<Login />} path="/login" />
-        <Route element={<CreateBlog />} path="/createblog" />
-        <Route element={<NotFound />} path="*" />
-      </Routes>
+      {message && <Toaster />}
+      <div className="min-h-screen">
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Discover />} path="/discover" />
+          <Route element={<Blogs />} path="/blogs/*" />
+          <Route element={<Articles />} path="/articles" />
+          <Route element={<Profil />} path="/profile" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<Login />} path="/login" />
+          <Route element={<CreateBlog />} path="/createblog" />
+          <Route element={<NotFound />} path="*" />
+        </Routes>
+      </div>
 
       <Footer />
       {message && <Toaster />}
