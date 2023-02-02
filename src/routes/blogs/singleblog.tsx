@@ -33,8 +33,8 @@ const Blog = () => {
         }
         articles {
           id
-          # slug
-          # title
+          slug
+          title
           articleContent {
             id
             content {
@@ -52,7 +52,7 @@ const Blog = () => {
               }
             }
             version
-            # current
+            current
           }
         }
       }
