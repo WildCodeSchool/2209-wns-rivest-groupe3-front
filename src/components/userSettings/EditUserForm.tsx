@@ -79,8 +79,10 @@ const EditUserForm = ({
       firstName: formData.firstName,
       lastName: formData.lastName,
       nickname: formData.nickname,
+      oldPassword: formData.oldPassword,
+      newPassword: formData.newPassword,
+      confirmPassword: formData.confirmPassword,
     }
-    console.log(newUserDatas)
     updateUser({ variables: { ...newUserDatas } })
       .then(() => {
         setMessage({
@@ -92,7 +94,7 @@ const EditUserForm = ({
       })
       .catch((err) => {
         setMessage({
-          text: `Erreur : impossible de mettre à jour le profil utilisateur. ${err}.`,
+          text: `Impossible de mettre à jour le profil utilisateur. ${err}.`,
           type: 'error',
         })
         console.error(err)
@@ -105,12 +107,12 @@ const EditUserForm = ({
         Editer mon profil
       </h1>
       <div className="flex">
-        <div className="w-1/4">
+        <div className="w-2/6">
           <img
             src={userInformations.avatar}
             alt={`${userInformations.nickname}-profil-picture`}
           />
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Avatar</span>
             <input
               {...register('avatar')}
@@ -118,15 +120,15 @@ const EditUserForm = ({
                 errors.avatar ? 'input input-error' : 'input input-bordered'
               }
               id="avatar"
-              type="avatar"
+              type="text"
               placeholder="avatar"
               defaultValue={userInformations.avatar}
             />
             <p className="text text-error">{errors.avatar?.message}</p>
           </label>
         </div>
-        <div className="w-3/4">
-          <label className="form-control space-y-2">
+        <div className="w-4/6">
+          <label className="form-control mb-4">
             <span className="label card-title">Pseudo</span>
             <input
               {...register('nickname')}
@@ -134,14 +136,14 @@ const EditUserForm = ({
                 errors.nickname ? 'input input-error' : 'input input-bordered'
               }
               id="nickname"
-              type="nickname"
+              type="text"
               placeholder="nickname"
               defaultValue={userInformations.nickname}
             />
             <p className="text text-error">{errors.nickname?.message}</p>
           </label>
 
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Nom</span>
             <input
               {...register('lastName')}
@@ -149,13 +151,13 @@ const EditUserForm = ({
                 errors.nickname ? 'input input-error' : 'input input-bordered'
               }
               id="lastName"
-              type="lastName"
+              type="text"
               placeholder="lastName"
               defaultValue={userInformations.lastName}
             />
             <p className="text text-error">{errors.lastName?.message}</p>
           </label>
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Prénom</span>
             <input
               {...register('firstName')}
@@ -163,13 +165,13 @@ const EditUserForm = ({
                 errors.nickname ? 'input input-error' : 'input input-bordered'
               }
               id="firstName"
-              type="firstName"
+              type="text"
               placeholder="firstName"
               defaultValue={userInformations.firstName}
             />
             <p className="text text-error">{errors.firstName?.message}</p>
           </label>
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Ville</span>
             <input
               {...register('city')}
@@ -177,27 +179,28 @@ const EditUserForm = ({
                 errors.nickname ? 'input input-error' : 'input input-bordered'
               }
               id="city"
-              type="city"
+              type="text"
               placeholder="city"
               defaultValue={userInformations.city}
             />
             <p className="text text-error">{errors.city?.message}</p>
           </label>
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Présentation</span>
-            <input
+            <textarea
               {...register('description')}
               className={
-                errors.nickname ? 'input input-error' : 'input input-bordered'
+                errors.nickname
+                  ? 'input input-error'
+                  : 'textarea textarea-bordered h-32 min-h-fit'
               }
               id="description"
-              type="description"
               placeholder="description"
               defaultValue={userInformations.description}
             />
             <p className="text text-error">{errors.description?.message}</p>
           </label>
-          <label className="form-control space-y-2">
+          <label className="form-control mb-4">
             <span className="label card-title">Email</span>
             <input
               {...register('email')}
@@ -211,9 +214,59 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.email?.message}</p>
           </label>
+          <label className="form-control mb-4">
+            <span className="label card-title">Ancien mot de passe</span>
+            <input
+              {...register('oldPassword')}
+              className={
+                errors.oldPassword
+                  ? 'input input-error'
+                  : 'input input-bordered'
+              }
+              id="password"
+              type="password"
+              placeholder="Mot de passe"
+            />
+            <p className="text text-error">{errors.oldPassword?.message}</p>
+          </label>
+          <label className="form-control mb-4">
+            <span className="label card-title">Nouveau mot de passe</span>
+            <input
+              {...register('newPassword')}
+              className={
+                errors.oldPassword
+                  ? 'input input-error'
+                  : 'input input-bordered'
+              }
+              id="password"
+              type="password"
+              placeholder="Mot de passe"
+            />
+            <p className="text text-error">{errors.newPassword?.message}</p>
+          </label>
+
+          <label className="form-control mb-4">
+            <span className="label card-title">
+              Confirmation du mot de passe
+            </span>
+            <input
+              {...register('confirmNewPassword')}
+              className={
+                errors.confirmNewPassword
+                  ? 'input input-error'
+                  : 'input input-bordered'
+              }
+              id="confirm-password"
+              type="password"
+              placeholder="Confirmation du mot de passe"
+            />
+            <p className="text text-error">
+              {errors.confirmNewPassword?.message}
+            </p>
+          </label>
         </div>
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 mt-12">
         <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
           Enregistrer
         </button>

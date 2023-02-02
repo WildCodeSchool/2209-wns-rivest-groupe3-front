@@ -4,7 +4,6 @@ import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
 import UserInformations from '../components/userSettings/UserInformations'
 import EditUserForm from '../components/userSettings/EditUserForm'
-import DeleteUser from '../components/buttons/DeleteUser'
 
 export const GET_USER = gql`
   query GetOneUser($getOneUserId: String!) {
@@ -25,7 +24,6 @@ const UserSettings = () => {
   const [showUserInformations, setShowUserInformations] =
     useState<boolean>(true)
   const [showEditUserForm, setShowEditUserForm] = useState<boolean>(false)
-
   const { user } = useContext<IUserContext>(UserContext)
 
   const { loading, error, data } = useQuery(GET_USER, {

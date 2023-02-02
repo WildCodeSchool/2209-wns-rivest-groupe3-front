@@ -9,7 +9,9 @@ export interface UserInformationsFormProps {
   city?: string
   avatar?: string
   email?: string
-  password?: string
+  oldPassword?: string
+  newPassword?: string
+  confirmNewPassword?: string
 }
 
 yup.setLocale({
@@ -44,7 +46,7 @@ const userInformationsSchema = yup.object({
     .string()
     .required('Merci de confirmer votre mot de passe')
     .oneOf(
-      [yup.ref('password'), null],
+      [yup.ref('newPassword'), null],
       'Les mots de passe ne correspondent pas.'
     )
     .optional(),

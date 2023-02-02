@@ -35,7 +35,7 @@ const UserInformations = ({
           <p className="mb-6">{userInformations?.email}</p>
         </div>
       </div>
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 mt-12">
         <button className="btn btn-primary" onClick={() => onClick()}>
           Editer
         </button>
