@@ -14,13 +14,13 @@ const UserInformations = ({
     <>
       <h1 className="text-5xl font-bold text-center mb-16">Mes informations</h1>
       <div className="flex">
-        <div className="w-1/4">
+        <div className="w-2/6 justify-center">
           <img
             src={userInformations.avatar}
             alt={`${userInformations.nickname}-profil-picture`}
           />
         </div>
-        <div className="w-3/4">
+        <div className="w-4/6">
           <h2 className="card-title">Pseudo</h2>
           <p className="mb-6">{userInformations?.nickname}</p>
           <h2 className="card-title">Nom</h2>

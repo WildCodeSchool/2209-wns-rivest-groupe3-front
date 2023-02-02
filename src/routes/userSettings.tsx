@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
@@ -6,7 +6,7 @@ import UserInformations from '../components/userSettings/UserInformations'
 import EditUserForm from '../components/userSettings/EditUserForm'
 import DeleteUser from '../components/buttons/DeleteUser'
 
-const GET_USER = gql`
+export const GET_USER = gql`
   query GetOneUser($getOneUserId: String!) {
     getOneUser(id: $getOneUserId) {
       nickname
@@ -22,8 +22,9 @@ const GET_USER = gql`
 `
 
 const UserSettings = () => {
-  const [showUserInformations, setShowUserInformations] = useState(true)
-  const [showEditUserForm, setShowEditUserForm] = useState(false)
+  const [showUserInformations, setShowUserInformations] =
+    useState<boolean>(true)
+  const [showEditUserForm, setShowEditUserForm] = useState<boolean>(false)
 
   const { user } = useContext<IUserContext>(UserContext)
 

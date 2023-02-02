@@ -1,11 +1,12 @@
-import { useContext, useState, useEffect } from 'react'
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { useContext } from 'react'
+import { gql, useMutation } from '@apollo/client'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   UserInformationsFormProps,
   userInformationsSchema,
 } from '../../utils/userInformationsValidation'
+import { GET_USER } from '../../routes/userSettings'
 import { UserContext, IUserContext } from '../../contexts/UserContext'
 
 const UPDATE_USER = gql`
@@ -43,6 +44,8 @@ const EditUserForm = ({
   setShowEditUserForm,
   setShowUserInformations,
 }: any) => {
+  const { user } = useContext<IUserContext>(UserContext)
+
   const onClick = () => {
     setShowUserInformations(true)
     setShowEditUserForm(false)
@@ -56,7 +59,14 @@ const EditUserForm = ({
     resolver: yupResolver(userInformationsSchema),
   })
 
-  const [updateUser] = useMutation(UPDATE_USER)
+  const [updateUser] = useMutation(UPDATE_USER, {
+    refetchQueries: [
+      {
+        query: GET_USER,
+        variables: { getOneUserId: user?.id },
+      },
+    ],
+  })
 
   const onSubmit = async (formData: FieldValues) => {
     const newUserDatas = {
@@ -71,7 +81,8 @@ const EditUserForm = ({
     console.log(newUserDatas)
     updateUser({ variables: { ...newUserDatas } })
       .then(() => {
-        alert('Ok')
+        setShowUserInformations(true)
+        setShowEditUserForm(false)
       })
       .catch((err) => {
         console.error(err)
@@ -90,6 +101,20 @@ const EditUserForm = ({
             src={userInformations.avatar}
             alt={`${userInformations.nickname}-profil-picture`}
           />
+          <label className="form-control space-y-2">
+            <span className="label card-title">Avatar</span>
+            <input
+              {...register('avatar')}
+              className={
+                errors.avatar ? 'input input-error' : 'input input-bordered'
+              }
+              id="avatar"
+              type="avatar"
+              placeholder="avatar"
+              defaultValue={userInformations.avatar}
+            />
+            <p className="text text-error">{errors.avatar?.message}</p>
+          </label>
         </div>
         <div className="w-3/4">
           <label className="form-control space-y-2">
@@ -106,6 +131,7 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.nickname?.message}</p>
           </label>
+
           <label className="form-control space-y-2">
             <span className="label card-title">Nom</span>
             <input
