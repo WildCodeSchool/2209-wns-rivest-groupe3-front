@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import axios from 'axios'
-import DragAndDrop from './inputs/DragAndDrop'
+import DragAndDrop from './DragAndDrop'
 
-const ImageHandler = () => {
+const PostImage = ({ postUrl }: {postUrl: string}) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
     imageUrl: string
@@ -37,7 +37,7 @@ const ImageHandler = () => {
     const token = localStorage.getItem('token')
     try {
       const { data } = await axios.post(
-        `http://localhost:8000/upload`,
+        `http://localhost:8000${postUrl}`,
         formData,
         {
           headers: {
@@ -53,13 +53,14 @@ const ImageHandler = () => {
   }
 
   return (
+    <>
     <DragAndDrop
       handleImageUpload={handleImageUpload}
       handleImageChange={handleImageChange}
       image={selectedImage}
       reset={resetImage}
-    />
+    /></>
   )
 }
 
-export default ImageHandler
+export default PostImage

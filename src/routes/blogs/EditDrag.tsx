@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import ImageHandler from '../../components/ImageHandler'
+import ImageHandler from '../../components/imagehandler/ImageHandler'
 
 interface Position {
   x: number
@@ -96,7 +96,8 @@ const EditDrag = ({
             placeholder="Description"
           />
         </label>
-        <ImageHandler />
+        {/* Put the cover link => ex: blog.cover-url */}
+        <ImageHandler type="cover" imgUrl={null}  />
         <button type="button" className="btn btn-info self-center w-full">
           + Ajouter un article
         </button>
@@ -113,7 +114,7 @@ const EditDrag = ({
               type="radio"
               name="template"
               checked={blog.template === 1}
-              onClick={() => setBlog({ ...blog, template: 1 })}
+              onChange={()=>setBlog({ ...blog, template: 1 })}
             />
           </label>
           <label
@@ -128,7 +129,7 @@ const EditDrag = ({
               type="radio"
               name="template"
               checked={blog.template === 2}
-              onClick={() => setBlog({ ...blog, template: 2 })}
+              onChange={() => setBlog({ ...blog, template: 2 })}
             />
           </label>
         </div>
