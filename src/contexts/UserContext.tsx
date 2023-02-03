@@ -6,10 +6,11 @@ export interface IUser {
   email: string
   lastName: string
   firstName: string
-  lastLogin: string
+  lastLogin: Date
   description: string
   createdAt: string
   avatar: string
+  createdAt: Date
 }
 
 export interface IUserContext {
