@@ -118,7 +118,7 @@ const CreateBlog = () => {
         type: 'success',
       })
 
-      template === 2 && navigate(`/blogs/${slug}`)
+      navigate(`/blogs/${slug}`)
     } catch (err) {
       console.error(err)
       setMessage({
