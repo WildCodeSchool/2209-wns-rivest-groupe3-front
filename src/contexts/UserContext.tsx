@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react'
 
-interface IUser {
+export interface IUser {
   id: string
   nickname: string
   email: string
@@ -8,10 +8,12 @@ interface IUser {
   firstName: string
   lastLogin: Date
   description: string
+  createdAt: string
+  avatar: string
   createdAt: Date
 }
 
-interface IUserContext {
+export interface IUserContext {
   user: IUser | null
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
   isCreatingBlog: boolean
