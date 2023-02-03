@@ -22,6 +22,7 @@ const GET_TOKEN = gql`
         lastLogin
         description
         createdAt
+        avatar
       }
     }
   }
@@ -53,6 +54,7 @@ const Login = () => {
         const localUser = {
           id: res.data.login.user.id,
           nickname: res.data.login.user.nickname,
+          avatar: res.data.login.user.avatar,
         }
         localStorage.setItem('user', JSON.stringify(localUser))
         setUser(res.data.login.user)

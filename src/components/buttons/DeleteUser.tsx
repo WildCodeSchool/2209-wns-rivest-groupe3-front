@@ -10,11 +10,11 @@ const DELETE_USER = gql`
   }
 `
 
-export function DeleteUser() {
+const DeleteUser = () => {
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
   const { message, setMessage } = useContext(NotificationContext)
-  const [deleteCurrentUser] = useMutation(DELETE_USER)
+  const [deleteCurrentUser, { loading, error }] = useMutation(DELETE_USER)
 
   async function deleteUserOnClick() {
     try {
@@ -22,31 +22,46 @@ export function DeleteUser() {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       setUser(null)
+      setMessage({
+        text: 'Compte, blogs et articles supprimés avec succès, même si nous sommes triste de vous voir partir :( Bon vent !',
+        type: 'success',
+      })
       navigate('/')
     } catch (error) {
       setMessage({
-        text: 'Erreur lors de la suppression du compte, veuillez réessayer plus tard.',
+        text: 'Error while deleting the account, please try again later.',
         type: 'error',
       })
       console.error(error)
     }
   }
 
+  if (loading) return <p>Chargement...</p>
+  if (error) return <p>Erreur lors de l'action </p>
+
   return (
     <>
-      <label htmlFor="delete-user-modal" className="btn btn-error">
+      <label htmlFor="delete-user-modal" className="btn btn-error text-white">
         Supprimer mon compte
       </label>
       <input type="checkbox" id="delete-user-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Êtes-vous sûr de vouloir supprimer votre compte ?
-          </h3>
+          <p className="text-lg text-center mb-8">
+            Si vous supprimez votre compte, vous perdrez tous vos blogs et vos
+            articles !
+          </p>
+          <p className="font-bold text-lg text-center mb-2">
+            Êtes-vous sûr de vouloir faire ça ?
+          </p>
+          <p className="italic text-sm text-center mb-12">
+            {' '}
+            (Et puis franchement, on est pas bien là ?)
+          </p>
           <div className="modal-action flex items-center justify-center">
             <label
               htmlFor="delete-user-modal"
-              className="btn btn-sm btn-error"
+              className="btn btn-sm text-white btn-error"
               onClick={() => deleteUserOnClick()}
             >
               Oui supprimer mon comtpe
@@ -60,3 +75,5 @@ export function DeleteUser() {
     </>
   )
 }
+
+export default DeleteUser
