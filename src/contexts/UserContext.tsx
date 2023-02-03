@@ -1,14 +1,14 @@
 import { createContext, useState } from 'react'
 
 interface IUser {
-  id: number
+  id: string
   nickname: string
   email: string
   lastName: string
   firstName: string
-  lastLogin: string
+  lastLogin: Date
   description: string
-  createdAt: string
+  createdAt: Date
 }
 
 interface IUserContext {
