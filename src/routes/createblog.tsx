@@ -118,7 +118,6 @@ const CreateBlog = () => {
         type: 'success',
       })
 
-      template === 1 && navigate(`/blogs/${slug}/T1`)
       template === 2 && navigate(`/blogs/${slug}`)
     } catch (err) {
       console.error(err)
