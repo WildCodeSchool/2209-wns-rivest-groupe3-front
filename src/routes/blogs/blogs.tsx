@@ -35,15 +35,12 @@ const Blogs = () => {
     return <></>
   }
   return (
-    <>
-      {isEditing && <EditDrag setIsEditing={setIsEditing} />}
-      <Routes>
-        <Route element={<ListingBlogs blogs={data.getAllBlogs} />} path="/" />
-        <Route element={<Blog />} path="/:slug" />
-        <Route element={<ArticleEditor />} path="/:blogSlug/_" />
-        <Route element={<Article />} path="/:blogSlug/:slug" />
-      </Routes>
-    </>
+    <Routes>
+      <Route element={<ListingBlogs blogs={data.getAllBlogs} />} path="/" />
+      <Route element={<Blog />} path="/:slug" />
+      <Route element={<ArticleEditor />} path="/:blogSlug/_" />
+      <Route element={<Article />} path="/:blogSlug/:slug" />
+    </Routes>
   )
 }
 
