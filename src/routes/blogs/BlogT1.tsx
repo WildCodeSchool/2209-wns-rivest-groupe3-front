@@ -3,19 +3,17 @@ import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import { IBlog, IUser } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import EditDrag from './EditDrag'
 
-const BlogT1 = ({
-  setIsEditing,
-  blog,
-  user,
-}: {
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
-  blog: IBlog
-  user: IUser | null
-}) => {
+const BlogT1 = ({ blog, user }: { blog: IBlog; user: IUser | null }) => {
   const navigate = useNavigate()
+
+  const [isEditing, setIsEditing] = useState(false)
+
   return (
     <>
+      {isEditing && <EditDrag setIsEditing={setIsEditing} />}
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
