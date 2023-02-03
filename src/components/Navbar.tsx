@@ -1,10 +1,13 @@
 import { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
   const location = useLocation()
+
+  console.log(user)
 
   const defaultNavClass =
     'navbar bg-white text-neutral w-full justify-between fixed top-0 z-50'
@@ -15,10 +18,11 @@ const Navbar = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
+    navigate('/')
   }
 
   return (
-    <nav className={location.pathname === "/" ? heroNavClass : defaultNavClass}>
+    <nav className={location.pathname === '/' ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Logo
@@ -45,7 +49,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end text-neutral">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                <img src={user.avatar} />
               </div>
             </label>
             <ul
@@ -54,11 +58,13 @@ const Navbar = () => {
             >
               <li>
                 <Link to="/profile" className="justify-between">
-                  Profile
+                  Voir le profil
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/settings" className="justify-between">
+                  Paramètres de compte
+                </Link>
               </li>
               <li>
                 <button className="btn btn-secondary" onClick={logout}>
