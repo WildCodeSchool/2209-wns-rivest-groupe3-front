@@ -1,15 +1,36 @@
 import { gql, useMutation } from '@apollo/client'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
 import { registerSchema } from '../utils/schemaValidation'
+import { UserContext } from '../contexts/UserContext'
+import { NotificationContext } from '../contexts/NotificationContext'
 
 const ADD_USER = gql`
   mutation Mutation($nickname: String!, $password: String!, $email: String!) {
     createUser(nickname: $nickname, password: $password, email: $email) {
       nickname
+    }
+  }
+`
+
+const GET_TOKEN = gql`
+  mutation Mutation($password: String!, $email: String!) {
+    login: getToken(password: $password, email: $email) {
+      token
+      user {
+        id
+        nickname
+        email
+        lastName
+        firstName
+        lastLogin
+        description
+        createdAt
+        avatar
+      }
     }
   }
 `
@@ -24,6 +45,10 @@ const Register = () => {
   })
 
   const [addUser] = useMutation(ADD_USER)
+  const { setUser, isCreatingBlog } = useContext(UserContext)
+  const navigate = useNavigate()
+  const [loadToken] = useMutation(GET_TOKEN)
+  const { message, setMessage } = useContext(NotificationContext)
 
   const onSubmit = async (data: FieldValues) => {
     const user = {
@@ -33,7 +58,29 @@ const Register = () => {
     }
     addUser({ variables: { ...user } })
       .then(() => {
-        alert('Ok')
+        setMessage({
+          text: 'Félicitation pour votre création de compte ! Bon voyage sur tabas.blog',
+          type: 'success',
+        })
+        loadToken({
+          variables: {
+            email: data.email,
+            password: data.password,
+          },
+        })
+          .then((res) => {
+            localStorage.setItem('token', res.data.login.token)
+            const localUser = {
+              id: res.data.login.user.id,
+              nickname: res.data.login.user.nickname,
+              avatar: res.data.login.user.avatar,
+            }
+            localStorage.setItem('user', JSON.stringify(localUser))
+            setUser(res.data.login.user)
+
+            isCreatingBlog ? navigate('/createblog') : navigate('/profile')
+          })
+          .catch((err) => console.error(err))
       })
       .catch((err) => {
         console.error(err)

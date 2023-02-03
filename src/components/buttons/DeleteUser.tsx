@@ -22,6 +22,10 @@ const DeleteUser = () => {
       localStorage.removeItem('token')
       localStorage.removeItem('user')
       setUser(null)
+      setMessage({
+        text: 'Compte, blogs et articles supprimés avec succès, même si nous sommes triste de vous voir partir :( Bon vent !',
+        type: 'success',
+      })
       navigate('/')
     } catch (error) {
       setMessage({

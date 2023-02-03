@@ -47,7 +47,7 @@ const Toaster = () => {
   }
 
   return (
-    <div className="toast">
+    <div className="toast z-20">
       <div className={innerDivClass}>
         <p>{message.text}</p>
       </div>
