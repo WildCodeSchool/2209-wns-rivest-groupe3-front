@@ -7,6 +7,8 @@ const Navbar = () => {
   const { user, setUser } = useContext(UserContext)
   const location = useLocation()
 
+  console.log(user)
+
   const defaultNavClass =
     'navbar bg-white text-neutral w-full justify-between fixed top-0 z-50'
   const heroNavClass =
@@ -47,7 +49,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end text-neutral">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                <img src={user.avatar} />
               </div>
             </label>
             <ul

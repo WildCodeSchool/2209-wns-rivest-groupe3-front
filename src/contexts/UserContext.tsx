@@ -9,6 +9,7 @@ export interface IUser {
   lastLogin: string
   description: string
   createdAt: string
+  avatar: string
 }
 
 export interface IUserContext {

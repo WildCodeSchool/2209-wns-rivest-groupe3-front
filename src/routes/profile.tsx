@@ -34,7 +34,7 @@ const Profile = () => {
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profil</h1>
 
-      <section className="flex mt-12 p-6 rounded-md">
+      <section className="flex mt-12 p-6 shadow-lg rounded-lg">
         <figure className="w-1/4 m-auto">
           <img
             src={data.getOneUser.avatar}
