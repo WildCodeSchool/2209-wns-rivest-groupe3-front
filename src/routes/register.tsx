@@ -6,7 +6,6 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
 import { registerSchema } from '../utils/schemaValidation'
-import { UserContext } from '../contexts/UserContext'
 import { NotificationContext } from '../contexts/NotificationContext'
 
 const ADD_USER = gql`
@@ -50,10 +49,6 @@ const Register = () => {
   const navigate = useNavigate()
   const [loadToken] = useMutation(GET_TOKEN)
   const { message, setMessage } = useContext(NotificationContext)
-
-  const { isCreatingBlog } = useContext(UserContext)
-
-  const navigate = useNavigate()
 
   const onSubmit = async (data: FieldValues) => {
     const user = {
