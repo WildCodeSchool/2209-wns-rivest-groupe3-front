@@ -41,7 +41,7 @@ export interface IArticleContent {
 }
 export interface IContent {
   time: number
-  version: number
+  version: string
   blocks: IContentBlock[]
 }
 export interface IContentBlock {
@@ -54,7 +54,6 @@ export interface IContentBlockData {
   level?: number
   style?: string
   items?: string[]
-  html?: string
   caption?: string
   url?: string
   alt?: string

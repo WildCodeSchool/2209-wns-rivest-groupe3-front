@@ -1,15 +1,19 @@
 import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
-import { IBlog } from '../../utils/interfaces/Interfaces'
+import { IBlog, IUser } from '../../utils/interfaces/Interfaces'
+import { useNavigate } from 'react-router-dom'
 
 const BlogT1 = ({
   setIsEditing,
   blog,
+  user,
 }: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
   blog: IBlog
+  user: IUser | null
 }) => {
+  const navigate = useNavigate()
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -25,12 +29,19 @@ const BlogT1 = ({
             <SearchBar />
           </div>
           <div className="flex gap-2">
-            <button
-              className="btn btn-info"
-              onClick={() => setIsEditing((isEditing) => !isEditing)}
-            >
-              Modifier
-            </button>
+            {user?.id === blog.user.id && (
+              <>
+                <button
+                  className="btn btn-info"
+                  onClick={() => setIsEditing((isEditing) => !isEditing)}
+                >
+                  Modifier
+                </button>
+                <button className="btn btn-info" onClick={() => navigate(`_`)}>
+                  Ajouter un article
+                </button>
+              </>
+            )}
             <button className="btn btn-outline">Suivre</button>
             <button className="btn btn-outline">Partager</button>
           </div>

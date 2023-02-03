@@ -4,7 +4,8 @@ import ListingBlogs from './ListingBlogs'
 import Blog from './singleblog'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
-import Article from '../singleArticle'
+import Article from './articles/singleArticle'
+import ArticleEditor from './articles/newArticle'
 
 const Blogs = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -34,11 +35,15 @@ const Blogs = () => {
     return <></>
   }
   return (
-    <Routes>
-      <Route element={<ListingBlogs blogs={data.getAllBlogs} />} path="/" />
-      <Route element={<Blog />} path="/:slug" />
-      <Route element={<Article />} path="/:blogSlug/:slug" />
-    </Routes>
+    <>
+      {isEditing && <EditDrag setIsEditing={setIsEditing} />}
+      <Routes>
+        <Route element={<ListingBlogs blogs={data.getAllBlogs} />} path="/" />
+        <Route element={<Blog />} path="/:slug" />
+        <Route element={<ArticleEditor />} path="/:blogSlug/_" />
+        <Route element={<Article />} path="/:blogSlug/:slug" />
+      </Routes>
+    </>
   )
 }
 

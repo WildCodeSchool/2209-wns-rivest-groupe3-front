@@ -7,9 +7,11 @@ import EditDrag from './EditDrag'
 import ListingBlogs from './ListingBlogs'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
+import { UserContext } from '../../contexts/UserContext'
 
 const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
+  const { user } = useContext(UserContext)
   const [isEditing, setIsEditing] = useState(false)
   const { slug } = useParams()
 
@@ -23,6 +25,7 @@ const Blog = () => {
         slug
         createdAt
         user {
+          id
           avatar
           nickname
           city
@@ -69,7 +72,9 @@ const Blog = () => {
   }
 
   if (data.getBlog.template === 0)
-    return <BlogT1 setIsEditing={setIsEditing} blog={data.getBlog} />
+    return (
+      <BlogT1 setIsEditing={setIsEditing} blog={data.getBlog} user={user} />
+    )
   if (data.getBlog.template === 1) return <BlogT2 setIsEditing={setIsEditing} />
   return <></>
 }

@@ -42,12 +42,6 @@ const outputData = (block: IContentBlock, index: number) => {
       }
     case 'image':
       return <img key={index} src={block.data.url} alt={block.data.alt} />
-    case 'paragraph':
-      return (
-        <p key={index} className="text-justify">
-          {parse(block.data.text || '')}
-        </p>
-      )
     case 'list':
       switch (block.data.style) {
         case 'unordered':
@@ -69,13 +63,6 @@ const outputData = (block: IContentBlock, index: number) => {
         default:
           throw new Error('List block style must be specified')
       }
-    case 'raw':
-      return (
-        <div
-          key={index}
-          dangerouslySetInnerHTML={{ __html: block.data.html || '' }}
-        />
-      )
     case 'quote':
       return (
         <figure>
@@ -87,8 +74,11 @@ const outputData = (block: IContentBlock, index: number) => {
       )
 
     default:
-      //throw new Error('Block type must be specified')
-      break
+      return (
+        <p key={index} className="text-justify">
+          {parse(block.data.text || '')}
+        </p>
+      )
   }
 }
 
