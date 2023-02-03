@@ -12,7 +12,7 @@ const BlogT1 = ({
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
-            Voyage machin
+            Blog de voyage
           </h1>
           <p className="max-w-2xl bg-neutral/80 p-2">
             Si vous êtes passionné de voyage et que vous avez envie de partager

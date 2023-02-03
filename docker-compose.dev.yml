@@ -51,9 +51,26 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
+  images:
+    container_name: images-service
+    env_file:
+      - ../images-service/.env
+    build: ../images-service
+    volumes:
+      - ../images-service/src:/app/src
+      - ../images-service/uploads:/app/uploads
+    ports:
+      - 8000:8000
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   frontend:
     container_name: frontend
+    env_file:
+      - .env  
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -63,4 +80,6 @@ services:
       - ./src/:/app/src/
     depends_on:
       'backend':
+        condition: service_healthy
+      'images':
         condition: service_healthy

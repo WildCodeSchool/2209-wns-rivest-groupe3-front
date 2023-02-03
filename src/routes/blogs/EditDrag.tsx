@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import ImageHandler from '../../components/imagehandler/ImageHandler'
 
 interface Position {
   x: number
@@ -95,12 +96,14 @@ const EditDrag = ({
             placeholder="Description"
           />
         </label>
+        {/* Put the cover link => ex: blog.cover-url */}
+        <ImageHandler type="cover" imgUrl={null}  />
         <button type="button" className="btn btn-info self-center w-full">
           + Ajouter un article
         </button>
-        <div className="flex justify-center gap-2 text-white mx-auto w-full">
+        <div className="flex justify-between text-white mx-auto w-full">
           <label
-            className={`flex flex-col justify-start gap-2 font-bold cursor-pointer rounded py-2 px-6 ${
+            className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer rounded py-2 px-6 w-1/2 ${
               blog.template === 1 ? 'btn-info' : 'btn-ghost'
             }`}
           >
@@ -111,11 +114,11 @@ const EditDrag = ({
               type="radio"
               name="template"
               checked={blog.template === 1}
-              onClick={() => setBlog({ ...blog, template: 1 })}
+              onChange={()=>setBlog({ ...blog, template: 1 })}
             />
           </label>
           <label
-            className={`flex flex-col justify-start gap-2 font-bold cursor-pointer bg-ghost rounded py-2 px-6 ${
+            className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer bg-ghost rounded py-2 px-6 w-1/2 ${
               blog.template === 2 ? 'btn-info' : 'btn-ghost text-white'
             }`}
           >
@@ -126,15 +129,15 @@ const EditDrag = ({
               type="radio"
               name="template"
               checked={blog.template === 2}
-              onClick={() => setBlog({ ...blog, template: 2 })}
+              onChange={() => setBlog({ ...blog, template: 2 })}
             />
           </label>
         </div>
-        <div className='flex justify-around gap-2 w-full'>
-          <button type="submit" className="btn btn-info">
-            Modifier
+        <div className='flex justify-center gap-4 w-full py-4'>
+          <button type="submit" className="btn btn-info w-2/5">
+            Sauvegarder
           </button>
-          <button type="button" className="btn btn-secondary" 
+          <button type="button" className="btn btn-secondary w-2/5" 
               onClick={() => setIsEditing(isEditing => !isEditing)}
               >
             Annuler

@@ -16,6 +16,7 @@ import { useContext } from 'react'
 
 function App() {
   const { message } = useContext(NotificationContext)
+
   return (
     <BrowserRouter>
       <Navbar />
