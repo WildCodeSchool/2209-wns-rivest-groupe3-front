@@ -33,20 +33,24 @@ const Profile = () => {
   return (
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profil</h1>
-      <section className="card lg:card-side bg-base-100 shadow-card">
-        <figure>
+
+      <section className="flex mt-12 p-6 rounded-md">
+        <figure className="w-1/4 m-auto">
           <img
             src={data.getOneUser.avatar}
             alt={`${data.getOneUser.nickname}-profil-picture`}
+            className="m-auto"
           />
         </figure>
-        <div className="card-body">
+
+        <div className="w-3/4">
           <h2 className="card-title">Pseudo</h2>
-          <p>{data.getOneUser.nickname}</p>
+          <p className="mb-6">{data.getOneUser.nickname}</p>
           <h2 className="card-title">Presentation</h2>
           <p>{data.getOneUser.description}</p>
         </div>
       </section>
+
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Mes blogs</h2>
         <article className="flex justify-center items-center gap-16">

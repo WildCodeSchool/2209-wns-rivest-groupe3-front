@@ -1,8 +1,9 @@
 import { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
   const location = useLocation()
 
@@ -15,6 +16,7 @@ const Navbar = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
+    navigate('/')
   }
 
   return (

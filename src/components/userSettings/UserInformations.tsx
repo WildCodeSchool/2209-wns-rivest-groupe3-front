@@ -36,7 +36,10 @@ const UserInformations = ({
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">
-        <button className="btn btn-primary" onClick={() => onClick()}>
+        <button
+          className="btn btn-primary text-white"
+          onClick={() => onClick()}
+        >
           Editer
         </button>
         <DeleteUser />

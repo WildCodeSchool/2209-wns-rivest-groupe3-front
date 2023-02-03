@@ -214,7 +214,7 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.email?.message}</p>
           </label>
-          <label className="form-control mb-4">
+          {/* <label className="form-control mb-4">
             <span className="label card-title">Ancien mot de passe</span>
             <input
               {...register('oldPassword')}
@@ -263,7 +263,7 @@ const EditUserForm = ({
             <p className="text text-error">
               {errors.confirmNewPassword?.message}
             </p>
-          </label>
+          </label> */}
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">

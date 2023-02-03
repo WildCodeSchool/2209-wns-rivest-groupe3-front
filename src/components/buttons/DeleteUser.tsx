@@ -37,19 +37,27 @@ const DeleteUser = () => {
 
   return (
     <>
-      <label htmlFor="delete-user-modal" className="btn btn-error">
+      <label htmlFor="delete-user-modal" className="btn btn-error text-white">
         Supprimer mon compte
       </label>
       <input type="checkbox" id="delete-user-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Êtes-vous sûr de vouloir supprimer votre compte ?
-          </h3>
+          <p className="text-lg text-center mb-8">
+            Si vous supprimez votre compte, vous perdrez tous vos blogs et vos
+            articles !
+          </p>
+          <p className="font-bold text-lg text-center mb-2">
+            Êtes-vous sûr de vouloir faire ça ?
+          </p>
+          <p className="italic text-sm text-center mb-12">
+            {' '}
+            (Et puis franchement, on est pas bien là ?)
+          </p>
           <div className="modal-action flex items-center justify-center">
             <label
               htmlFor="delete-user-modal"
-              className="btn btn-sm btn-error"
+              className="btn btn-sm text-white btn-error"
               onClick={() => deleteUserOnClick()}
             >
               Oui supprimer mon comtpe
