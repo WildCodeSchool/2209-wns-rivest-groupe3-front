@@ -1,8 +1,9 @@
+import { IBlog } from '../../utils/interfaces/Interfaces'
 import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 
-const ListingBlogs = () => {
+const ListingBlogs = ({ blogs }: { blogs: IBlog[] }) => {
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
@@ -10,7 +11,7 @@ const ListingBlogs = () => {
           Blogs
         </h1>
       </header>
-      <div className='flex justify-between w-full items-center'>
+      <div className="flex justify-between w-full items-center">
         <SearchBar />
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
@@ -30,15 +31,9 @@ const ListingBlogs = () => {
         </div>
       </div>
       <section className="w-full grid grid-cols-3 grid-row-3 gap-8">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {blogs.map((blog) => (
+          <Card key={blog.id} blog={blog} />
+        ))}
       </section>
       <Pagination />
     </main>

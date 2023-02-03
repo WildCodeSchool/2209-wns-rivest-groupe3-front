@@ -13,26 +13,33 @@ import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
 import { useContext } from 'react'
+import Modal from './components/Modal'
 
 function App() {
   const { message } = useContext(NotificationContext)
+
   return (
     <BrowserRouter>
+      <Modal />
+
       <Navbar />
       {message && <Toaster />}
-      <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<Discover />} path="/discover" />
-        <Route element={<Blogs />} path="/blogs/*" />
-        <Route element={<Articles />} path="/articles" />
-        <Route element={<Profil />} path="/profile" />
-        <Route element={<Register />} path="/register" />
-        <Route element={<Login />} path="/login" />
-        <Route element={<CreateBlog />} path="/createblog" />
-        <Route element={<NotFound />} path="*" />
-      </Routes>
+      <div className="min-h-screen">
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Discover />} path="/discover" />
+          <Route element={<Blogs />} path="/blogs/*" />
+          <Route element={<Articles />} path="/articles" />
+          <Route element={<Profil />} path="/profile" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<Login />} path="/login" />
+          <Route element={<CreateBlog />} path="/createblog" />
+          <Route element={<NotFound />} path="*" />
+        </Routes>
+      </div>
 
       <Footer />
+      {message && <Toaster />}
     </BrowserRouter>
   )
 }

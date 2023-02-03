@@ -1,6 +1,8 @@
 import { gql, useMutation } from '@apollo/client'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { useContext } from 'react'
+import { UserContext } from '../contexts/UserContext'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
@@ -25,6 +27,10 @@ const Register = () => {
 
   const [addUser] = useMutation(ADD_USER)
 
+  const { isCreatingBlog } = useContext(UserContext)
+
+  const navigate = useNavigate()
+
   const onSubmit = async (data: FieldValues) => {
     const user = {
       nickname: data.nickname,
@@ -34,6 +40,8 @@ const Register = () => {
     addUser({ variables: { ...user } })
       .then(() => {
         alert('Ok')
+        isCreatingBlog ? navigate('/login') : navigate('/')
+
       })
       .catch((err) => {
         console.error(err)
