@@ -8,16 +8,21 @@ import Discover from './routes/discover'
 import Home from './routes/home'
 import Login from './routes/login'
 import NotFound from './routes/notFound'
-import Profil from './routes/profile'
+import Profile from './routes/profile'
+import UserSettings from './routes/userSettings'
 import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
 import { useContext } from 'react'
+import Modal from './components/Modal'
 
 function App() {
   const { message } = useContext(NotificationContext)
+
   return (
     <BrowserRouter>
+      <Modal />
+
       <Navbar />
       {message && <Toaster />}
       <Routes>
@@ -25,7 +30,8 @@ function App() {
         <Route element={<Discover />} path="/discover" />
         <Route element={<Blogs />} path="/blogs/*" />
         <Route element={<Articles />} path="/articles" />
-        <Route element={<Profil />} path="/profile" />
+        <Route element={<Profile />} path="/profile" />
+        <Route element={<UserSettings />} path="/settings" />
         <Route element={<Register />} path="/register" />
         <Route element={<Login />} path="/login" />
         <Route element={<CreateBlog />} path="/createblog" />
@@ -33,6 +39,7 @@ function App() {
       </Routes>
 
       <Footer />
+      {message && <Toaster />}
     </BrowserRouter>
   )
 }

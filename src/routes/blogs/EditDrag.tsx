@@ -6,11 +6,7 @@ interface Position {
   y: number
 }
 
-const EditDrag = ({
-  setIsEditing,
-}: {
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 })
   const [blog, setBlog] = useState({ template: 1 })
 
@@ -95,16 +91,17 @@ const EditDrag = ({
             placeholder="Description"
           />
         </label>
-        <button type="button" className="btn btn-info self-center w-full">
-          + Ajouter un article
-        </button>
         <div className="flex justify-center gap-2 text-white mx-auto w-full">
           <label
             className={`flex flex-col justify-start gap-2 font-bold cursor-pointer rounded py-2 px-6 ${
               blog.template === 1 ? 'btn-info' : 'btn-ghost'
             }`}
           >
-            <img src='/src/assets/template-1.png' alt='template 1' className='w-24 rounded'/>
+            <img
+              src="/src/assets/template-1.png"
+              alt="template 1"
+              className="w-24 rounded"
+            />
             <span>Template 1</span>
             <input
               className="hidden"
@@ -119,7 +116,11 @@ const EditDrag = ({
               blog.template === 2 ? 'btn-info' : 'btn-ghost text-white'
             }`}
           >
-            <img src='/src/assets/template-2.png' alt='template 2' className='w-24 rounded'/>
+            <img
+              src="/src/assets/template-2.png"
+              alt="template 2"
+              className="w-24 rounded"
+            />
             <span>Template 2</span>
             <input
               className="hidden"
@@ -130,13 +131,15 @@ const EditDrag = ({
             />
           </label>
         </div>
-        <div className='flex justify-around gap-2 w-full'>
+        <div className="flex justify-around gap-2 w-full">
           <button type="submit" className="btn btn-info">
             Modifier
           </button>
-          <button type="button" className="btn btn-secondary" 
-              onClick={() => setIsEditing(isEditing => !isEditing)}
-              >
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={closeEdit}
+          >
             Annuler
           </button>
         </div>

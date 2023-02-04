@@ -1,28 +1,87 @@
+import { useContext } from 'react'
+import { gql, useQuery } from '@apollo/client'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../contexts/UserContext'
+import { IUserContext } from '../contexts/UserContext'
+
 import Card from '../components/Card'
 
-const Profil = () => {
+const GET_USER = gql`
+  query GetOneUser($getOneUserId: String!) {
+    getOneUser(id: $getOneUserId) {
+      nickname
+      lastName
+      firstName
+      description
+      createdAt
+      city
+      avatar
+    }
+  }
+`
+
+const Profile = () => {
+  const { user } = useContext<IUserContext>(UserContext)
+  const navigate = useNavigate()
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { getOneUserId: user?.id },
+  })
+
+  const onClickProfile = () => {
+    navigate('/settings')
+  }
+
+  const onClickCreateBlog = () => {
+    navigate('/createblog')
+  }
+
+  if (loading) return <p>Chargement...</p>
+  if (error) return <p>Erreur lors de la récupération de l'utilisateur </p>
+
   return (
-    <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-      <h1 className="text-5xl font-bold text-center">Profile</h1>
-      <section className="card lg:card-side bg-base-100 shadow-card">
-        <figure>
-          <img src="https://placeimg.com/400/400/arch" alt="Album" />
+    <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <h1 className="text-5xl font-bold text-center">Profil</h1>
+      <section className="flex mt-12 p-6 shadow-lg rounded-lg min-w-full">
+        <figure className="w-1/4 m-auto">
+          {/* <img
+            src={data.getOneUser.avatar}
+            alt={`${data.getOneUser.nickname}-profil-picture`}
+            className="m-auto"
+          /> */}
+          <img
+            src={
+              'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
+            }
+            alt={`${data.getOneUser.nickname}-profil-picture`}
+            className="m-auto"
+          />
         </figure>
-        <div className="card-body">
+        <div className="w-3/4">
           <h2 className="card-title">Pseudo</h2>
-          <p>Sasuke69</p>
+          <p className="mb-6">{data.getOneUser.nickname}</p>
           <h2 className="card-title">Presentation</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta
-            fugiat, veritatis ea et, similique velit nesciunt laborum eius nam
-            adipisci blanditiis ullam officia, labore atque cumque saepe! Id,
-            maxime officia.
-          </p>
+          <p>{data.getOneUser.description}</p>
         </div>
       </section>
+      <div className="flex">
+        <button
+          className="btn btn-primary text-white mr-2"
+          onClick={() => onClickCreateBlog()}
+        >
+          Créer un blog
+        </button>
+        <button
+          className="btn btn-primary text-white ml-2"
+          onClick={() => onClickProfile()}
+        >
+          Editer mon profil
+        </button>
+      </div>
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Mes blogs</h2>
         <article className="flex justify-center items-center gap-16">
+          <Card />
+          <Card />
           <Card />
         </article>
       </section>
@@ -35,53 +94,8 @@ const Profil = () => {
         </article>
         <a className="link link-hover text-xl">Voir plus</a>
       </section>
-      <section className="card flex flex-col gap-8">
-        <h2 className="text-5xl font-bold text-center">Mes informations</h2>
-
-        <label className='space-y-4'>
-          <span className="card-title">Nom</span>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full w-full"
-          />
-        </label>
-        <label className='space-y-4'>
-          <span className="card-title">Prénom</span>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full w-full"
-          />
-        </label>
-        <label className='space-y-4'>
-          <span className="card-title">Ville</span>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full w-full"
-          />
-        </label>
-        <label className='space-y-4'>
-          <span className="card-title">E-mail</span>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full w-full"
-          />
-        </label>
-        <label className='space-y-4'>
-          <span className="card-title">Mot de passe</span>
-          <input
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered w-full w-full"
-          />
-        </label>
-        <button className="btn btn-primary">Edit</button>
-      </section>
     </main>
   )
 }
 
-export default Profil
+export default Profile
