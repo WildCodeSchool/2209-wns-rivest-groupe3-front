@@ -58,3 +58,11 @@ export interface IContentBlockData {
   url?: string
   alt?: string
 }
+
+export interface IPropsBlogTemplate {
+  blog: IBlog
+  editor: IUser
+  articles: IArticle[]
+  editBlog: () => void
+  addArticle: () => void
+}

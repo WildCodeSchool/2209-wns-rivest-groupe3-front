@@ -1,67 +1,23 @@
 import { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import { useNavigate, useParams } from 'react-router-dom'
 import BlogT1 from './BlogT1'
 import BlogT2 from './BlogT2'
-import EditDrag from './EditDrag'
-import ListingBlogs from './ListingBlogs'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
-import { UserContext } from '../../contexts/UserContext'
+import { GET_ONE_BLOG } from '../../queries/blogs'
+import EditDrag from './EditDrag'
 
 const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
-  const { user } = useContext(UserContext)
   const [isEditing, setIsEditing] = useState(false)
   const { slug } = useParams()
+  const navigate = useNavigate()
 
-  const GET_BLOG = gql`
-    query GetBlog($slug: String!) {
-      getBlog(slug: $slug) {
-        id
-        name
-        description
-        template
-        slug
-        createdAt
-        user {
-          id
-          avatar
-          nickname
-          city
-          description
-          blogs {
-            slug
-          }
-        }
-        articles {
-          id
-          slug
-          title
-          articleContent {
-            id
-            content {
-              time
-              version
-              blocks {
-                id
-                type
-                data {
-                  text
-                  level
-                  style
-                  items
-                }
-              }
-            }
-            version
-            current
-          }
-        }
-      }
-    }
-  `
-  const { loading, error, data } = useQuery(GET_BLOG, {
+  const editBlog = () => setIsEditing((isEditing) => !isEditing)
+  const addArticle = () => navigate(`_`)
+
+  const { loading, error, data } = useQuery(GET_ONE_BLOG, {
     variables: { slug },
   })
 
@@ -70,13 +26,30 @@ const Blog = () => {
     setMessage({ text: error.message, type: 'error' })
     return <></>
   }
-
-  if (data.getBlog.template === 0)
+  const template: number = data.getBlog.template
+  if (data.getBlog.template === 1)
     return (
-      <BlogT1 setIsEditing={setIsEditing} blog={data.getBlog} user={user} />
+      <>
+        {isEditing && <EditDrag closeEdit={editBlog} />}
+        {template === 2 ? (
+          <BlogT2
+            editBlog={editBlog}
+            addArticle={addArticle}
+            blog={data.getBlog}
+            articles={data.getBlog.articles}
+            editor={data.getBlog.editor}
+          />
+        ) : (
+          <BlogT1
+            editBlog={editBlog}
+            addArticle={addArticle}
+            blog={data.getBlog}
+            articles={data.getBlog.articles}
+            editor={data.getBlog.editor}
+          />
+        )}
+      </>
     )
-  if (data.getBlog.template === 1) return <BlogT2 setIsEditing={setIsEditing} />
-  return <></>
 }
 
 export default Blog

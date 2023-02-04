@@ -29,8 +29,8 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
           </div>
           <p>{blog.description}</p>
           <span className="italic text-sm text-end">
-            Créé le{' '}
-            {new Intl.DateTimeFormat('fr-FR').format(new Date(blog.createdAt))}{' '}
+            Créé le
+            {new Intl.DateTimeFormat('fr-FR').format(new Date(blog.createdAt))}
             par <strong>{blog.user.nickname}</strong>
           </span>
         </div>
