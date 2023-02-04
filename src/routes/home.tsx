@@ -1,7 +1,37 @@
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
+import { gql, useQuery } from '@apollo/client'
+import { useContext } from 'react'
+import { NotificationContext } from '../contexts/NotificationContext'
+import { IBlog } from '../utils/interfaces/Interfaces'
 
 const Home = () => {
+  const { setMessage } = useContext(NotificationContext)
+
+  const GET_ALL_BLOGS = gql`
+    query GetAllBlogs {
+      getAllBlogs {
+        id
+        name
+        slug
+        description
+        template
+        createdAt
+        user {
+          id
+          nickname
+        }
+      }
+    }
+  `
+
+  const { loading, error, data } = useQuery(GET_ALL_BLOGS)
+
+  if (loading) return <>Loading...</>
+  if (error) {
+    setMessage({ text: error.message, type: 'error' })
+    return <></>
+  }
   return (
     <>
       <section
@@ -21,7 +51,9 @@ const Home = () => {
               pour créer votre propre blog de voyage et raconter vos aventures.
               Bon voyage !
             </p>
-            <Link to="./createblog" className="btn btn-secondary w-96">Crée ton blog</Link>
+            <Link to="./createblog" className="btn btn-secondary w-96">
+              Crée ton blog
+            </Link>
           </div>
           <div className="w-1/2 h-full overflow-hidden">
             <iframe
@@ -85,19 +117,16 @@ const Home = () => {
 
       <section className="py-16 flex flex-col items-center justify-center gap-16 bg-gray-300">
         <h2 className="text-5xl font-bold text-center">Choisis ton template</h2>
-        <article className="flex justify-center items-center gap-16 mx-8">
-          <Card />
-          <Card />
-          <Card />
-        </article>
+        <article className="flex justify-center items-center gap-16 mx-8"></article>
       </section>
 
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">Découvre des blogs</h2>
         <article className="flex justify-center items-center mx-8 gap-16">
-          <Card />
-          <Card />
-          <Card />
+          {data.getAllBlogs.map((blog: IBlog, index: number) => {
+            if (index > 3) return
+            return <Card key={blog.id} blog={blog} />
+          })}
         </article>
         <Link to="/blogs" className="link link-hover text-xl">
           Voir plus

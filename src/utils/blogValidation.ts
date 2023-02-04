@@ -8,7 +8,11 @@ yup.setLocale({
     min: 'Ton texte doit faire au moins ${min} caractères',
   },
 })
-export const blogSchema: any = yup.object().shape({
-  name: yup.string().required().min(5),
-  description: yup.string().required().min(10),
+
+export const nameValidation: any = yup.object().shape({
+  name: yup.string().nullable().required().min(5),
+})
+
+export const descriptionValidation: any = yup.object().shape({
+  description: yup.string().nullable().required().min(10),
 })
