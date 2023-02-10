@@ -1,10 +1,12 @@
 import { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
+import { NotificationContext } from '../contexts/NotificationContext'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
+  const { message, setMessage } = useContext(NotificationContext)
   const location = useLocation()
 
   const defaultNavClass =
@@ -13,10 +15,22 @@ const Navbar = () => {
     'navbar bg-transparent text-white w-full justify-between absolute top-0 z-50'
 
   const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    setUser(null)
-    navigate('/')
+    try {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      setUser(null)
+      setMessage({
+        text: 'Déconnexion avec succès',
+        type: 'success',
+      })
+      navigate('/')
+    } catch (err) {
+      setMessage({
+        text: 'Erreur lors de la déconnexion',
+        type: 'error',
+      })
+      navigate('/')
+    }
   }
 
   return (
