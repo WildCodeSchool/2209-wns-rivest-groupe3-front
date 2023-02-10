@@ -8,7 +8,7 @@ export interface IUser {
   firstName: string
   lastLogin: Date
   description: string
-  createdAt: string
+  city: string
   avatar: string
   createdAt: Date
 }

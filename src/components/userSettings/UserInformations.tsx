@@ -1,13 +1,26 @@
+import { IUser } from '../../contexts/UserContext'
 import DeleteUser from '../buttons/DeleteUser'
+
+interface IUserInfromation {
+  userInformations: IUser
+  setShowEditPasswordForm: React.Dispatch<React.SetStateAction<boolean>>
+  setShowUserInformations: React.Dispatch<React.SetStateAction<boolean>>
+  setShowEditUserForm: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 const UserInformations = ({
   userInformations,
   setShowUserInformations,
   setShowEditUserForm,
-}: any) => {
-  const onClick = () => {
+  setShowEditPasswordForm,
+}: IUserInfromation) => {
+  const onEditClick = () => {
     setShowUserInformations(false)
     setShowEditUserForm(true)
+  }
+  const onPasswordClick = () => {
+    setShowUserInformations(false)
+    setShowEditPasswordForm(true)
   }
 
   return (
@@ -38,9 +51,15 @@ const UserInformations = ({
       <div className="flex justify-center gap-4 mt-12">
         <button
           className="btn btn-primary text-white"
-          onClick={() => onClick()}
+          onClick={() => onEditClick()}
         >
-          Editer
+          Editer mon profil
+        </button>
+        <button
+          className="btn btn-primary text-white"
+          onClick={() => onPasswordClick()}
+        >
+          Modifier mon mot de passe
         </button>
         <DeleteUser />
       </div>

@@ -7,7 +7,7 @@ import {
   userInformationsSchema,
 } from '../../utils/userInformationsValidation'
 import { GET_USER } from '../../routes/userSettings'
-import { UserContext, IUserContext } from '../../contexts/UserContext'
+import { UserContext, IUserContext, IUser } from '../../contexts/UserContext'
 import { NotificationContext } from '../../contexts/NotificationContext'
 
 const UPDATE_USER = gql`
@@ -40,11 +40,17 @@ const UPDATE_USER = gql`
   }
 `
 
+interface IEditUserForm {
+  userInformations: IUser
+  setShowEditUserForm: React.Dispatch<React.SetStateAction<boolean>>
+  setShowUserInformations: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 const EditUserForm = ({
   userInformations,
   setShowEditUserForm,
   setShowUserInformations,
-}: any) => {
+}: IEditUserForm) => {
   const { user } = useContext<IUserContext>(UserContext)
   const { message, setMessage } = useContext(NotificationContext)
 
@@ -79,9 +85,6 @@ const EditUserForm = ({
       firstName: formData.firstName,
       lastName: formData.lastName,
       nickname: formData.nickname,
-      oldPassword: formData.oldPassword,
-      newPassword: formData.newPassword,
-      confirmPassword: formData.confirmPassword,
     }
     updateUser({ variables: { ...newUserDatas } })
       .then(() => {
@@ -214,63 +217,13 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.email?.message}</p>
           </label>
-          {/* <label className="form-control mb-4">
-            <span className="label card-title">Ancien mot de passe</span>
-            <input
-              {...register('oldPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="password"
-              type="password"
-              placeholder="Mot de passe"
-            />
-            <p className="text text-error">{errors.oldPassword?.message}</p>
-          </label>
-          <label className="form-control mb-4">
-            <span className="label card-title">Nouveau mot de passe</span>
-            <input
-              {...register('newPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="password"
-              type="password"
-              placeholder="Mot de passe"
-            />
-            <p className="text text-error">{errors.newPassword?.message}</p>
-          </label>
-
-          <label className="form-control mb-4">
-            <span className="label card-title">
-              Confirmation du mot de passe
-            </span>
-            <input
-              {...register('confirmNewPassword')}
-              className={
-                errors.confirmNewPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="confirm-password"
-              type="password"
-              placeholder="Confirmation du mot de passe"
-            />
-            <p className="text text-error">
-              {errors.confirmNewPassword?.message}
-            </p>
-          </label> */}
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">
         <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
           Enregistrer
         </button>
-        <button className="btn btn-error" onClick={() => onClick()}>
+        <button className="btn btn-error" onClick={onClick}>
           Annuler
         </button>
       </div>
