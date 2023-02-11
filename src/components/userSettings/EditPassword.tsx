@@ -8,6 +8,7 @@ import {
 } from '../../utils/userEditPasswordValidation'
 import { UserContext, IUserContext, IUser } from '../../contexts/UserContext'
 import { NotificationContext } from '../../contexts/NotificationContext'
+import PasswordInput from '../inputs/PasswordInput'
 
 const UPDATE_PASSWORD_USER = gql`
   mutation UpdateUserPassword($newPassword: String!, $oldPassword: String!) {
@@ -35,6 +36,7 @@ const EditPasswordForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm<UserPasswordFormProps>({
     resolver: yupResolver(userEditPasswordSchema),
   })
@@ -65,6 +67,9 @@ const EditPasswordForm = ({
   }
 
   const onCancelClick = () => {
+    resetField('oldPassword')
+    resetField('newPassword')
+    resetField('confirmNewPassword')
     setShowUserInformations(true)
     setShowEditPasswordForm(false)
   }
@@ -76,68 +81,68 @@ const EditPasswordForm = ({
       </h1>
       <div className="flex">
         <div className="w-2/6">
-          <img
-            src={userInformations.avatar}
-            alt={`${userInformations.nickname}-profil-picture`}
-          />
+          {userInformations.avatar ? (
+            <img
+              src={userInformations.avatar}
+              alt={`${userInformations.nickname}-profil-picture`}
+            />
+          ) : (
+            <img
+              src={
+                'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
+              }
+            />
+          )}
         </div>
         <div className="w-4/6">
-          <label className="form-control mb-4">
-            <span className="label card-title">Ancien mot de passe</span>
-            <input
-              {...register('oldPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="old-password"
-              type="password"
-              placeholder="Ancien mot de passe"
-            />
-            <p className="text text-error">{errors.oldPassword?.message}</p>
-          </label>
-          <label className="form-control mb-4">
-            <span className="label card-title">Nouveau mot de passe</span>
-            <input
-              {...register('newPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="new-password"
-              type="password"
-              placeholder="Nouveau mot de passe"
-            />
-            <p className="text text-error">{errors.newPassword?.message}</p>
-          </label>
-
-          <label className="form-control mb-4">
-            <span className="label card-title">
-              Confirmation du mot de passe
-            </span>
-            <input
-              {...register('confirmNewPassword')}
-              className={
-                errors.confirmNewPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="confirm-password"
-              type="password"
-              placeholder="Confirmation du nouveau mot de passe"
-            />
-            <p className="text text-error">
-              {errors.confirmNewPassword?.message}
-            </p>
-          </label>
+          <PasswordInput
+            id="old-password"
+            labelTitle="Ancien mot de passe"
+            labelClassName="label card-title"
+            additionalLabelContainerClassName="mb-4"
+            inputName="oldPassword"
+            placeholder="Ancien mot de passe"
+            inputClassName={
+              errors.oldPassword ? 'input input-error' : 'input input-bordered'
+            }
+            register={register}
+            error={errors.oldPassword?.message}
+          />
+          <PasswordInput
+            id="new-password"
+            labelTitle="Nouveau mot de passe"
+            labelClassName="label card-title"
+            additionalLabelContainerClassName="mb-4"
+            inputName="newPassword"
+            placeholder="Nouveau mot de passe"
+            inputClassName={
+              errors.newPassword ? 'input input-error' : 'input input-bordered'
+            }
+            register={register}
+            error={errors.newPassword?.message}
+          />
+          <PasswordInput
+            id="confirm-password"
+            labelTitle="Confirmation du nouveau mot de passe"
+            labelClassName="label card-title"
+            additionalLabelContainerClassName="mb-4"
+            inputName="confirmNewPassword"
+            placeholder="Confirmation du nouveau mot de passe"
+            inputClassName={
+              errors.confirmNewPassword
+                ? 'input input-error'
+                : 'input input-bordered'
+            }
+            register={register}
+            error={errors.confirmNewPassword?.message}
+          />
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">
         <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
           Enregistrer
         </button>
+        {/* <button className="btn btn-error" onClick={() => onCancelClick()}> */}
         <button className="btn btn-error" onClick={() => onCancelClick()}>
           Annuler
         </button>

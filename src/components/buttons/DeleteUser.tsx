@@ -9,6 +9,7 @@ import {
   IUserPassword,
   userPasswordSchema,
 } from '../../utils/userPasswordValidation'
+import PasswordInput from '../inputs/PasswordInput'
 
 const DELETE_USER = gql`
   mutation DeleteUser($password: String!) {
@@ -26,6 +27,7 @@ const DeleteUser = () => {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm<IUserPassword>({
     resolver: yupResolver(userPasswordSchema),
   })
@@ -54,6 +56,10 @@ const DeleteUser = () => {
       })
   }
 
+  const onCancelClick = () => {
+    resetField('password')
+  }
+
   if (loading) return <p>Chargement...</p>
   if (error) return <p>Erreur lors de l'action </p>
 
@@ -72,25 +78,25 @@ const DeleteUser = () => {
             {' '}
             (Franchement, on est pas bien là en bermuda ?)
           </p>
-          <p className="text-lg text-center mb-2">
+          <p className="text-lg text-center mb-8">
             Si vous supprimez votre compte, vous perdrez tous vos blogs et vos
             articles !
           </p>
-          <p className="text-lg text-center mb-2">
-            Rentrez votre mot de passe pour confirmer la suppression du compte:
+          <p className="text-lg text-center mb-4">
+            Mais si c'est vraiment ce que vous voulez, rentrez votre mot de
+            passe pour confirmer la suppression :
           </p>
-          <label className="form-control mb-16">
-            <input
-              {...register('password')}
-              className={
-                errors.password ? 'input input-error' : 'input input-bordered'
-              }
-              id="password"
-              type="password"
-              placeholder="Mot de passe"
-            />
-            <p className="text text-error">{errors.password?.message}</p>
-          </label>
+          <PasswordInput
+            id="password"
+            additionalLabelContainerClassName="mb-12"
+            inputName="password"
+            placeholder="Mot de passe"
+            inputClassName={
+              errors.password ? 'input input-error' : 'input input-bordered'
+            }
+            register={register}
+            error={errors.password?.message}
+          />
           <div className="modal-action flex items-center justify-center">
             <label
               htmlFor="delete-user-modal"
@@ -99,7 +105,11 @@ const DeleteUser = () => {
             >
               Oui supprimer mon comtpe
             </label>
-            <label htmlFor="delete-user-modal" className="btn btn-sm btn-ghost">
+            <label
+              onClick={onCancelClick}
+              htmlFor="delete-user-modal"
+              className="btn btn-sm btn-ghost"
+            >
               Non, annuler
             </label>
           </div>
