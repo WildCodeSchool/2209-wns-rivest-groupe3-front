@@ -64,15 +64,31 @@ export const GET_ONE_BLOG = gql`
 `
 
 export const CREATE_BLOG = gql`
-mutation Mutation(
-  $description: String!
-  $name: String!
-  $template: Float!
-) {
-  createBlog(description: $description, name: $name, template: $template) {
-    name
-    id
-    slug
+  mutation Mutation($description: String!, $name: String!, $template: Float!) {
+    createBlog(description: $description, name: $name, template: $template) {
+      name
+      id
+      slug
+    }
   }
-}
+`
+
+export const UPDATE_BLOG = gql`
+  mutation UpdateBlog(
+    $slug: String!
+    $name: String
+    $description: String
+    $template: Float
+  ) {
+    updateBlog(
+      blogSlug: $slug
+      name: $name
+      description: $description
+      template: $template
+    ) {
+      id
+      name
+      description
+    }
+  }
 `
