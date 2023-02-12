@@ -20,6 +20,7 @@
     "react-hook-form": "^7.41.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.3",
+    "slugify": "^1.6.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

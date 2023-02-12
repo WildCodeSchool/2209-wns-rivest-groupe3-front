@@ -15,16 +15,16 @@ const BlogT1 = ({
 }: IPropsBlogTemplate) => {
   const { user } = useContext(UserContext)
   const { name, description } = blog
-
+  const blogDescription = description?.length ? description : 'Aucune description'
   return (
-    <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+    <main className="relative min-h-screen w-full mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
         <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {name}
         </h1>
-        <p className="max-w-2xl bg-neutral/80 p-2">{description}</p>
+        <p className="max-w-2xl bg-neutral/80 p-2 prose">{blogDescription}</p>
       </header>
-      <section className="flex justify-between items-start w-full relative">
+      <section className="flex justify-between items-start w-full max-w-screen-2xl relative">
         <aside className="w-96 h-full p-8 bg-gray-300 rounded-md sticky top-16">
           <div className="flex flex-col justify-center items-center h-full w-full gap-8">
             <div className="avatar">
