@@ -89,6 +89,16 @@ export const UPDATE_BLOG = gql`
       id
       name
       description
+      slug
+    }
+  }
+`
+
+export const GET_ALL_SLUGS = gql`
+  query GetAllBlogs {
+    getAllBlogs {
+      slug
+      name
     }
   }
 `
