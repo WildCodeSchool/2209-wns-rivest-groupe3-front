@@ -2,7 +2,6 @@ import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import { IPropsBlogTemplate } from '../../utils/interfaces/Interfaces'
-import EditDrag from './EditDrag'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 

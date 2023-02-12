@@ -1,16 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import { useMutation } from '@apollo/client'
+import React, { useState, useEffect, useContext } from 'react'
 import { useForm } from 'react-hook-form'
+import { NotificationContext } from '../../contexts/NotificationContext'
+import { GET_ONE_BLOG, UPDATE_BLOG } from '../../queries/blogs'
+import { IBlog } from '../../utils/interfaces/Interfaces'
 
 interface Position {
   x: number
   y: number
 }
 
-const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
+const EditDrag = ({
+  slug,
+  blog,
+  closeEdit,
+}: {
+  slug: string | undefined
+  blog: IBlog
+  closeEdit: () => void
+}) => {
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 })
-  const [blog, setBlog] = useState({ template: 1 })
+  const [template, setTemplate] = useState(2)
 
+  const { setMessage } = useContext(NotificationContext)
   const { register, handleSubmit } = useForm()
+
+  useEffect(() => {
+    setTemplate(blog.template)
+  }, [])
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -61,8 +78,31 @@ const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
 
     document.addEventListener('mouseup', handleMouseUp)
   }
+
+  const [updateBlog] = useMutation(UPDATE_BLOG, {
+    refetchQueries: [
+      {
+        query: GET_ONE_BLOG,
+        variables: { slug },
+      },
+    ],
+  })
+
   const onSubmit = (data: any) => {
-    console.log(data)
+    updateBlog({ variables: { slug, ...data, template: template } })
+      .then(() => {
+        setMessage({
+          text: `Blog mis à jour avec succès !`,
+          type: 'success',
+        })
+      })
+      .catch((err) => {
+        setMessage({
+          text: `Impossible de mettre à jour le blog. ${err}.`,
+          type: 'error',
+        })
+        console.error(err)
+      })
   }
 
   return (
@@ -80,6 +120,7 @@ const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
             id="name"
             type="name"
             placeholder="Nom du blog"
+            defaultValue={blog.name}
           />
         </label>
         <label className="form-control">
@@ -89,12 +130,13 @@ const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
             className="input input-bordered h-48 p-4"
             id="description"
             placeholder="Description"
+            defaultValue={blog.description}
           />
         </label>
         <div className="flex justify-center gap-2 text-white mx-auto w-full">
           <label
             className={`flex flex-col justify-start gap-2 font-bold cursor-pointer rounded py-2 px-6 ${
-              blog.template === 1 ? 'btn-info' : 'btn-ghost'
+              template === 1 ? 'btn-info' : 'btn-ghost'
             }`}
           >
             <img
@@ -107,13 +149,13 @@ const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
               className="hidden"
               type="radio"
               name="template"
-              checked={blog.template === 1}
-              onClick={() => setBlog({ ...blog, template: 1 })}
+              defaultChecked={blog.template === 1}
+              onChange={() => setTemplate(1)}
             />
           </label>
           <label
             className={`flex flex-col justify-start gap-2 font-bold cursor-pointer bg-ghost rounded py-2 px-6 ${
-              blog.template === 2 ? 'btn-info' : 'btn-ghost text-white'
+              template === 2 ? 'btn-info' : 'btn-ghost text-white'
             }`}
           >
             <img
@@ -126,8 +168,8 @@ const EditDrag = ({ closeEdit }: { closeEdit: () => void }) => {
               className="hidden"
               type="radio"
               name="template"
-              checked={blog.template === 2}
-              onClick={() => setBlog({ ...blog, template: 2 })}
+              defaultChecked={blog.template === 2}
+              onClick={() => setTemplate(2)}
             />
           </label>
         </div>
