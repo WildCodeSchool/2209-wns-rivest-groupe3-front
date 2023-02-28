@@ -1,4 +1,4 @@
-import Pagination from '../../components/buttons/Pagination'
+import StaticPagination from '../../components/buttons/StaticPagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import { IBlog } from '../../utils/interfaces/Interfaces'
@@ -42,7 +42,7 @@ const BlogT1 = ({
           })}
         </section>
 
-        <Pagination />
+        <StaticPagination />
       </main>
       <section className="py-16 bg-gray-300 w-full flex">
         <div className="flex justify-center items-center w-full gap-24">
