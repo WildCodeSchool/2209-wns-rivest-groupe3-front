@@ -12,12 +12,16 @@ import Profil from './routes/profile'
 import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import ScrollToTop from './utils/ScrollToTop'
 
 function App() {
   const { message } = useContext(NotificationContext)
+
   return (
     <BrowserRouter>
+      <ScrollToTop />
+
       <Navbar />
       {message && <Toaster />}
       <div className="min-h-screen">
