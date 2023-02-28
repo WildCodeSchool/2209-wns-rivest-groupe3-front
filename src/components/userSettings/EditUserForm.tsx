@@ -7,7 +7,7 @@ import {
   userInformationsSchema,
 } from '../../utils/userInformationsValidation'
 import { GET_USER } from '../../routes/userSettings'
-import { UserContext, IUserContext } from '../../contexts/UserContext'
+import { UserContext, IUserContext, IUser } from '../../contexts/UserContext'
 import { NotificationContext } from '../../contexts/NotificationContext'
 
 const UPDATE_USER = gql`
@@ -40,23 +40,25 @@ const UPDATE_USER = gql`
   }
 `
 
+interface IEditUserForm {
+  userInformations: IUser
+  setShowEditUserForm: React.Dispatch<React.SetStateAction<boolean>>
+  setShowUserInformations: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 const EditUserForm = ({
   userInformations,
   setShowEditUserForm,
   setShowUserInformations,
-}: any) => {
+}: IEditUserForm) => {
   const { user } = useContext<IUserContext>(UserContext)
   const { message, setMessage } = useContext(NotificationContext)
-
-  const onClick = () => {
-    setShowUserInformations(true)
-    setShowEditUserForm(false)
-  }
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm<UserInformationsFormProps>({
     resolver: yupResolver(userInformationsSchema),
   })
@@ -79,9 +81,6 @@ const EditUserForm = ({
       firstName: formData.firstName,
       lastName: formData.lastName,
       nickname: formData.nickname,
-      oldPassword: formData.oldPassword,
-      newPassword: formData.newPassword,
-      confirmPassword: formData.confirmPassword,
     }
     updateUser({ variables: { ...newUserDatas } })
       .then(() => {
@@ -101,6 +100,29 @@ const EditUserForm = ({
       })
   }
 
+  const onCancelClick = () => {
+    if (!userInformations.nickname) {
+      resetField('nickname')
+    }
+    if (!userInformations.firstName) {
+      resetField('firstName')
+    }
+    if (!userInformations.lastName) {
+      resetField('lastName')
+    }
+    if (!userInformations.email) {
+      resetField('email')
+    }
+    if (!userInformations.description) {
+      resetField('description')
+    }
+    if (!userInformations.city) {
+      resetField('city')
+    }
+    setShowUserInformations(true)
+    setShowEditUserForm(false)
+  }
+
   return (
     <>
       <h1 className="text-5xl font-bold text-center mb-16">
@@ -108,24 +130,19 @@ const EditUserForm = ({
       </h1>
       <div className="flex">
         <div className="w-2/6">
-          <img
-            src={userInformations.avatar}
-            alt={`${userInformations.nickname}-profil-picture`}
-          />
-          <label className="form-control mb-4">
-            <span className="label card-title">Avatar</span>
-            <input
-              {...register('avatar')}
-              className={
-                errors.avatar ? 'input input-error' : 'input input-bordered'
-              }
-              id="avatar"
-              type="text"
-              placeholder="avatar"
-              defaultValue={userInformations.avatar}
+          {userInformations.avatar ? (
+            <img
+              src={userInformations.avatar}
+              alt={`${userInformations.nickname}-profil-picture`}
             />
-            <p className="text text-error">{errors.avatar?.message}</p>
-          </label>
+          ) : (
+            <img
+              src={
+                'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
+              }
+            />
+          )}
+          {/* TODO add image uploader */}
         </div>
         <div className="w-4/6">
           <label className="form-control mb-4">
@@ -142,21 +159,6 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.nickname?.message}</p>
           </label>
-
-          <label className="form-control mb-4">
-            <span className="label card-title">Nom</span>
-            <input
-              {...register('lastName')}
-              className={
-                errors.nickname ? 'input input-error' : 'input input-bordered'
-              }
-              id="lastName"
-              type="text"
-              placeholder="lastName"
-              defaultValue={userInformations.lastName}
-            />
-            <p className="text text-error">{errors.lastName?.message}</p>
-          </label>
           <label className="form-control mb-4">
             <span className="label card-title">Prénom</span>
             <input
@@ -170,6 +172,20 @@ const EditUserForm = ({
               defaultValue={userInformations.firstName}
             />
             <p className="text text-error">{errors.firstName?.message}</p>
+          </label>
+          <label className="form-control mb-4">
+            <span className="label card-title">Nom</span>
+            <input
+              {...register('lastName')}
+              className={
+                errors.nickname ? 'input input-error' : 'input input-bordered'
+              }
+              id="lastName"
+              type="text"
+              placeholder="lastName"
+              defaultValue={userInformations.lastName}
+            />
+            <p className="text text-error">{errors.lastName?.message}</p>
           </label>
           <label className="form-control mb-4">
             <span className="label card-title">Ville</span>
@@ -214,63 +230,13 @@ const EditUserForm = ({
             />
             <p className="text text-error">{errors.email?.message}</p>
           </label>
-          {/* <label className="form-control mb-4">
-            <span className="label card-title">Ancien mot de passe</span>
-            <input
-              {...register('oldPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="password"
-              type="password"
-              placeholder="Mot de passe"
-            />
-            <p className="text text-error">{errors.oldPassword?.message}</p>
-          </label>
-          <label className="form-control mb-4">
-            <span className="label card-title">Nouveau mot de passe</span>
-            <input
-              {...register('newPassword')}
-              className={
-                errors.oldPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="password"
-              type="password"
-              placeholder="Mot de passe"
-            />
-            <p className="text text-error">{errors.newPassword?.message}</p>
-          </label>
-
-          <label className="form-control mb-4">
-            <span className="label card-title">
-              Confirmation du mot de passe
-            </span>
-            <input
-              {...register('confirmNewPassword')}
-              className={
-                errors.confirmNewPassword
-                  ? 'input input-error'
-                  : 'input input-bordered'
-              }
-              id="confirm-password"
-              type="password"
-              placeholder="Confirmation du mot de passe"
-            />
-            <p className="text text-error">
-              {errors.confirmNewPassword?.message}
-            </p>
-          </label> */}
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">
         <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
           Enregistrer
         </button>
-        <button className="btn btn-error" onClick={() => onClick()}>
+        <button className="btn btn-error" onClick={onCancelClick}>
           Annuler
         </button>
       </div>
