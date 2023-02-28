@@ -27,29 +27,28 @@ const Blog = () => {
     return <></>
   }
   const template: number = data.getBlog.template
-  if (data.getBlog.template === 1)
-    return (
-      <>
-        {isEditing && <EditDrag closeEdit={editBlog} />}
-        {template === 2 ? (
-          <BlogT2
-            editBlog={editBlog}
-            addArticle={addArticle}
-            blog={data.getBlog}
-            articles={data.getBlog.articles}
-            editor={data.getBlog.editor}
-          />
-        ) : (
-          <BlogT1
-            editBlog={editBlog}
-            addArticle={addArticle}
-            blog={data.getBlog}
-            articles={data.getBlog.articles}
-            editor={data.getBlog.editor}
-          />
-        )}
-      </>
-    )
+  return (
+    <>
+      {isEditing && <EditDrag closeEdit={editBlog} />}
+      {template === 2 ? (
+        <BlogT2
+          editBlog={editBlog}
+          addArticle={addArticle}
+          blog={data.getBlog}
+          articles={data.getBlog.articles}
+          editor={data.getBlog.editor}
+        />
+      ) : (
+        <BlogT1
+          editBlog={editBlog}
+          addArticle={addArticle}
+          blog={data.getBlog}
+          articles={data.getBlog.articles}
+          editor={data.getBlog.editor}
+        />
+      )}
+    </>
+  )
 }
 
 export default Blog
