@@ -1,13 +1,15 @@
 import { useContext } from 'react'
 import { ModalContext } from '../../contexts/ModalContext'
 
-const StepThree = ({
-  setTemplate,
-  template,
-}: {
-  setTemplate: React.Dispatch<React.SetStateAction<number | null>>
+interface IStepThree {
+  handleChange: (
+    type: 'name' | 'description' | 'template',
+    value: string | number
+  ) => void
   template: number | null
-}) => {
+}
+
+const StepThree = ({ handleChange, template }: IStepThree) => {
   const template1 = [
     '/src/assets/Template1_1.png',
     '/src/assets/Template1_2.png',
@@ -53,7 +55,7 @@ const StepThree = ({
             type="radio"
             name="template"
             checked={template === 1}
-            onClick={() => setTemplate(1)}
+            onClick={() => handleChange('template', 1)}
           />
           <label
             htmlFor="my-modal-3"
@@ -80,7 +82,7 @@ const StepThree = ({
             type="radio"
             name="template"
             checked={template === 2}
-            onClick={() => setTemplate(2)}
+            onClick={() => handleChange('template', 2)}
           />
           <label
             htmlFor="my-modal-3"

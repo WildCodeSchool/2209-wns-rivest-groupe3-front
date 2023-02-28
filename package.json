@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@hookform/resolvers": "^2.9.10",
     "@types/react-html-parser": "^2.0.2",
     "axios": "^1.2.4",
@@ -22,6 +24,7 @@
     "react-hook-form": "^7.41.0",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.3",
+    "slugify": "^1.6.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

@@ -1,82 +1,75 @@
-import { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { useNavigate, useParams } from 'react-router-dom'
 import BlogT1 from './BlogT1'
 import BlogT2 from './BlogT2'
-import EditDrag from './EditDrag'
-import ListingBlogs from './ListingBlogs'
 import { useContext } from 'react'
 import { NotificationContext } from '../../contexts/NotificationContext'
-import { UserContext } from '../../contexts/UserContext'
+import { GET_ONE_BLOG } from '../../queries/blogs'
+import EditDrag from './EditDrag'
+import { IBlog } from '../../utils/interfaces/Interfaces'
 
 const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
-  const { user } = useContext(UserContext)
   const [isEditing, setIsEditing] = useState(false)
-  const { slug } = useParams()
+  const [blog, setBlog] = useState<IBlog | null>(null)
 
-  const GET_BLOG = gql`
-    query GetBlog($slug: String!) {
-      getBlog(slug: $slug) {
-        id
-        name
-        description
-        template
-        slug
-        createdAt
-        user {
-          id
-          avatar
-          nickname
-          city
-          description
-          blogs {
-            slug
-          }
-        }
-        articles {
-          id
-          slug
-          title
-          articleContent {
-            id
-            content {
-              time
-              version
-              blocks {
-                id
-                type
-                data {
-                  text
-                  level
-                  style
-                  items
-                }
-              }
-            }
-            version
-            current
-          }
-        }
-      }
-    }
-  `
-  const { loading, error, data } = useQuery(GET_BLOG, {
+  const { slug } = useParams()
+  const navigate = useNavigate()
+
+  const editBlog = () => setIsEditing((isEditing) => !isEditing)
+  const resetChangements = () => {
+    setBlog(data.getBlog)
+    setIsEditing(false)
+  }
+  const addArticle = () => navigate(`_`)
+
+  const { loading, error, data } = useQuery(GET_ONE_BLOG, {
     variables: { slug },
   })
+
+  useEffect(() => {
+    if (data) setBlog(data.getBlog)
+  }, [data])
 
   if (loading) return <>Loading...</>
   if (error) {
     setMessage({ text: error.message, type: 'error' })
-    return <></>
+    return <div>Erreur</div>
   }
 
-  if (data.getBlog.template === 0)
-    return (
-      <BlogT1 setIsEditing={setIsEditing} blog={data.getBlog} user={user} />
+  return (
+    blog && (
+      <>
+        {isEditing && (
+          <EditDrag
+            slug={slug}
+            blog={blog}
+            closeEdit={editBlog}
+            reset={resetChangements}
+            setBlog={setBlog}
+          />
+        )}
+        {blog.template === 2 ? (
+          <BlogT2
+            editBlog={editBlog}
+            addArticle={addArticle}
+            blog={blog}
+            articles={data.getBlog.articles}
+            editor={data.getBlog.editor}
+          />
+        ) : (
+          <BlogT1
+            editBlog={editBlog}
+            addArticle={addArticle}
+            blog={blog}
+            articles={data.getBlog.articles}
+            editor={data.getBlog.editor}
+          />
+        )}
+      </>
     )
-  if (data.getBlog.template === 1) return <BlogT2 setIsEditing={setIsEditing} />
-  return <></>
+  )
 }
 
 export default Blog
