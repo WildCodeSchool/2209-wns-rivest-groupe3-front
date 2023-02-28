@@ -5,7 +5,7 @@ import {
   GET_ALL_BLOGS_FOR_DISCOVER,
   GET_ONE_BLOG,
 } from '../src/queries/blogs'
-import { GET_USER } from '../src/queries/user'
+import { GET_TOKEN, GET_USER } from '../src/queries/user'
 
 export const mocks: readonly MockedResponse<Record<string, any>>[] = [
   {

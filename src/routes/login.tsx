@@ -10,25 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginFormProps } from '../components/inputs/inputsInterfaces'
 import { loginSchema } from '../utils/schemaValidation'
 import PasswordInput from '../components/inputs/PasswordInput'
-
-const GET_TOKEN = gql`
-  mutation Mutation($password: String!, $email: String!) {
-    login: getToken(password: $password, email: $email) {
-      token
-      user {
-        id
-        nickname
-        email
-        lastName
-        firstName
-        lastLogin
-        description
-        createdAt
-        avatar
-      }
-    }
-  }
-`
+import { GET_TOKEN } from '../queries/user'
 
 const Login = () => {
   const {
