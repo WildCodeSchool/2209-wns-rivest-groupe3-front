@@ -4,6 +4,7 @@ import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
 import UserInformations from '../components/userSettings/UserInformations'
 import EditUserForm from '../components/userSettings/EditUserForm'
+import EditPasswordForm from '../components/userSettings/EditPassword'
 
 export const GET_USER = gql`
   query GetOneUser($getOneUserId: String!) {
@@ -24,6 +25,8 @@ const UserSettings = () => {
   const [showUserInformations, setShowUserInformations] =
     useState<boolean>(true)
   const [showEditUserForm, setShowEditUserForm] = useState<boolean>(false)
+  const [showEditPasswordForm, setShowEditPasswordForm] =
+    useState<boolean>(false)
   const { user } = useContext<IUserContext>(UserContext)
 
   const { loading, error, data } = useQuery(GET_USER, {
@@ -44,6 +47,7 @@ const UserSettings = () => {
           userInformations={data.getOneUser}
           setShowUserInformations={setShowUserInformations}
           setShowEditUserForm={setShowEditUserForm}
+          setShowEditPasswordForm={setShowEditPasswordForm}
         />
       </div>
       <div
@@ -55,6 +59,17 @@ const UserSettings = () => {
           userInformations={data.getOneUser}
           setShowEditUserForm={setShowEditUserForm}
           setShowUserInformations={setShowUserInformations}
+        />
+      </div>
+      <div
+        className={
+          showEditPasswordForm === true ? 'flex flex-col w-4/5 mb-4' : 'hidden'
+        }
+      >
+        <EditPasswordForm
+          userInformations={data.getOneUser}
+          setShowUserInformations={setShowUserInformations}
+          setShowEditPasswordForm={setShowEditPasswordForm}
         />
       </div>
     </main>

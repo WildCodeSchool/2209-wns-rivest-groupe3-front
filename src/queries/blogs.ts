@@ -89,3 +89,33 @@ export const CREATE_BLOG = gql`
     }
   }
 `
+
+export const UPDATE_BLOG = gql`
+  mutation UpdateBlog(
+    $slug: String!
+    $name: String
+    $description: String
+    $template: Float
+  ) {
+    updateBlog(
+      blogSlug: $slug
+      name: $name
+      description: $description
+      template: $template
+    ) {
+      id
+      name
+      description
+      slug
+    }
+  }
+`
+
+export const GET_ALL_SLUGS = gql`
+  query GetAllBlogs {
+    getAllBlogs {
+      slug
+      name
+    }
+  }
+`
