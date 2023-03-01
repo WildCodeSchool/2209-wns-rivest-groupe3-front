@@ -35,15 +35,13 @@ const client = new ApolloClient({
 })
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <NotificationProvider>
-        <UserProvider>
-          <ModalProvider>
-            <App />
-          </ModalProvider>
-        </UserProvider>
-      </NotificationProvider>
-    </ApolloProvider>
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <NotificationProvider>
+      <UserProvider>
+        <ModalProvider>
+          <App />
+        </ModalProvider>
+      </UserProvider>
+    </NotificationProvider>
+  </ApolloProvider>
 )
