@@ -44,10 +44,10 @@ const UserInformations = ({
         <div className="w-4/6">
           <h2 className="card-title">Pseudo</h2>
           <p className="mb-6">{userInformations?.nickname}</p>
-          <h2 className="card-title">Nom</h2>
-          <p className="mb-6">{userInformations?.lastName}</p>
           <h2 className="card-title">Prénom</h2>
           <p className="mb-6">{userInformations?.firstName}</p>
+          <h2 className="card-title">Nom</h2>
+          <p className="mb-6">{userInformations?.lastName}</p>
           <h2 className="card-title">Ville</h2>
           <p className="mb-6">{userInformations?.city}</p>
           <h2 className="card-title">Presentation</h2>
@@ -58,12 +58,14 @@ const UserInformations = ({
       </div>
       <div className="flex justify-center gap-4 mt-12">
         <button
+          id="edit-profile-button"
           className="btn btn-primary text-white"
           onClick={() => onEditClick()}
         >
           Editer mon profil
         </button>
         <button
+          id="edit-password-button"
           className="btn btn-primary text-white"
           onClick={() => onPasswordClick()}
         >
