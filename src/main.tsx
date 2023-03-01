@@ -38,9 +38,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ApolloProvider client={client}>
       <NotificationProvider>
         <UserProvider>
-          <>
-            <App />
-          </>
+          <App />
         </UserProvider>
       </NotificationProvider>
     </ApolloProvider>
