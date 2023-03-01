@@ -56,9 +56,9 @@ const ImageHandler = ({
   }
 
   return dataFilename && imgUrl ? (
-    <UpdateImage imgUrl={imgUrl} updateUrl={url.updateUrl} deleteUrl={url.deleteUrl} updateBackendUrlImg={updateBackendUrlImg} />
+    <UpdateImage type={type} imgUrl={imgUrl} updateUrl={url.updateUrl} deleteUrl={url.deleteUrl} updateBackendUrlImg={updateBackendUrlImg} />
   ) : (
-    <PostImage postUrl={url.postUrl} updateBackendUrlImg={updateBackendUrlImg} />
+    <PostImage type={type} postUrl={url.postUrl} updateBackendUrlImg={updateBackendUrlImg} />
   )
 }
 

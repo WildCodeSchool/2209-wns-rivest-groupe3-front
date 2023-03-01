@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 interface IPropsUpdate {
+  type: 'avatar' | 'cover' | 'article'
   imgUrl: string
   updateUrl: string
   deleteUrl: string
@@ -9,6 +10,7 @@ interface IPropsUpdate {
 }
 
 const UpdateImage = ({
+  type,
   imgUrl,
   updateUrl,
   deleteUrl,
@@ -28,7 +30,6 @@ const UpdateImage = ({
 
   useEffect(() => {
     setDataImg(`http://localhost:8000${imgUrl}`)
-    
   }, [])
 
   const resetImage = () => {
@@ -85,8 +86,8 @@ const UpdateImage = ({
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <figure className="relative">
+    <div className="flex flex-col items-center gap-4">
+      <div className="relative">
         <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/2 flex gap-2">
           {selectedImage.preview && (
             <button
@@ -132,12 +133,16 @@ const UpdateImage = ({
             />
           </label>
         </div>
-        <figure className="w-48 h-24 overflow-hidden flex justify-center items-center border border-white">
-          {selectedImage?.preview ? (
+        <figure
+          className={`${
+            type === 'avatar' ? 'w-96 aspect-square rounded-full' : 'w-48 h-24'
+          } overflow-hidden flex justify-center items-center border border-white`}
+        >
+          {selectedImage.preview ? (
             <img
               src={selectedImage.preview}
               alt="blog cover"
-              className="w-full"
+              className="object-cover min-w-full min-h-full"
               width="400"
               height="400"
             />
@@ -145,13 +150,15 @@ const UpdateImage = ({
             <img
               src={dataImg}
               alt="blog cover"
-              className="w-full"
+              className="object-cover min-w-full min-h-full"
               width="400"
               height="400"
             />
-          ) : <div className='bg-white h-full w-full'/>}
+          ) : (
+            <div className="bg-white h-full w-full" />
+          )}
         </figure>
-      </figure>
+      </div>
       {selectedImage.preview ? (
         <div className="flex justify-center gap-4 w-full py-4">
           <button

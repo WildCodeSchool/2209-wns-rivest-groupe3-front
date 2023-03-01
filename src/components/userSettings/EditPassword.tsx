@@ -6,7 +6,7 @@ import {
   UserPasswordFormProps,
   userEditPasswordSchema,
 } from '../../utils/userEditPasswordValidation'
-import { UserContext, IUserContext, IUser } from '../../contexts/UserContext'
+import { IUser } from '../../contexts/UserContext'
 import { NotificationContext } from '../../contexts/NotificationContext'
 import PasswordInput from '../inputs/PasswordInput'
 
@@ -29,8 +29,7 @@ const EditPasswordForm = ({
   setShowUserInformations,
   setShowEditPasswordForm,
 }: IEditPasswordForm) => {
-  const { user } = useContext<IUserContext>(UserContext)
-  const { message, setMessage } = useContext(NotificationContext)
+  const { setMessage } = useContext(NotificationContext)
 
   const {
     register,
@@ -80,21 +79,7 @@ const EditPasswordForm = ({
         Editer mon profil
       </h1>
       <div className="flex">
-        <div className="w-2/6">
-          {userInformations.avatar ? (
-            <img
-              src={userInformations.avatar}
-              alt={`${userInformations.nickname}-profil-picture`}
-            />
-          ) : (
-            <img
-              src={
-                'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
-              }
-            />
-          )}
-        </div>
-        <div className="w-4/6">
+        <div className="w-full md:w-4/6 m-auto">
           <PasswordInput
             id="old-password"
             labelTitle="Ancien mot de passe"

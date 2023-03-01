@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'

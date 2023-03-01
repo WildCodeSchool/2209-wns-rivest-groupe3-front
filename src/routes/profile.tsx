@@ -5,6 +5,7 @@ import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
 
 import Card from '../components/Card'
+import Avatar from '../components/Avatar'
 
 const GET_USER = gql`
   query GetOneUser($getOneUserId: String!) {
@@ -41,22 +42,11 @@ const Profile = () => {
   return (
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profil</h1>
-      <section className="flex mt-12 p-6 shadow-lg rounded-lg min-w-full">
-        <figure className="w-1/4 m-auto">
-          {/* <img
-            src={data.getOneUser.avatar}
-            alt={`${data.getOneUser.nickname}-profil-picture`}
-            className="m-auto"
-          /> */}
-          <img
-            src={
-              'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
-            }
-            alt={`${data.getOneUser.nickname}-profil-picture`}
-            className="m-auto"
-          />
-        </figure>
-        <div className="w-3/4">
+      <section className="flex flex-col md:flex-row mt-12 p-6 shadow-lg rounded-lg min-w-full gap-8">
+        <div className="w-full md:w-1/4 m-auto">
+          <Avatar imgUrl={data.getOneUser.avatar}/>
+        </div>
+        <div className="w-full md:w-1/2">
           <h2 className="card-title">Pseudo</h2>
           <p className="mb-6">{data.getOneUser.nickname}</p>
           <h2 className="card-title">Presentation</h2>

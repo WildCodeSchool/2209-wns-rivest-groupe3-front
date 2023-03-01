@@ -3,9 +3,11 @@ import axios from 'axios'
 import DragAndDrop from './DragAndDrop'
 
 const PostImage = ({
+  type,
   postUrl,
   updateBackendUrlImg,
 }: {
+  type: 'avatar' | 'cover' | 'article'
   postUrl: string
   updateBackendUrlImg: (imgUrl: string)=>Promise<any>
 }) => {
@@ -66,6 +68,7 @@ const PostImage = ({
         handleImageChange={handleImageChange}
         image={selectedImage}
         reset={resetImage}
+        type={type}
       />
     </>
   )
