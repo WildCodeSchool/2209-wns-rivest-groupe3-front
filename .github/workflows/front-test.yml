@@ -1,0 +1,12 @@
+name: front-tests-workflow
+
+on: pull_request
+
+jobs:
+  test-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Goto front and run tests
+        run: npm i && npm run test
