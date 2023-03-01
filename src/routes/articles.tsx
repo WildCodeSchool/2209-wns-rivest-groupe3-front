@@ -1,11 +1,13 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useContext, useState, useEffect } from 'react'
 
 import { NotificationContext } from '../contexts/NotificationContext'
+import { GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL } from '../queries/articles'
 
 import Pagination from '../components/buttons/Pagination'
 import Card from '../components/Card'
 import SearchBar from '../components/inputs/SearchBar'
+import { IArticle, IArticleCard } from '../utils/interfaces/Interfaces'
 
 const Articles = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -13,23 +15,8 @@ const Articles = () => {
   const [limit] = useState(6)
   const [offset, setOffset] = useState(0)
 
-  const [numberOfPages, setNumberOfPages] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const GET_ALL_ARTICLES_AND_TOTAL = gql`
-    query getAllArticles($limit: Float, $offset: Float) {
-      getAllArticles(limit: $limit, offset: $offset) {
-        id
-        title
-        postedAt
-        createdAt
-      }
-      getNumberOfArticles
-    }
-  `
-
   const { loading, error, data, fetchMore } = useQuery(
-    GET_ALL_ARTICLES_AND_TOTAL,
+    GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL,
     {
       variables: {
         limit,
@@ -37,6 +24,10 @@ const Articles = () => {
       },
     }
   )
+
+  const [searchInput, setSearchInput] = useState<string>('')
+  const [numberOfPages, setNumberOfPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (data) {
@@ -71,7 +62,7 @@ const Articles = () => {
         </h1>
       </header>
       <div className="flex justify-between w-full items-center">
-        <SearchBar />
+        <SearchBar setSearchInput={setSearchInput} />
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
             Filter
@@ -90,9 +81,13 @@ const Articles = () => {
         </div>
       </div>
       <section className="w-full grid grid-cols-3 grid-row-3 gap-8">
-        {data.getAllArticles.map((article: any) => {
-          return <Card key={article.id} article={article} />
-        })}
+        {data.getAllArticles
+          .filter((article: IArticleCard) =>
+            article.title.toLowerCase().includes(searchInput)
+          )
+          .map((article: any) => {
+            return <Card key={article.id} article={article} />
+          })}
       </section>
 
       <Pagination

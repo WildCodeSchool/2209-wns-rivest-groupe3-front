@@ -33,6 +33,24 @@ export const GET_ALL_BLOGS = gql`
   }
 `
 
+export const GET_ALL_BLOGS_WITH_LIMIT_AND_TOTAL = gql`
+  query GetAllBlogs($limit: Float, $offset: Float) {
+    getAllBlogs(limit: $limit, offset: $offset) {
+      id
+      name
+      slug
+      description
+      template
+      createdAt
+      user {
+        id
+        nickname
+      }
+    }
+    getNumberOfBlogs
+  }
+`
+
 export const GET_ONE_BLOG = gql`
   query GetBlog($slug: String!) {
     getBlog(slug: $slug) {

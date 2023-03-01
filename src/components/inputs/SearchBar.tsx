@@ -1,11 +1,21 @@
-const SearchBar = () => {
+const SearchBar = ({
+  setSearchInput,
+}: {
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>
+}) => {
+  const handleSearch = (e: any) => {
+    const input = e.target.value.toLowerCase()
+    setSearchInput(input)
+  }
+
   return (
     <div className="form-control">
       <div className="input-group">
         <input
           type="text"
-          placeholder="Search…"
+          placeholder="Recherche..."
           className="input input-bordered"
+          onChange={handleSearch}
         />
         <button className="btn btn-square">
           <svg
