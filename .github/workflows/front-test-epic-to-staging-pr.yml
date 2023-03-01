@@ -3,7 +3,7 @@ name: front-tests-epic-to-staging-pr
 on: pull_request
 
 jobs:
-  test-client:
+  front-tests-epic-to-staging-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

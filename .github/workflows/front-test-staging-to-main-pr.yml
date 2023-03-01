@@ -3,7 +3,7 @@ name: front-tests-staging-to-main-pr
 on: pull_request
 
 jobs:
-  test-client:
+  front-tests-staging-to-main-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
