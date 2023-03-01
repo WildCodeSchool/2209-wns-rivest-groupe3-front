@@ -7,7 +7,7 @@ import { GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL } from '../queries/articles'
 import Pagination from '../components/buttons/Pagination'
 import Card from '../components/Card'
 import SearchBar from '../components/inputs/SearchBar'
-import { IArticle, IArticleCard } from '../utils/interfaces/Interfaces'
+import { IArticleCard } from '../utils/interfaces/Interfaces'
 
 const Articles = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -48,11 +48,12 @@ const Articles = () => {
     })
   }
 
+  useEffect(() => {
+    if (error) setMessage({ text: error.message, type: 'error' })
+  }, [error])
+
   if (loading) return <>Loading...</>
-  if (error) {
-    setMessage({ text: error.message, type: 'error' })
-    return <></>
-  }
+  if (error) return <></>
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">

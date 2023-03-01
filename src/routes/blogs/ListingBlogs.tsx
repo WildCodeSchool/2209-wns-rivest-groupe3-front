@@ -49,11 +49,13 @@ const ListingBlogs = () => {
     })
   }
 
+  useEffect(() => {
+    if (error) setMessage({ text: error.message, type: 'error' })
+  }, [error])
+
   if (loading) return <>Loading...</>
-  if (error) {
-    setMessage({ text: error.message, type: 'error' })
-    return <></>
-  }
+
+  if (error) return <></>
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">

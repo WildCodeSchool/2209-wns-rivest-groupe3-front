@@ -1,29 +1,13 @@
-import { gql, useQuery } from '@apollo/client'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Card from '../components/Card'
+import { useQuery } from '@apollo/client'
+
 import { NotificationContext } from '../contexts/NotificationContext'
+import { GET_FIRST_BLOGS_AND_ARTICLES } from '../queries/blogs'
+
+import Card from '../components/Card'
 
 const Discover = () => {
-  const GET_FIRST_BLOGS_AND_ARTICLES = gql`
-    query getAllBlogsAndArticles($limit: Float) {
-      getAllBlogs(limit: $limit) {
-        id
-        name
-        slug
-        description
-        createdAt
-        user {
-          nickname
-        }
-      }
-      getAllArticles(limit: $limit) {
-        id
-        title
-        slug
-      }
-    }
-  `
   const { loading, error, data } = useQuery(GET_FIRST_BLOGS_AND_ARTICLES, {
     variables: {
       limit: 4,
@@ -32,11 +16,12 @@ const Discover = () => {
 
   const { setMessage } = useContext(NotificationContext)
 
+  useEffect(() => {
+    if (error) setMessage({ text: error.message, type: 'error' })
+  }, [error])
+
   if (loading) return <>Loading...</>
-  if (error) {
-    setMessage({ text: error.message, type: 'error' })
-    return <></>
-  }
+  if (error) return <></>
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">

@@ -137,3 +137,23 @@ export const GET_ALL_SLUGS = gql`
     }
   }
 `
+
+export const GET_FIRST_BLOGS_AND_ARTICLES = gql`
+  query getAllBlogsAndArticles($limit: Float) {
+    getAllBlogs(limit: $limit) {
+      id
+      name
+      slug
+      description
+      createdAt
+      user {
+        nickname
+      }
+    }
+    getAllArticles(limit: $limit) {
+      id
+      title
+      slug
+    }
+  }
+`
