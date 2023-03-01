@@ -2,7 +2,6 @@ import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import { IPropsBlogTemplate } from '../../utils/interfaces/Interfaces'
-import EditDrag from './EditDrag'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 
@@ -11,11 +10,11 @@ const BlogT2 = ({
   editor,
   articles,
   addArticle,
-  editBlog
+  editBlog,
 }: IPropsBlogTemplate) => {
   const { user } = useContext(UserContext)
   const { name, description } = blog
-
+  const blogDescription = description?.length ? description : 'Aucune description'
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -23,12 +22,14 @@ const BlogT2 = ({
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
             {name}
           </h1>
-          <p className="max-w-2xl bg-neutral/80 p-2">{description}</p>
+          <p className="max-w-2xl bg-neutral/80 p-2 prose">
+            {blogDescription}
+          </p>
           <figure className="absolute w-full h-96 overflow-hidden flex items-center bg-gray-300 -z-10">
             <img
               src="https://placeimg.com/1000/800/arch"
               alt={`couverture du blog ${name}`}
-              className="w-full opacity-75"
+              className="w-full"
             />
           </figure>
         </header>

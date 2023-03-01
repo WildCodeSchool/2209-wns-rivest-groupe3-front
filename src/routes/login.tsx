@@ -1,32 +1,16 @@
 import { gql, useMutation } from '@apollo/client'
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../contexts/UserContext'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../contexts/UserContext'
+import { NotificationContext } from '../contexts/NotificationContext'
 
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginFormProps } from '../components/inputs/inputsInterfaces'
 import { loginSchema } from '../utils/schemaValidation'
-
-const GET_TOKEN = gql`
-  mutation Mutation($password: String!, $email: String!) {
-    login: getToken(password: $password, email: $email) {
-      token
-      user {
-        id
-        nickname
-        email
-        lastName
-        firstName
-        lastLogin
-        description
-        createdAt
-        avatar
-      }
-    }
-  }
-`
+import PasswordInput from '../components/inputs/PasswordInput'
+import { GET_TOKEN } from '../queries/user'
 
 const Login = () => {
   const {
@@ -38,7 +22,7 @@ const Login = () => {
   })
 
   const { setUser, isCreatingBlog } = useContext(UserContext)
-
+  const { message, setMessage } = useContext(NotificationContext)
   const navigate = useNavigate()
   const [loadToken] = useMutation(GET_TOKEN)
 
@@ -58,10 +42,19 @@ const Login = () => {
         }
         localStorage.setItem('user', JSON.stringify(localUser))
         setUser(res.data.login.user)
-
         isCreatingBlog ? navigate('/createblog') : navigate('/')
+        setMessage({
+          text: 'Connexion réussie',
+          type: 'success',
+        })
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        setMessage({
+          text: 'Erreur lors de la connexion',
+          type: 'error',
+        })
+        console.error(err)
+      })
   }
 
   return (
@@ -93,20 +86,18 @@ const Login = () => {
               />
               <p className="text text-error">{errors.email?.message}</p>
             </label>
-
-            <label className="form-control">
-              <span className="label label-text">Mot de passe</span>
-              <input
-                {...register('password')}
-                className={
-                  errors.password ? 'input input-error' : 'input input-bordered'
-                }
-                id="password"
-                type="password"
-                placeholder="Mot de passe"
-              />
-              <p className="text text-error">{errors.password?.message}</p>
-            </label>
+            <PasswordInput
+              id="password"
+              labelTitle="Mot de passe"
+              labelClassName="label label-text"
+              inputName="password"
+              inputClassName={
+                errors.password ? 'input input-error' : 'input input-bordered'
+              }
+              placeholder="Mot de passe"
+              register={register}
+              error={errors.password?.message}
+            />
           </form>
           <Link to="/register" className="label-text-alt link link-hover mt-6">
             Pas encore de comtpe ?

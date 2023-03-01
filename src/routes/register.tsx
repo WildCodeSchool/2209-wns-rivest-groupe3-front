@@ -7,33 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
 import { registerSchema } from '../utils/schemaValidation'
 import { NotificationContext } from '../contexts/NotificationContext'
-
-const ADD_USER = gql`
-  mutation Mutation($nickname: String!, $password: String!, $email: String!) {
-    createUser(nickname: $nickname, password: $password, email: $email) {
-      nickname
-    }
-  }
-`
-
-const GET_TOKEN = gql`
-  mutation Mutation($password: String!, $email: String!) {
-    login: getToken(password: $password, email: $email) {
-      token
-      user {
-        id
-        nickname
-        email
-        lastName
-        firstName
-        lastLogin
-        description
-        createdAt
-        avatar
-      }
-    }
-  }
-`
+import PasswordInput from '../components/inputs/PasswordInput'
+import { ADD_USER, GET_TOKEN } from '../queries/user'
 
 const Register = () => {
   const {
@@ -120,41 +95,32 @@ const Register = () => {
               />
               <p className="text text-error">{errors.email?.message}</p>
             </label>
-
-            <label className="form-control">
-              <span className="label label-text">Mot de passe</span>
-              <input
-                {...register('password')}
-                className={
-                  errors.password ? 'input input-error' : 'input input-bordered'
-                }
-                id="password"
-                type="password"
-                placeholder="Mot de passe"
-              />
-              <p className="text text-error">{errors.password?.message}</p>
-            </label>
-
-            <label className="form-control">
-              <span className="label label-text">
-                Confirmation du mot de passe
-              </span>
-              <input
-                {...register('confirmPassword')}
-                className={
-                  errors.confirmPassword
-                    ? 'input input-error'
-                    : 'input input-bordered'
-                }
-                id="confirm-password"
-                type="password"
-                placeholder="Confirmation du mot de passe"
-              />
-              <p className="text text-error">
-                {errors.confirmPassword?.message}
-              </p>
-            </label>
-
+            <PasswordInput
+              id="password"
+              labelTitle="Mot de passe"
+              labelClassName="label label-text"
+              inputName="password"
+              inputClassName={
+                errors.password ? 'input input-error' : 'input input-bordered'
+              }
+              placeholder="Mot de passe"
+              register={register}
+              error={errors.password?.message}
+            />
+            <PasswordInput
+              id="confirm-password"
+              labelTitle="Confirmation du mot de passe"
+              labelClassName="label label-text"
+              inputName="confirmPassword"
+              inputClassName={
+                errors.confirmPassword
+                  ? 'input input-error'
+                  : 'input input-bordered'
+              }
+              placeholder="Mot de passe"
+              register={register}
+              error={errors.confirmPassword?.message}
+            />
             <label className="form-control">
               <span className="label label-text">Pseudo</span>
               <input
