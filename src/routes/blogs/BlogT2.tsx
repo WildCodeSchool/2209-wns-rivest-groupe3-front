@@ -1,4 +1,4 @@
-import Pagination from '../../components/buttons/Pagination'
+import StaticPagination from '../../components/buttons/StaticPagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
 
@@ -65,7 +65,7 @@ const BlogT2 = ({
               <CardT2 />
               <CardT2 />
             </div>
-            <Pagination />
+            <StaticPagination />
           </article>
         </section>
       </main>
