@@ -2,7 +2,7 @@ const Avatar = ({
   imgUrl,
   width = 'w-96',
 }: {
-  imgUrl: string | null
+  imgUrl: string | null | undefined
   width?: string
 }) => {
   const url = `http://localhost:8000${imgUrl}`

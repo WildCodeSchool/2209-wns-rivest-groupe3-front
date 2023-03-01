@@ -2,11 +2,12 @@ import { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 import { NotificationContext } from '../contexts/NotificationContext'
+import Avatar from './Avatar'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
-  const { message, setMessage } = useContext(NotificationContext)
+  const { setMessage } = useContext(NotificationContext)
   const location = useLocation()
 
   const defaultNavClass =
@@ -60,20 +61,7 @@ const Navbar = () => {
         {user && (
           <div className="dropdown dropdown-end text-neutral">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={`${user.nickname}-profil-picture`}
-                  />
-                ) : (
-                  <img
-                    src={
-                      'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
-                    }
-                  />
-                )}
-              </div>
+              <Avatar imgUrl={user.avatar} width="w-10" />
             </label>
             <ul
               tabIndex={0}

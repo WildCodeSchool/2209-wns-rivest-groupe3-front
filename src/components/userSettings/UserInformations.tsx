@@ -35,7 +35,7 @@ const UserInformations = ({
     setShowUserInformations(false)
     setShowEditPasswordForm(true)
   }
-  const { user } = useContext<IUserContext>(UserContext)
+  const { user, setUser } = useContext<IUserContext>(UserContext)
   const { setMessage } = useContext(NotificationContext)
   const [updateAvatarImg] = useMutation(UPDATE_AVATAR, {
     refetchQueries: [
@@ -48,7 +48,20 @@ const UserInformations = ({
 
   const updateAvatarUrl = async (avatarUrl: string | null) => {
     try {
-      await updateAvatarImg({ variables: { avatar: avatarUrl } })
+      const dataAvatar = await updateAvatarImg({
+        variables: { avatar: avatarUrl },
+      })
+      const newAvatar = dataAvatar.data.updateUser.avatar as string
+      if (user) {
+        const newUser = { ...user, avatar: newAvatar }
+        const localUser = {
+          id: newUser.id,
+          nickname: newUser.nickname,
+          avatar: newUser.avatar,
+        }
+        localStorage.setItem('user', JSON.stringify(localUser))
+        setUser(newUser)
+      }
       setMessage({
         text: `Votre avatar a été mis à jour avec succès !`,
         type: 'success',
@@ -67,7 +80,7 @@ const UserInformations = ({
       <h1 className="text-5xl font-bold text-center mb-16">Mes informations</h1>
       <div className="flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex flex-col justify-center items-center gap-8">
-          <span className='font-bold text-3xl'>Avatar</span>
+          <span className="font-bold text-3xl">Avatar</span>
           <ImageHandler
             type="avatar"
             imgUrl={userInformations.avatar}

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import Avatar from '../../components/Avatar'
 import Pagination from '../../components/buttons/Pagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
@@ -41,9 +42,7 @@ const BlogT1 = ({
         <aside className="w-96 h-full p-8 bg-gray-300 rounded-md sticky top-16">
           <div className="flex flex-col justify-center items-center h-full w-full gap-8">
             <div className="avatar">
-              <div className="w-80 mask mask-squircle mx-auto">
-                <img src="https://placeimg.com/192/192/people" />
-              </div>
+              <Avatar imgUrl={editor.avatar} width='w-80'/>
             </div>
             <h2 className="font-lobster text-5xl">{editor.nickname}</h2>
             <p className="text-xl">
