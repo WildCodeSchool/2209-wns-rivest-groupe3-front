@@ -5,9 +5,10 @@ interface IPropsUpdate {
   imgUrl: string
   updateUrl: string
   deleteUrl: string
+  updateBackendUrlImg: (imgUrl: string | null)=>Promise<any>
 }
 
-const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
+const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPropsUpdate) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
     imageUrl: string | null
@@ -35,7 +36,7 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
           Authorization: token,
         },
       })
-      alert('Cover deleted')
+      await updateBackendUrlImg(null) 
     } catch (err) {
       console.error(err)
     }
@@ -57,12 +58,13 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
 
     try {
       await axios.get(`http://localhost:8000${imgUrl}`)
-      await axios.put(`http://localhost:8000${updateUrl}`, formData, {
+      const { data } = await axios.put(`http://localhost:8000${updateUrl}`, formData, {
         headers: {
           Authorization: token,
         },
       })
-      alert('Cover updated !')
+      console.log(data)
+      await updateBackendUrlImg(data.filename) 
     } catch (err) {
       console.error(err)
     }

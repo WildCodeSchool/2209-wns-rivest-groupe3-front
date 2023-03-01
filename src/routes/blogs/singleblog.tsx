@@ -8,6 +8,7 @@ import { NotificationContext } from '../../contexts/NotificationContext'
 import { GET_ONE_BLOG } from '../../queries/blogs'
 import EditDrag from './EditDrag'
 import { IBlog } from '../../utils/interfaces/Interfaces'
+import UpdateForm from './UpdateForm'
 
 const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -42,13 +43,15 @@ const Blog = () => {
     blog && (
       <>
         {isEditing && (
-          <EditDrag
-            slug={slug}
-            blog={blog}
-            closeEdit={editBlog}
-            reset={resetChangements}
-            setBlog={setBlog}
-          />
+          <EditDrag>
+            <UpdateForm
+              slug={slug}
+              blog={blog}
+              closeEdit={editBlog}
+              reset={resetChangements}
+              setBlog={setBlog}
+            />
+          </EditDrag>
         )}
         {blog.template === 2 ? (
           <BlogT2

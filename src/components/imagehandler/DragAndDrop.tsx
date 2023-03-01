@@ -96,7 +96,7 @@ const DragAndDrop = ({
             </div>
             <img src={image.preview} alt="image" className="w-24" />
           </figure>
-          <button onClick={handleImageUpload} className="btn btn-info">
+          <button type="button" onClick={handleImageUpload} className="btn btn-info">
             Sauvegarder l'image
           </button>
         </>

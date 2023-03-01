@@ -25,6 +25,7 @@ export const GET_ONE_BLOG = gql`
       template
       slug
       createdAt
+      coverUrl
       editor: user {
         id
         avatar
@@ -90,6 +91,14 @@ export const UPDATE_BLOG = gql`
       name
       description
       slug
+    }
+  }
+`
+
+export const UPDATE_COVER_IMG = gql`
+  mutation UpdateBlog($slug: String!, $coverUrl: String) {
+    updateBlog(blogSlug: $slug, coverUrl: $coverUrl) {
+      coverUrl
     }
   }
 `

@@ -2,7 +2,13 @@ import { useState } from 'react'
 import axios from 'axios'
 import DragAndDrop from './DragAndDrop'
 
-const PostImage = ({ postUrl }: {postUrl: string}) => {
+const PostImage = ({
+  postUrl,
+  updateBackendUrlImg,
+}: {
+  postUrl: string
+  updateBackendUrlImg: (imgUrl: string)=>Promise<any>
+}) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
     imageUrl: string
@@ -46,6 +52,7 @@ const PostImage = ({ postUrl }: {postUrl: string}) => {
         }
       )
       console.log(data)
+      await updateBackendUrlImg(data.filename)
       setSelectedImage({ ...selectedImage, imageUrl: data.filename })
     } catch (err) {
       console.error(err)
@@ -54,12 +61,13 @@ const PostImage = ({ postUrl }: {postUrl: string}) => {
 
   return (
     <>
-    <DragAndDrop
-      handleImageUpload={handleImageUpload}
-      handleImageChange={handleImageChange}
-      image={selectedImage}
-      reset={resetImage}
-    /></>
+      <DragAndDrop
+        handleImageUpload={handleImageUpload}
+        handleImageChange={handleImageChange}
+        image={selectedImage}
+        reset={resetImage}
+      />
+    </>
   )
 }
 
