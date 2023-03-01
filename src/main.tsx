@@ -11,6 +11,7 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import { UserProvider } from './contexts/UserContext'
 import { NotificationProvider } from './contexts/NotificationContext'
+import { ModalProvider } from './contexts/ModalContext'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:5000/',
@@ -38,7 +39,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ApolloProvider client={client}>
       <NotificationProvider>
         <UserProvider>
-          <App />
+          <ModalProvider>
+            <App />
+          </ModalProvider>
         </UserProvider>
       </NotificationProvider>
     </ApolloProvider>

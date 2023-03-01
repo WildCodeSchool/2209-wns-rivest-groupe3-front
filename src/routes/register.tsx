@@ -1,15 +1,37 @@
 import { gql, useMutation } from '@apollo/client'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { UserContext } from '../contexts/UserContext'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
 import { registerSchema } from '../utils/schemaValidation'
+import { NotificationContext } from '../contexts/NotificationContext'
+import PasswordInput from '../components/inputs/PasswordInput'
 
 const ADD_USER = gql`
   mutation Mutation($nickname: String!, $password: String!, $email: String!) {
     createUser(nickname: $nickname, password: $password, email: $email) {
       nickname
+    }
+  }
+`
+
+const GET_TOKEN = gql`
+  mutation Mutation($password: String!, $email: String!) {
+    login: getToken(password: $password, email: $email) {
+      token
+      user {
+        id
+        nickname
+        email
+        lastName
+        firstName
+        lastLogin
+        description
+        createdAt
+        avatar
+      }
     }
   }
 `
@@ -24,6 +46,10 @@ const Register = () => {
   })
 
   const [addUser] = useMutation(ADD_USER)
+  const { setUser, isCreatingBlog } = useContext(UserContext)
+  const navigate = useNavigate()
+  const [loadToken] = useMutation(GET_TOKEN)
+  const { message, setMessage } = useContext(NotificationContext)
 
   const onSubmit = async (data: FieldValues) => {
     const user = {
@@ -33,7 +59,29 @@ const Register = () => {
     }
     addUser({ variables: { ...user } })
       .then(() => {
-        alert('Ok')
+        setMessage({
+          text: 'Félicitation pour votre création de compte ! Bon voyage sur tabas.blog',
+          type: 'success',
+        })
+        loadToken({
+          variables: {
+            email: data.email,
+            password: data.password,
+          },
+        })
+          .then((res) => {
+            localStorage.setItem('token', res.data.login.token)
+            const localUser = {
+              id: res.data.login.user.id,
+              nickname: res.data.login.user.nickname,
+              avatar: res.data.login.user.avatar,
+            }
+            localStorage.setItem('user', JSON.stringify(localUser))
+            setUser(res.data.login.user)
+            isCreatingBlog ? navigate('/createblog') : navigate('/profile')
+          })
+          .catch((err) => console.error(err))
+        isCreatingBlog ? navigate('/login') : navigate('/')
       })
       .catch((err) => {
         console.error(err)
@@ -73,41 +121,32 @@ const Register = () => {
               />
               <p className="text text-error">{errors.email?.message}</p>
             </label>
-
-            <label className="form-control">
-              <span className="label label-text">Mot de passe</span>
-              <input
-                {...register('password')}
-                className={
-                  errors.password ? 'input input-error' : 'input input-bordered'
-                }
-                id="password"
-                type="password"
-                placeholder="Mot de passe"
-              />
-              <p className="text text-error">{errors.password?.message}</p>
-            </label>
-
-            <label className="form-control">
-              <span className="label label-text">
-                Confirmation du mot de passe
-              </span>
-              <input
-                {...register('confirmPassword')}
-                className={
-                  errors.confirmPassword
-                    ? 'input input-error'
-                    : 'input input-bordered'
-                }
-                id="confirm-password"
-                type="password"
-                placeholder="Confirmation du mot de passe"
-              />
-              <p className="text text-error">
-                {errors.confirmPassword?.message}
-              </p>
-            </label>
-
+            <PasswordInput
+              id="password"
+              labelTitle="Mot de passe"
+              labelClassName="label label-text"
+              inputName="password"
+              inputClassName={
+                errors.password ? 'input input-error' : 'input input-bordered'
+              }
+              placeholder="Mot de passe"
+              register={register}
+              error={errors.password?.message}
+            />
+            <PasswordInput
+              id="confirm-password"
+              labelTitle="Confirmation du mot de passe"
+              labelClassName="label label-text"
+              inputName="confirmPassword"
+              inputClassName={
+                errors.confirmPassword
+                  ? 'input input-error'
+                  : 'input input-bordered'
+              }
+              placeholder="Mot de passe"
+              register={register}
+              error={errors.confirmPassword?.message}
+            />
             <label className="form-control">
               <span className="label label-text">Pseudo</span>
               <input
