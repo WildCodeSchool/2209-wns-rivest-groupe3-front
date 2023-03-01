@@ -115,6 +115,7 @@ const UpdateForm = ({
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <BlogDetailsForm blog={blog} blogs={blogs} setBlog={setBlog} />
+      <span className='text-white font-bold block'>Image de couverture :</span>
       <ImageHandler
         type="cover"
         imgUrl={coverUrl}

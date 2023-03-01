@@ -14,10 +14,10 @@ const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
   const [isEditing, setIsEditing] = useState(false)
   const [blog, setBlog] = useState<IBlog | null>(null)
-
+  
   const { slug } = useParams()
   const navigate = useNavigate()
-
+  
   const editBlog = () => setIsEditing((isEditing) => !isEditing)
   const resetChangements = () => {
     setBlog(data.getBlog)
@@ -28,11 +28,11 @@ const Blog = () => {
   const { loading, error, data } = useQuery(GET_ONE_BLOG, {
     variables: { slug },
   })
-
+  
   useEffect(() => {
     if (data) setBlog(data.getBlog)
   }, [data])
-
+  
   if (loading) return <>Loading...</>
   if (error) {
     setMessage({ text: error.message, type: 'error' })

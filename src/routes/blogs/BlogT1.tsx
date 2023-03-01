@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Pagination from '../../components/buttons/Pagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
@@ -11,14 +10,28 @@ const BlogT1 = ({
   editor,
   articles,
   addArticle,
-  editBlog
+  editBlog,
 }: IPropsBlogTemplate) => {
   const { user } = useContext(UserContext)
-  const { name, description } = blog
-  const blogDescription = description?.length ? description : 'Aucune description'
+  const { name, description, coverUrl } = blog
+  const blogDescription = description?.length
+    ? description
+    : 'Aucune description'
+    console.log(coverUrl)
   return (
     <main className="relative min-h-screen w-full mx-auto my-8 flex flex-col items-center gap-8">
-      <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
+      <header className="relative h-96 w-full m-auto bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
+        {coverUrl ? (
+          <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+            <img
+              className="w-full"
+              src={`http://localhost:8000${coverUrl}`}
+              alt="couverture"
+            />
+          </figure>
+        ) : (
+          <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+        )}
         <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {name}
         </h1>

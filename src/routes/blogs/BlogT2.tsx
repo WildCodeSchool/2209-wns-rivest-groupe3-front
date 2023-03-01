@@ -13,7 +13,7 @@ const BlogT2 = ({
   editBlog,
 }: IPropsBlogTemplate) => {
   const { user } = useContext(UserContext)
-  const { name, description } = blog
+  const { name, description, coverUrl } = blog
   const blogDescription = description?.length ? description : 'Aucune description'
   return (
     <>
@@ -25,13 +25,17 @@ const BlogT2 = ({
           <p className="max-w-2xl bg-neutral/80 p-2 prose">
             {blogDescription}
           </p>
-          <figure className="absolute w-full h-96 overflow-hidden flex items-center bg-gray-300 -z-10">
+          {coverUrl ? (
+          <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
             <img
-              src="https://placeimg.com/1000/800/arch"
-              alt={`couverture du blog ${name}`}
               className="w-full"
+              src={`http://localhost:8000${coverUrl}`}
+              alt="couverture"
             />
           </figure>
+        ) : (
+          <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+        )}
         </header>
         <nav className="navbar bg-base-100 justify-between">
           <div className="flex gap-2">

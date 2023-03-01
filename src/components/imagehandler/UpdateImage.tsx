@@ -1,14 +1,19 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface IPropsUpdate {
   imgUrl: string
   updateUrl: string
   deleteUrl: string
-  updateBackendUrlImg: (imgUrl: string | null)=>Promise<any>
+  updateBackendUrlImg: (imgUrl: string | null) => Promise<any>
 }
 
-const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPropsUpdate) => {
+const UpdateImage = ({
+  imgUrl,
+  updateUrl,
+  deleteUrl,
+  updateBackendUrlImg,
+}: IPropsUpdate) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
     imageUrl: string | null
@@ -18,8 +23,13 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPro
     imageUrl: null,
     preview: null,
   })
-
   const token = localStorage.getItem('token')
+  const [dataImg, setDataImg] = useState<string | null>(null)
+
+  useEffect(() => {
+    setDataImg(`http://localhost:8000${imgUrl}`)
+    
+  }, [])
 
   const resetImage = () => {
     setSelectedImage({
@@ -36,7 +46,7 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPro
           Authorization: token,
         },
       })
-      await updateBackendUrlImg(null) 
+      await updateBackendUrlImg(null)
     } catch (err) {
       console.error(err)
     }
@@ -58,13 +68,17 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPro
 
     try {
       await axios.get(`http://localhost:8000${imgUrl}`)
-      const { data } = await axios.put(`http://localhost:8000${updateUrl}`, formData, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      const { data } = await axios.put(
+        `http://localhost:8000${updateUrl}`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
       console.log(data)
-      await updateBackendUrlImg(data.filename) 
+      await updateBackendUrlImg(data.filename)
     } catch (err) {
       console.error(err)
     }
@@ -118,11 +132,25 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl, updateBackendUrlImg }: IPro
             />
           </label>
         </div>
-        <img
-          src={selectedImage?.preview ?? `http://localhost:8000${imgUrl}`}
-          alt="blog cover"
-          className="w-24"
-        />
+        <figure className="w-48 h-24 overflow-hidden flex justify-center items-center border border-white">
+          {selectedImage?.preview ? (
+            <img
+              src={selectedImage.preview}
+              alt="blog cover"
+              className="w-full"
+              width="400"
+              height="400"
+            />
+          ) : dataImg ? (
+            <img
+              src={dataImg}
+              alt="blog cover"
+              className="w-full"
+              width="400"
+              height="400"
+            />
+          ) : <div className='bg-white h-full w-full'/>}
+        </figure>
       </figure>
       {selectedImage.preview ? (
         <div className="flex justify-center gap-4 w-full py-4">
