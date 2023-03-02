@@ -16,6 +16,9 @@ describe('User workflow test', () => {
     cy.get('#confirm-password').clear()
     cy.get('#confirm-password').type('@Test123')
     cy.contains(/Enregistrer/).click()
+    cy.contains(
+      /Félicitation pour votre création de compte ! Bon voyage sur tabas.blog/
+    )
     cy.url().should('include', '/profile')
 
     // Disconnexion
@@ -100,10 +103,10 @@ describe('User workflow test', () => {
     // cy.get('#delete-account-confirm').click()
     // cy.contains(/Error while deleting the account, please try again later/)
     // cy.get('#delete-account').click()
-    // cy.get('#password').type('@Test124')
-    // cy.get('#delete-account-confirm').click()
-    // cy.contains(
-    //   /Compte, blogs et articles supprimés avec succès, même si nous sommes triste de vous voir partir/
-    // )
+    cy.get('#password').type('@Test124')
+    cy.get('#delete-account-confirm').click()
+    cy.contains(
+      /Compte, blogs et articles supprimés avec succès, même si nous sommes triste de vous voir partir/
+    )
   })
 })

@@ -4,10 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "db:test:up": "docker compose -f docker-compose.front.test.yml up --build -d --wait",
+    "db:test:down": "docker compose -f docker-compose.front.test.yml down",
+    "citest": "npm run db:test:up && vitest && cypress run",
+    "postcitest": "npm run db:test:down",
     "dev": "vite",
     "test": "vitest",
-    "cypress:open": "cypress open",
     "coverage": "vitest run --coverage",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
