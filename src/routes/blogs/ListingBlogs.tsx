@@ -1,7 +1,11 @@
 import { useState, useContext, useEffect } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+
 import { NotificationContext } from '../../contexts/NotificationContext'
+
+import { GET_ALL_BLOGS_WITH_LIMIT_AND_TOTAL } from '../../queries/blogs'
 import { IBlog } from '../../utils/interfaces/Interfaces'
+
 import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
@@ -12,28 +16,8 @@ const ListingBlogs = () => {
   const [limit] = useState(6)
   const [offset, setOffset] = useState(0)
 
-  const [numberOfPages, setNumberOfPages] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const GET_ALL_BLOGS_AND_TOTAL = gql`
-    query GetAllBlogs($limit: Float, $offset: Float) {
-      getAllBlogs(limit: $limit, offset: $offset) {
-        id
-        name
-        slug
-        description
-        template
-        createdAt
-        user {
-          id
-          nickname
-        }
-      }
-      getNumberOfBlogs
-    }
-  `
   const { loading, error, data, fetchMore } = useQuery(
-    GET_ALL_BLOGS_AND_TOTAL,
+    GET_ALL_BLOGS_WITH_LIMIT_AND_TOTAL,
     {
       variables: {
         limit,
@@ -41,6 +25,10 @@ const ListingBlogs = () => {
       },
     }
   )
+
+  const [searchInput, setSearchInput] = useState<string>('')
+  const [numberOfPages, setNumberOfPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (data) {
@@ -61,11 +49,13 @@ const ListingBlogs = () => {
     })
   }
 
+  useEffect(() => {
+    if (error) setMessage({ text: error.message, type: 'error' })
+  }, [error])
+
   if (loading) return <>Loading...</>
-  if (error) {
-    setMessage({ text: error.message, type: 'error' })
-    return <></>
-  }
+
+  if (error) return <></>
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -75,7 +65,7 @@ const ListingBlogs = () => {
         </h1>
       </header>
       <div className="flex justify-between w-full items-center">
-        <SearchBar />
+        <SearchBar setSearchInput={setSearchInput} />
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
             Filter
@@ -94,9 +84,13 @@ const ListingBlogs = () => {
         </div>
       </div>
       <section className="w-full grid grid-cols-3 grid-row-3 gap-8">
-        {data.getAllBlogs.map((blog: IBlog) => (
-          <Card key={blog.id} blog={blog} />
-        ))}
+        {data.getAllBlogs
+          .filter((blog: IBlog) =>
+            blog.name.toLowerCase().includes(searchInput)
+          )
+          .map((blog: IBlog) => (
+            <Card key={blog.id} blog={blog} />
+          ))}
       </section>
 
       <Pagination

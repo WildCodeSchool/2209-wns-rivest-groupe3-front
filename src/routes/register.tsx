@@ -8,33 +8,7 @@ import { RegisterFormProps } from '../components/inputs/inputsInterfaces'
 import { registerSchema } from '../utils/schemaValidation'
 import { NotificationContext } from '../contexts/NotificationContext'
 import PasswordInput from '../components/inputs/PasswordInput'
-
-const ADD_USER = gql`
-  mutation Mutation($nickname: String!, $password: String!, $email: String!) {
-    createUser(nickname: $nickname, password: $password, email: $email) {
-      nickname
-    }
-  }
-`
-
-const GET_TOKEN = gql`
-  mutation Mutation($password: String!, $email: String!) {
-    login: getToken(password: $password, email: $email) {
-      token
-      user {
-        id
-        nickname
-        email
-        lastName
-        firstName
-        lastLogin
-        description
-        createdAt
-        avatar
-      }
-    }
-  }
-`
+import { ADD_USER, GET_TOKEN } from '../queries/user'
 
 const Register = () => {
   const {

@@ -2,7 +2,7 @@ import StaticPagination from '../../components/buttons/StaticPagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import { IPropsBlogTemplate } from '../../utils/interfaces/Interfaces'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 
 const BlogT2 = ({
@@ -17,6 +17,9 @@ const BlogT2 = ({
   const blogDescription = description?.length
     ? description
     : 'Aucune description'
+
+  const [searchInput, setSearchInput] = useState('')
+
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -36,7 +39,7 @@ const BlogT2 = ({
         <nav className="navbar bg-base-100 justify-between">
           <div className="flex gap-2">
             <button className="btn btn-outline">Filtre</button>
-            <SearchBar />
+            <SearchBar setSearchInput={setSearchInput} />
           </div>
           <div className="flex gap-2">
             {editor.id === user?.id ? (
@@ -57,9 +60,11 @@ const BlogT2 = ({
         <h2 className="text-5xl font-bold font-lobster ">Articles</h2>
         <section className="w-full flex justify-center gap-8">
           {articles.length ? (
-            articles.map((article) => (
-              <Card key={article.id} article={article} />
-            ))
+            articles
+              .filter((article) =>
+                article.title.toLowerCase().includes(searchInput)
+              )
+              .map((article) => <Card key={article.id} article={article} />)
           ) : (
             <span className="text-3xl my-24">
               Aucun article disponible pour le moment

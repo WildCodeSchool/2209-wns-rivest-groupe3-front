@@ -1,29 +1,13 @@
 import { Link } from 'react-router-dom'
 import Card from '../components/Card'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useContext } from 'react'
 import { NotificationContext } from '../contexts/NotificationContext'
+import { GET_ALL_BLOGS } from '../queries/blogs'
 import { IBlog } from '../utils/interfaces/Interfaces'
 
-const Home = () => {
+export const Home = () => {
   const { setMessage } = useContext(NotificationContext)
-
-  const GET_ALL_BLOGS = gql`
-    query GetAllBlogs {
-      getAllBlogs {
-        id
-        name
-        slug
-        description
-        template
-        createdAt
-        user {
-          id
-          nickname
-        }
-      }
-    }
-  `
 
   const { loading, error, data } = useQuery(GET_ALL_BLOGS)
 

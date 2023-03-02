@@ -58,6 +58,12 @@ export interface IContentBlockData {
   url?: string
   alt?: string
 }
+export interface IArticleCard {
+  id: string
+  title: string
+  postedAt: Date
+  createdAt: Date
+}
 
 export interface IPropsBlogTemplate {
   blog: IBlog

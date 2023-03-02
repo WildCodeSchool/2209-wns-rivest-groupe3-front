@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
 import StaticPagination from '../../components/buttons/StaticPagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
@@ -18,6 +17,9 @@ const BlogT1 = ({
   const blogDescription = description?.length
     ? description
     : 'Aucune description'
+
+  const [searchInput, setSearchInput] = useState('')
+
   return (
     <main className="relative min-h-screen w-full mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
@@ -48,7 +50,7 @@ const BlogT1 = ({
           <nav className="navbar bg-white p-4 gap-8 justify-between sticky top-16 z-30">
             <div className="flex gap-2">
               <button className="btn btn-outline">Filtre</button>
-              <SearchBar />
+              <SearchBar setSearchInput={setSearchInput} />
             </div>
             {editor.id === user?.id ? (
               <div className="flex gap-2">
@@ -65,9 +67,11 @@ const BlogT1 = ({
           </nav>
           <div className="space-y-4 p-4 pr-0">
             {articles.length ? (
-              articles.map((article) => (
-                <CardT2 key={article.id} article={article} />
-              ))
+              articles
+                .filter((article) =>
+                  article.title.toLowerCase().includes(searchInput)
+                )
+                .map((article) => <CardT2 key={article.id} article={article} />)
             ) : (
               <span className="text-3xl my-24">
                 Aucun article disponible pour le moment

@@ -1,24 +1,11 @@
 import { useContext } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
+import { GET_USER } from '../queries/user'
 
 import Card from '../components/Card'
-
-const GET_USER = gql`
-  query GetOneUser($getOneUserId: String!) {
-    getOneUser(id: $getOneUserId) {
-      nickname
-      lastName
-      firstName
-      description
-      createdAt
-      city
-      avatar
-    }
-  }
-`
 
 const Profile = () => {
   const { user } = useContext<IUserContext>(UserContext)
