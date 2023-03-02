@@ -1,9 +1,9 @@
-name: front-tests-staging-to-main-pr
+name: front-tests
 
 on: pull_request
 
 jobs:
-  front-tests-staging-to-main-pr:
+  front-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -11,7 +11,7 @@ jobs:
       - name: Goto front and run tests
         run: npm i && npm run test
   docker:
-    needs: front-test
+    needs: front-tests
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
