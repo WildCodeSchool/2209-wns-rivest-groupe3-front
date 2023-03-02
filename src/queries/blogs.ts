@@ -42,6 +42,7 @@ export const GET_ALL_BLOGS_WITH_LIMIT_AND_TOTAL = gql`
       description
       template
       createdAt
+      coverUrl
       user {
         id
         nickname

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 import { NotificationContext } from '../contexts/NotificationContext'
 import Avatar from './Avatar'
+import Logo from './Logo'
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -37,9 +38,8 @@ const Navbar = () => {
   return (
     <nav className={location.pathname === '/' ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Logo
-        </Link>
+        <Logo />
+
         <Link to="/discover" className="btn btn-ghost normal-case text-xl">
           Découvrir
         </Link>
@@ -64,7 +64,11 @@ const Navbar = () => {
 
         {user && (
           <div className="dropdown dropdown-end text-neutral">
-            <label tabIndex={0} id="profil-head-avatar" className="btn btn-ghost btn-circle avatar">
+            <label
+              tabIndex={0}
+              id="profil-head-avatar"
+              className="btn btn-ghost btn-circle avatar"
+            >
               <Avatar imgUrl={user.avatar} width="w-10" />
             </label>
             <ul
