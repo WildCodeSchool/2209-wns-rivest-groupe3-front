@@ -47,6 +47,29 @@ body {
   @apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px];
 }
 
+/***** Editor js style overrides *****/
+.ce-header {
+  @apply font-bold font-lobster p-2;
+}
+h1.ce-header {
+  @apply text-7xl;
+}
+h2.ce-header {
+  @apply text-5xl;
+}
+h3.ce-header {
+  @apply text-3xl;
+}
+h4.ce-header {
+  @apply text-xl;
+}
+h5.ce-header {
+  @apply text-lg;
+}
+.ce-toolbar--opened {
+  @apply -right-14;
+}
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 12px;
