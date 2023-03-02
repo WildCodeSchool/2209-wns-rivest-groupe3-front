@@ -49,10 +49,14 @@ const Navbar = () => {
           <span className="text-xl font-bold mr-2">{user.nickname}</span>
         ) : (
           <>
-            <Link to="/register" className="btn btn-ghost">
+            <Link
+              id="inscription-head-link"
+              to="/register"
+              className="btn btn-ghost"
+            >
               Inscription
             </Link>
-            <Link to="/login" className="btn">
+            <Link id="login-head-link" to="/login" className="btn">
               Connexion
             </Link>
           </>
@@ -60,7 +64,7 @@ const Navbar = () => {
 
         {user && (
           <div className="dropdown dropdown-end text-neutral">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <label tabIndex={0} id="profil-head-avatar" className="btn btn-ghost btn-circle avatar">
               <Avatar imgUrl={user.avatar} width="w-10" />
             </label>
             <ul
@@ -68,17 +72,29 @@ const Navbar = () => {
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to="/profile" className="justify-between">
+                <Link
+                  id="profil-head-link"
+                  to="/profile"
+                  className="justify-between"
+                >
                   Voir le profil
                 </Link>
               </li>
               <li>
-                <Link to="/settings" className="justify-between">
+                <Link
+                  id="settings-head-link"
+                  to="/settings"
+                  className="justify-between"
+                >
                   Paramètres de compte
                 </Link>
               </li>
               <li>
-                <button className="btn btn-secondary" onClick={logout}>
+                <button
+                  id="disconnexion-head"
+                  className="btn btn-secondary"
+                  onClick={logout}
+                >
                   Déconnexion
                 </button>
               </li>

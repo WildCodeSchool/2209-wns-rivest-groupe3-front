@@ -1,3 +1,5 @@
+import { OutputData } from '@editorjs/editorjs'
+
 export interface IBlog {
   id: string
   name: string
@@ -38,9 +40,9 @@ export interface IArticleContent {
   version: number
   id: string
   current: boolean
-  content: IContent
+  content: IContentType
 }
-export interface IContent {
+export interface IContentType extends OutputData {
   time: number
   version: string
   blocks: IContentBlock[]

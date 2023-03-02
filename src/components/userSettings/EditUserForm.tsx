@@ -218,10 +218,18 @@ const EditUserForm = ({
         </div>
       </div>
       <div className="flex justify-center gap-4 mt-12">
-        <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
+        <button
+          id="edit-profile-save"
+          className="btn btn-primary"
+          onClick={handleSubmit(onSubmit)}
+        >
           Enregistrer
         </button>
-        <button className="btn btn-error" onClick={onCancelClick}>
+        <button
+          id="edit-profile-cancel"
+          className="btn btn-error"
+          onClick={onCancelClick}
+        >
           Annuler
         </button>
       </div>

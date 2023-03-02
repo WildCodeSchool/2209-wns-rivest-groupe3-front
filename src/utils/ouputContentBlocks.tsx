@@ -1,3 +1,4 @@
+import parse from 'html-react-parser'
 import { IContentBlock } from './interfaces/Interfaces'
 
 const outputData = (block: IContentBlock, index: number) => {
@@ -47,7 +48,7 @@ const outputData = (block: IContentBlock, index: number) => {
           return (
             <ul key={index} style={{ textAlign: 'left' }}>
               {block.data.items?.map((element, liIndex) => {
-                return <li key={`li-${index}${liIndex}`}>{element}</li>
+                return <li key={`li-${index}${liIndex}`}>{parse(element)}</li>
               })}
             </ul>
           )
@@ -55,7 +56,7 @@ const outputData = (block: IContentBlock, index: number) => {
           return (
             <ol key={index} style={{ textAlign: 'left' }}>
               {block.data.items?.map((element, liIndex) => {
-                return <li key={`li-${index}${liIndex}`}>{element}</li>
+                return <li key={`li-${index}${liIndex}`}>{parse(element)}</li>
               })}
             </ol>
           )
@@ -66,7 +67,7 @@ const outputData = (block: IContentBlock, index: number) => {
       return (
         <figure>
           <blockquote>
-            <p>{block.data.text}</p>
+            <p>{parse(block.data.text || '')}</p>
           </blockquote>
           <figcaption>{block.data.caption}</figcaption>
         </figure>
@@ -75,7 +76,7 @@ const outputData = (block: IContentBlock, index: number) => {
     default:
       return (
         <p key={index} className="text-justify">
-          {block.data.text}
+          {parse(block.data.text || '')}
         </p>
       )
   }
