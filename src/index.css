@@ -2,73 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+@font-face {
+  font-family: 'Lobster';
+  src: url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300');
 }
-a:hover {
-  color: #535bf2;
+
+.btn-primary,
+.btn-secondary,
+.btn-square,
+.btn-info {
+  @apply text-white;
+}
+
+.btn {
+  @apply rounded-md;
+}
+
+.btn-circle {
+  @apply rounded-full;
+}
+
+.card {
+  @apply rounded-md;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply scrollbar;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.shadow-card {
+  @apply shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px];
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.shadow-card:hover {
+  @apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px];
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.shadow-article:hover {
+  @apply shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px];
+}
+
+/***** Editor js style overrides *****/
+.ce-header {
+  @apply font-bold font-lobster p-2;
+}
+h1.ce-header {
+  @apply text-7xl;
+}
+h2.ce-header {
+  @apply text-5xl;
+}
+h3.ce-header {
+  @apply text-3xl;
+}
+h4.ce-header {
+  @apply text-xl;
+}
+h5.ce-header {
+  @apply text-lg;
+}
+.ce-toolbar--opened {
+  @apply -right-14;
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
   }
-  a:hover {
-    color: #747bff;
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
   }
-  button {
-    background-color: #f9f9f9;
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #09243452;
+    border-radius: 80vh;
+    /* border: 3px solid #f6f7ed; */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #092434;
   }
 }

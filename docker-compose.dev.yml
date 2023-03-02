@@ -1,64 +1,66 @@
 services:
-    db:
-        container_name: postgresDB
-        image: postgres
-        restart: always
-        volumes:
-            - ../back/data:/var/lib/postgresql/data
-        ports:
-            - 5432:5432
-        environment:
-            POSTGRES_DB: postgres
-            PGUSER: postgres
-            POSTGRES_PASSWORD: example
-            PGDATA: /var/lib/postgresql/data/pgdata
-        healthcheck:
-            test: ['CMD-SHELL', 'pg_isready']
-            interval: 5s
-            timeout: 10s
-            retries: 15
-            start_period: 30s
-    backend:
-        container_name: backend
-        build:
-            context: ../back
-            dockerfile: Dockerfile.dev
-        ports:
-            - 5000:5000
-        command: [sh, -cx, 'npm run dev']
-        volumes:
-            - ../back/src/:/app/src/
-        depends_on:
-            'db':
-                condition: service_healthy
-        healthcheck:
-            test:
-                [
-                    'CMD',
-                    'curl',
-                    '--request',
-                    'POST',
-                    '--header',
-                    "'content-type: application/json'",
-                    '--url',
-                    'http://localhost:5000/',
-                    '--data',
-                    '{"query":"query { __typename }"}',
-                ]
-            interval: 5s
-            timeout: 10s
-            retries: 10
-            start_period: 10s
+  db:
+    container_name: postgresDB
+    image: postgres
+    restart: always
+    volumes:
+      - ../back/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: postgres
+      PGUSER: postgres
+      POSTGRES_PASSWORD: example
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 5s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
+  backend:
+    container_name: backend
+    build:
+      context: ../back
+      dockerfile: Dockerfile.dev
+    env_file:
+      - ../back/.env
+    ports:
+      - 5000:5000
+    command: [sh, -cx, 'npm run dev']
+    volumes:
+      - ../back/src/:/app/src/
+    depends_on:
+      'db':
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--request',
+          'POST',
+          '--header',
+          "'content-type: application/json'",
+          '--url',
+          'http://localhost:5000/',
+          '--data',
+          '{"query":"query { __typename }"}',
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
 
-    frontend:
-        container_name: frontend
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        ports:
-            - 8080:8080
-        volumes:
-            - ./src/:/app/src/
-        depends_on:
-            'backend':
-                condition: service_healthy
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src/:/app/src/
+    depends_on:
+      'backend':
+        condition: service_healthy
