@@ -7,6 +7,7 @@ interface Props {
     preview: any
   }
   reset: () => void
+  type?: string | null
 }
 
 const DragAndDrop = ({
@@ -14,6 +15,7 @@ const DragAndDrop = ({
   handleImageChange,
   image,
   reset,
+  type = null
 }: Props) => {
   return (
     <div className="max-w-xl flex flex-col items-center gap-2">
@@ -94,9 +96,16 @@ const DragAndDrop = ({
                 />
               </label>
             </div>
-            <img src={image.preview} alt="image" className="w-24" />
+            <figure
+          className={`${
+            type === 'avatar' ? 'w-96 aspect-square rounded-full' : 'w-48 h-24'
+          } overflow-hidden flex justify-center items-center border border-white`}
+        >
+
+            <img src={image.preview} alt="image" className="min-w-full min-h-full object-cover" />
+        </figure>
           </figure>
-          <button onClick={handleImageUpload} className="btn btn-info">
+          <button type="button" onClick={handleImageUpload} className="btn btn-info">
             Sauvegarder l'image
           </button>
         </>

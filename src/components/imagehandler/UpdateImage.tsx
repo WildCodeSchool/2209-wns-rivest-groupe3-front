@@ -1,13 +1,21 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface IPropsUpdate {
+  type: 'avatar' | 'cover' | 'article'
   imgUrl: string
   updateUrl: string
   deleteUrl: string
+  updateBackendUrlImg: (imgUrl: string | null) => Promise<any>
 }
 
-const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
+const UpdateImage = ({
+  type,
+  imgUrl,
+  updateUrl,
+  deleteUrl,
+  updateBackendUrlImg,
+}: IPropsUpdate) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
     imageUrl: string | null
@@ -17,8 +25,12 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
     imageUrl: null,
     preview: null,
   })
-
   const token = localStorage.getItem('token')
+  const [dataImg, setDataImg] = useState<string | null>(null)
+
+  useEffect(() => {
+    setDataImg(`http://localhost:8000${imgUrl}`)
+  }, [])
 
   const resetImage = () => {
     setSelectedImage({
@@ -35,7 +47,7 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
           Authorization: token,
         },
       })
-      alert('Cover deleted')
+      await updateBackendUrlImg(null)
     } catch (err) {
       console.error(err)
     }
@@ -57,20 +69,25 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
 
     try {
       await axios.get(`http://localhost:8000${imgUrl}`)
-      await axios.put(`http://localhost:8000${updateUrl}`, formData, {
-        headers: {
-          Authorization: token,
-        },
-      })
-      alert('Cover updated !')
+      const { data } = await axios.put(
+        `http://localhost:8000${updateUrl}`,
+        formData,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      console.log(data)
+      await updateBackendUrlImg(data.filename)
     } catch (err) {
       console.error(err)
     }
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <figure className="relative">
+    <div className="flex flex-col items-center gap-4">
+      <div className="relative">
         <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/2 flex gap-2">
           {selectedImage.preview && (
             <button
@@ -116,12 +133,32 @@ const UpdateImage = ({ imgUrl, updateUrl, deleteUrl }: IPropsUpdate) => {
             />
           </label>
         </div>
-        <img
-          src={selectedImage?.preview ?? `http://localhost:8000${imgUrl}`}
-          alt="blog cover"
-          className="w-24"
-        />
-      </figure>
+        <figure
+          className={`${
+            type === 'avatar' ? 'w-96 aspect-square rounded-full' : 'w-48 h-24'
+          } overflow-hidden flex justify-center items-center border border-white`}
+        >
+          {selectedImage.preview ? (
+            <img
+              src={selectedImage.preview}
+              alt="blog cover"
+              className="object-cover min-w-full min-h-full"
+              width="400"
+              height="400"
+            />
+          ) : dataImg ? (
+            <img
+              src={dataImg}
+              alt="blog cover"
+              className="object-cover min-w-full min-h-full"
+              width="400"
+              height="400"
+            />
+          ) : (
+            <div className="bg-white h-full w-full" />
+          )}
+        </figure>
+      </div>
       {selectedImage.preview ? (
         <div className="flex justify-center gap-4 w-full py-4">
           <button

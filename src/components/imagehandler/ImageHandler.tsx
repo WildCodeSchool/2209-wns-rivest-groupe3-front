@@ -6,6 +6,8 @@ interface IPropsImageHandler {
   imgUrl: string | null | undefined
   blogId?: string | null
   articleId?: string | null
+  updateBackendUrlImg: (imgUrl: string | null)=>Promise<any>
+
 }
 
 const ImageHandler = ({
@@ -13,6 +15,7 @@ const ImageHandler = ({
   imgUrl,
   blogId = null,
   articleId = null,
+  updateBackendUrlImg
 }: IPropsImageHandler) => {
   const dataFilename = imgUrl ? imgUrl.split('/').at(-1) : null
 
@@ -53,9 +56,9 @@ const ImageHandler = ({
   }
 
   return dataFilename && imgUrl ? (
-    <UpdateImage imgUrl={imgUrl} updateUrl={url.updateUrl} deleteUrl={url.deleteUrl} />
+    <UpdateImage type={type} imgUrl={imgUrl} updateUrl={url.updateUrl} deleteUrl={url.deleteUrl} updateBackendUrlImg={updateBackendUrlImg} />
   ) : (
-    <PostImage postUrl={url.postUrl} />
+    <PostImage type={type} postUrl={url.postUrl} updateBackendUrlImg={updateBackendUrlImg} />
   )
 }
 
