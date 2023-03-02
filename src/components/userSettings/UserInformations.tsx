@@ -1,19 +1,32 @@
-import { IUser } from '../../contexts/UserContext'
+import { gql, useMutation } from '@apollo/client'
+import { useContext } from 'react'
+import { NotificationContext } from '../../contexts/NotificationContext'
+import { IUser, IUserContext, UserContext } from '../../contexts/UserContext'
+import { GET_USER } from '../../routes/userSettings'
 import DeleteUser from '../buttons/DeleteUser'
+import ImageHandler from '../imagehandler/ImageHandler'
 
-interface IUserInfromation {
+interface IUserInformation {
   userInformations: IUser
   setShowEditPasswordForm: React.Dispatch<React.SetStateAction<boolean>>
   setShowUserInformations: React.Dispatch<React.SetStateAction<boolean>>
   setShowEditUserForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+const UPDATE_AVATAR = gql`
+  mutation UpdateAvatar($avatar: String) {
+    updateUser(avatar: $avatar) {
+      avatar
+    }
+  }
+`
+
 const UserInformations = ({
   userInformations,
   setShowUserInformations,
   setShowEditUserForm,
   setShowEditPasswordForm,
-}: IUserInfromation) => {
+}: IUserInformation) => {
   const onEditClick = () => {
     setShowUserInformations(false)
     setShowEditUserForm(true)
@@ -22,26 +35,59 @@ const UserInformations = ({
     setShowUserInformations(false)
     setShowEditPasswordForm(true)
   }
+  const { user, setUser } = useContext<IUserContext>(UserContext)
+  const { setMessage } = useContext(NotificationContext)
+  const [updateAvatarImg] = useMutation(UPDATE_AVATAR, {
+    refetchQueries: [
+      {
+        query: GET_USER,
+        variables: { getOneUserId: user?.id },
+      },
+    ],
+  })
+
+  const updateAvatarUrl = async (avatarUrl: string | null) => {
+    try {
+      const dataAvatar = await updateAvatarImg({
+        variables: { avatar: avatarUrl },
+      })
+      const newAvatar = dataAvatar.data.updateUser.avatar as string
+      if (user) {
+        const newUser = { ...user, avatar: newAvatar }
+        const localUser = {
+          id: newUser.id,
+          nickname: newUser.nickname,
+          avatar: newUser.avatar,
+        }
+        localStorage.setItem('user', JSON.stringify(localUser))
+        setUser(newUser)
+      }
+      setMessage({
+        text: `Votre avatar a été mis à jour avec succès !`,
+        type: 'success',
+      })
+    } catch (err) {
+      setMessage({
+        text: `Impossible de mettre à jour votre avatar. ${err}.`,
+        type: 'error',
+      })
+      console.error(err)
+    }
+  }
 
   return (
     <>
       <h1 className="text-5xl font-bold text-center mb-16">Mes informations</h1>
-      <div className="flex">
-        <div className="w-2/6 justify-center">
-          {userInformations.avatar ? (
-            <img
-              src={userInformations.avatar}
-              alt={`${userInformations.nickname}-profil-picture`}
-            />
-          ) : (
-            <img
-              src={
-                'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
-              }
-            />
-          )}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div className="flex flex-col justify-center items-center gap-8">
+          <span className="font-bold text-3xl">Avatar</span>
+          <ImageHandler
+            type="avatar"
+            imgUrl={userInformations.avatar}
+            updateBackendUrlImg={updateAvatarUrl}
+          />
         </div>
-        <div className="w-4/6">
+        <div className="w-full md:w-1/2">
           <h2 className="card-title">Pseudo</h2>
           <p className="mb-6">{userInformations?.nickname}</p>
           <h2 className="card-title">Prénom</h2>

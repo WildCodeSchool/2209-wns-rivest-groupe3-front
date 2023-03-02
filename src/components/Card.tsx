@@ -6,11 +6,15 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
     return (
       <Link
         to={`/blogs/${blog.slug}`}
-        className="w-full group card bg-base-100 shadow-card m-auto cursor-pointer transition-all duration-300"
+        className="w-full group card bg-base-100 shadow-card m-auto cursor-pointer transition-all duration-300 h-full"
       >
         <figure className="relative w-full overflow-hidden">
           <img
-            src="https://placeimg.com/400/225/arch"
+            src={
+              blog.coverUrl
+                ? `http://localhost:8000${blog.coverUrl}`
+                : '/src/assets/Tabasblog-placeholder.png'
+            }
             alt="Shoes"
             className="w-full group-hover:scale-110 transition-all duration-300"
           />
@@ -29,8 +33,8 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
           </div>
           <p>{blog.description}</p>
           <span className="italic text-sm text-end">
-            Créé le
-            {new Intl.DateTimeFormat('fr-FR').format(new Date(blog.createdAt))}
+            Créé le{' '}
+            {new Intl.DateTimeFormat('fr-FR').format(new Date(blog.createdAt))}{' '}
             par <strong>{blog.user.nickname}</strong>
           </span>
         </div>
@@ -44,7 +48,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
       >
         <figure className="relative w-full overflow-hidden">
           <img
-            src="https://placeimg.com/400/225/arch"
+            src="/src/assets/Tabasblog-placeholder.png"
             alt="Shoes"
             className="w-full group-hover:scale-110 transition-all duration-300"
           />

@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import Avatar from '../../components/Avatar'
 import StaticPagination from '../../components/buttons/StaticPagination'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
@@ -13,16 +14,26 @@ const BlogT1 = ({
   editBlog,
 }: IPropsBlogTemplate) => {
   const { user } = useContext(UserContext)
-  const { name, description } = blog
+  const { name, description, coverUrl } = blog
   const blogDescription = description?.length
     ? description
     : 'Aucune description'
 
-  const [searchInput, setSearchInput] = useState('')
-
+    const [searchInput, setSearchInput] = useState('')
   return (
     <main className="relative min-h-screen w-full mx-auto my-8 flex flex-col items-center gap-8">
-      <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
+      <header className="relative h-96 w-full m-auto bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
+        {coverUrl ? (
+          <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+            <img
+              className="w-full"
+              src={`http://localhost:8000${coverUrl}`}
+              alt="couverture"
+            />
+          </figure>
+        ) : (
+          <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+        )}
         <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {name}
         </h1>
@@ -32,9 +43,7 @@ const BlogT1 = ({
         <aside className="w-96 h-full p-8 bg-gray-300 rounded-md sticky top-16">
           <div className="flex flex-col justify-center items-center h-full w-full gap-8">
             <div className="avatar">
-              <div className="w-80 mask mask-squircle mx-auto">
-                <img src="https://placeimg.com/192/192/people" />
-              </div>
+              <Avatar imgUrl={editor.avatar} width='w-80'/>
             </div>
             <h2 className="font-lobster text-5xl">{editor.nickname}</h2>
             <p className="text-xl">
