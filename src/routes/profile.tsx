@@ -1,24 +1,11 @@
 import { useContext } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 import { IUserContext } from '../contexts/UserContext'
+import { GET_USER } from '../queries/user'
 
 import Card from '../components/Card'
-
-const GET_USER = gql`
-  query GetOneUser($getOneUserId: String!) {
-    getOneUser(id: $getOneUserId) {
-      nickname
-      lastName
-      firstName
-      description
-      createdAt
-      city
-      avatar
-    }
-  }
-`
 
 const Profile = () => {
   const { user } = useContext<IUserContext>(UserContext)
@@ -65,12 +52,14 @@ const Profile = () => {
       </section>
       <div className="flex">
         <button
+          id="create-blog-button"
           className="btn btn-primary text-white mr-2"
           onClick={() => onClickCreateBlog()}
         >
           Créer un blog
         </button>
         <button
+          id="edit-profile-button"
           className="btn btn-primary text-white ml-2"
           onClick={() => onClickProfile()}
         >
