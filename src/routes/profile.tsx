@@ -52,12 +52,14 @@ const Profile = () => {
       </section>
       <div className="flex">
         <button
+          id="create-blog-button"
           className="btn btn-primary text-white mr-2"
           onClick={() => onClickCreateBlog()}
         >
           Créer un blog
         </button>
         <button
+          id="edit-profile-button"
           className="btn btn-primary text-white ml-2"
           onClick={() => onClickProfile()}
         >

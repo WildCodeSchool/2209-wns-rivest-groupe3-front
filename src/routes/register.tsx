@@ -139,6 +139,7 @@ const Register = () => {
             Déjà membre ?
           </Link>
           <button
+            id="create-account-button"
             onClick={handleSubmit(onSubmit)}
             type="submit"
             className="btn btn-primary"
