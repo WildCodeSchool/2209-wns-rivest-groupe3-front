@@ -65,7 +65,11 @@ const DeleteUser = () => {
 
   return (
     <>
-      <label htmlFor="delete-user-modal" className="btn btn-error text-white">
+      <label
+        id="delete-account"
+        htmlFor="delete-user-modal"
+        className="btn btn-error text-white"
+      >
         Supprimer mon compte
       </label>
       <input type="checkbox" id="delete-user-modal" className="modal-toggle" />
@@ -99,6 +103,7 @@ const DeleteUser = () => {
           />
           <div className="modal-action flex items-center justify-center">
             <label
+              id="delete-account-confirm"
               htmlFor="delete-user-modal"
               className="btn btn-sm text-white btn-error"
               onClick={handleSubmit(deleteUserOnClick)}
@@ -106,6 +111,7 @@ const DeleteUser = () => {
               Oui supprimer mon comtpe
             </label>
             <label
+              id="delete-account-cancel"
               onClick={onCancelClick}
               htmlFor="delete-user-modal"
               className="btn btn-sm btn-ghost"
