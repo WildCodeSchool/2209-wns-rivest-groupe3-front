@@ -30,7 +30,7 @@ describe('Test display of the Routes pages', () => {
   })
 
   it('should render Linsting blogs Page', async () => {
-    render(<WrappedContextProvider children={<ListingBlogs blogs={[]} />} />)
+    render(<WrappedContextProvider children={<ListingBlogs />} />)
     expect(await screen.findByText('Blogs')).toBeInTheDocument()
   })
 
