@@ -31,6 +31,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
+          context: '{{defaultContext}}'
+          file: ./Dockerfile.dev
           push: true
-          context: '{{defaultContext}}:front'
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tabas-front:latest
