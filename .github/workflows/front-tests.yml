@@ -32,5 +32,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context: '{{defaultContext}}'
+          context: '{{defaultContext}}:front'
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tabas-front:latest
