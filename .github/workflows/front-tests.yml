@@ -14,11 +14,11 @@ jobs:
         uses: actions/checkout@v2
       - name: create back env file
         run: |
-          touch .env.test
+          touch .env.back.test
           echo "NODE_ENV=test
-          PORT=5555
+          PORT=5000
           JWT_SECRET_KEY=05165447ad9dc0ee73ebd61faeaf0830
-          " >> ../back/env.test
+            " >> .env.back.test
       - name: Goto front and run tests
         run: npm i && npm run citest
   docker:

@@ -20,13 +20,11 @@ services:
 
   backend-test:
     container_name: backend-test
-    build:
-      context: ../back
-      dockerfile: Dockerfile.dev
+    image: tbiarneix/tabas-back:latest
     env_file:
-      - ./.env.test
+      - .env.back.test
     ports:
-      - 5555:5555
+      - 5000:5000
     command: [sh, -cx, 'npm run dev']
     depends_on:
       'db-test':
@@ -41,7 +39,7 @@ services:
           '--header',
           "'content-type: application/json'",
           '--url',
-          'http://localhost:5555/',
+          'http://localhost:5000/',
           '--data',
           '{"query":"query { __typename }"}',
         ]
@@ -56,7 +54,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 8088:8088
+      - 8080:8080
     depends_on:
       'backend-test':
         condition: service_healthy
