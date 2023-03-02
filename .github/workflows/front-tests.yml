@@ -1,11 +1,10 @@
 name: front-tests
 
-on: 
+on:
   push:
     branches:
       - main
-  pull_request
-
+  pull_request:
 
 jobs:
   front-tests:
