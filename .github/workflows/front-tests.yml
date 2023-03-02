@@ -1,6 +1,10 @@
 name: front-tests
 
-on: pull_request
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   front-tests:
@@ -27,6 +31,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          push: true
           context: '{{defaultContext}}'
+          file: ./Dockerfile.dev
+          push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tabas-front:latest
