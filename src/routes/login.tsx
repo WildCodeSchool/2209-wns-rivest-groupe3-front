@@ -103,6 +103,7 @@ const Login = () => {
             Pas encore de comtpe ?
           </Link>
           <button
+            id="connexion-button"
             onClick={handleSubmit(onSubmit)}
             type="submit"
             className="btn btn-primary"
