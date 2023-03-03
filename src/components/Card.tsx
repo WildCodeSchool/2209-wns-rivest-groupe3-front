@@ -13,7 +13,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
             src={
               blog.coverUrl
                 ? `http://localhost:8000${blog.coverUrl}`
-                : '/src/assets/Tabasblog-placeholder.png'
+                : '/src/assets/Tabasblog-default.png'
             }
             alt="Shoes"
             className="w-full group-hover:scale-110 transition-all duration-300"
@@ -48,7 +48,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
       >
         <figure className="relative w-full overflow-hidden">
           <img
-            src="/src/assets/Tabasblog-placeholder.png"
+            src="/src/assets/Tabasblog-default.png"
             alt="Shoes"
             className="w-full group-hover:scale-110 transition-all duration-300"
           />
