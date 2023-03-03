@@ -8,6 +8,7 @@ export interface IBlog {
   template: number
   createdAt: Date
   user: IUser
+  coverUrl: string | null
   articles: IArticle[]
 }
 

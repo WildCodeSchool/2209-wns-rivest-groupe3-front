@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react'
 
 export interface IUser {
-  id: string
+  id?: string
   nickname: string
   email: string
   lastName: string

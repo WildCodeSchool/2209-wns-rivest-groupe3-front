@@ -9,7 +9,7 @@ const CardT2 = ({ article }: { article: IArticle }) => {
     >
       <figure className="relative w-full overflow-hidden">
         <img
-          src="https://placeimg.com/400/225/arch"
+          src="/src/assets/Tabasblog-placeholder.png"
           alt="Shoes"
           className="w-full group-hover:scale-110 transition-all duration-300"
         />

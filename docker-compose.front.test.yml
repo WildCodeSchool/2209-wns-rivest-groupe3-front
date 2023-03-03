@@ -1,14 +1,13 @@
 services:
-  db:
-    container_name: postgresDB
+  db-test:
+    container_name: test-postgresDB
     image: postgres
     restart: always
-    volumes:
-      - ../back/data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5433:5433
     environment:
       POSTGRES_DB: postgres
+      PGPORT: 5433
       PGUSER: postgres
       POSTGRES_PASSWORD: example
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -18,20 +17,17 @@ services:
       timeout: 10s
       retries: 15
       start_period: 30s
-  backend:
-    container_name: backend
-    build:
-      context: ../back
-      dockerfile: Dockerfile.dev
+
+  backend-test:
+    container_name: backend-test
+    image: tbiarneix/tabas-back:latest
     env_file:
-      - ../back/.env
+      - .env.back.test
     ports:
       - 5000:5000
     command: [sh, -cx, 'npm run dev']
-    volumes:
-      - ../back/src/:/app/src/
     depends_on:
-      'db':
+      'db-test':
         condition: service_healthy
     healthcheck:
       test:
@@ -51,33 +47,14 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
-  images:
-    container_name: images-service
-    env_file:
-      - ../images-service/.env
-    build: ../images-service
-    volumes:
-      - ../images-service/src:/app/src
-      - ../images-service/uploads:/app/uploads
-    ports:
-      - 8000:8000
-    healthcheck:
-      test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
-  frontend:
-    container_name: frontend
+  frontend-test:
+    container_name: frontend-test
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
       - 8080:8080
-    volumes:
-      - ./src/:/app/src/
     depends_on:
-      'backend':
-        condition: service_healthy
-      'images':
+      'backend-test':
         condition: service_healthy
