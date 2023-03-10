@@ -18,6 +18,17 @@ services:
       timeout: 10s
       retries: 15
       start_period: 30s
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DESIGN=hydra
+    ports:
+      - 8081:8080
+    depends_on:
+      db:
+        condition: service_healthy
   backend:
     container_name: backend
     build:
