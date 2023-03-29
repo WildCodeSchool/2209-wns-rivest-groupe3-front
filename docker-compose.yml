@@ -7,10 +7,12 @@ services:
       - ../back/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    env_file:
+      - ../back/.env
     environment:
       POSTGRES_DB: postgres
       PGUSER: postgres
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: Sp1IMBUY03kSwxaiBZXMFr9zT9qjfHPE4jYyBbW
       PGDATA: /var/lib/postgresql/data/pgdata
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
@@ -31,16 +33,12 @@ services:
         condition: service_healthy
   backend:
     container_name: backend
-    build:
-      context: ../back
-      dockerfile: Dockerfile.dev
+    image: tbiarneix/tabas-back
     env_file:
       - ../back/.env
     ports:
       - 5000:5000
-    command: [sh, -cx, 'npm run dev']
-    volumes:
-      - ../back/src/:/app/src/
+    command: [sh, -cx, 'npm run build && npm run start']
     depends_on:
       'db':
         condition: service_healthy
@@ -66,10 +64,10 @@ services:
     container_name: images-service
     env_file:
       - ../images-service/.env
-    build: ../images-service
+    image: tbiarneix/tabas-images-service
     volumes:
-      - ../images-service/src:/app/src
       - ../images-service/uploads:/app/uploads
+    command: [sh, -cx, 'npm run build && npm run start-prod']
     ports:
       - 8000:8000
     healthcheck:
@@ -77,16 +75,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-
   frontend:
     container_name: frontend
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    image: tbiarneix/tabas-front
+    env_file:
+      - ./.env
     ports:
       - 8080:8080
-    volumes:
-      - ./src/:/app/src/
+    command: [sh, -cx, 'npm run build']
     depends_on:
       'backend':
         condition: service_healthy

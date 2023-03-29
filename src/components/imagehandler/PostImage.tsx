@@ -9,7 +9,7 @@ const PostImage = ({
 }: {
   type: 'avatar' | 'cover' | 'article'
   postUrl: string
-  updateBackendUrlImg: (imgUrl: string)=>Promise<any>
+  updateBackendUrlImg: (imgUrl: string) => Promise<any>
 }) => {
   const [selectedImage, setSelectedImage] = useState<{
     image: Blob | null
@@ -45,7 +45,7 @@ const PostImage = ({
     const token = localStorage.getItem('token')
     try {
       const { data } = await axios.post(
-        `http://localhost:8000${postUrl}`,
+        `${import.meta.env.VITE_IMAGES_URL}${postUrl}`,
         formData,
         {
           headers: {

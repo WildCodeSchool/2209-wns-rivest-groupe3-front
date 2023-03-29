@@ -29,7 +29,7 @@ const UpdateImage = ({
   const [dataImg, setDataImg] = useState<string | null>(null)
 
   useEffect(() => {
-    setDataImg(`http://localhost:8000${imgUrl}`)
+    setDataImg(`${import.meta.env.VITE_IMAGES_URL}${imgUrl}`)
   }, [])
 
   const resetImage = () => {
@@ -42,7 +42,7 @@ const UpdateImage = ({
 
   const deleteImg = async () => {
     try {
-      await axios.delete(`http://localhost:8000${deleteUrl}`, {
+      await axios.delete(`${import.meta.env.VITE_IMAGES_URL}${deleteUrl}`, {
         headers: {
           Authorization: token,
         },
@@ -68,9 +68,9 @@ const UpdateImage = ({
       formData.append('file', selectedImage.image, selectedImage.image.name)
 
     try {
-      await axios.get(`http://localhost:8000${imgUrl}`)
+      await axios.get(`${import.meta.env.VITE_IMAGES_URL}${imgUrl}`)
       const { data } = await axios.put(
-        `http://localhost:8000${updateUrl}`,
+        `${import.meta.env.VITE_IMAGES_URL}${updateUrl}`,
         formData,
         {
           headers: {
