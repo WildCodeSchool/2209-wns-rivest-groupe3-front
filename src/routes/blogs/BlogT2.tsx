@@ -18,7 +18,7 @@ const BlogT2 = ({
   const blogDescription = description?.length
     ? description
     : 'Aucune description'
-    const [searchInput, setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState('')
   return (
     <>
       <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -31,7 +31,7 @@ const BlogT2 = ({
             <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
               <img
                 className="w-full"
-                src={`http://localhost:8000${coverUrl}`}
+                src={`${import.meta.env.VITE_IMAGES_URL}${coverUrl}`}
                 alt={`couverture du blog ${name}`}
               />
             </figure>

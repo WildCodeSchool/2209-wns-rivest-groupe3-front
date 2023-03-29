@@ -19,7 +19,7 @@ const BlogT1 = ({
     ? description
     : 'Aucune description'
 
-    const [searchInput, setSearchInput] = useState('')
+  const [searchInput, setSearchInput] = useState('')
   return (
     <main className="relative min-h-screen w-full mx-auto my-8 flex flex-col items-center gap-8">
       <header className="relative h-96 w-full m-auto bg-opacity-25 flex flex-col justify-center items-center text-white gap-4">
@@ -27,7 +27,7 @@ const BlogT1 = ({
           <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
             <img
               className="w-full"
-              src={`http://localhost:8000${coverUrl}`}
+              src={`${import.meta.env.VITE_IMAGES_URL}${coverUrl}`}
               alt="couverture"
             />
           </figure>
@@ -43,7 +43,7 @@ const BlogT1 = ({
         <aside className="w-96 h-full p-8 bg-gray-300 rounded-md sticky top-16">
           <div className="flex flex-col justify-center items-center h-full w-full gap-8">
             <div className="avatar">
-              <Avatar imgUrl={editor.avatar} width='w-80'/>
+              <Avatar imgUrl={editor.avatar} width="w-80" />
             </div>
             <h2 className="font-lobster text-5xl">{editor.nickname}</h2>
             <p className="text-xl">

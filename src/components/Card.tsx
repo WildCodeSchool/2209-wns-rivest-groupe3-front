@@ -12,7 +12,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
           <img
             src={
               blog.coverUrl
-                ? `http://localhost:8000${blog.coverUrl}`
+                ? `${import.meta.env.VITE_IMAGES_URL}${blog.coverUrl}`
                 : '/src/assets/Tabasblog-default.png'
             }
             alt="Shoes"
