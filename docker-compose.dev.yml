@@ -7,11 +7,8 @@ services:
       - ../back/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_DB: postgres
-      PGUSER: postgres
-      POSTGRES_PASSWORD: example
-      PGDATA: /var/lib/postgresql/data/pgdata
+    env_file:
+      - ../back/.env
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s

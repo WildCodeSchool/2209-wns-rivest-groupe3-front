@@ -9,11 +9,6 @@ services:
       - 5432:5432
     env_file:
       - ../back/.env
-    environment:
-      POSTGRES_DB: postgres
-      PGUSER: postgres
-      POSTGRES_PASSWORD: Sp1IMBUY03kSwxaiBZXMFr9zT9qjfHPE4jYyBbW
-      PGDATA: /var/lib/postgresql/data/pgdata
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s
