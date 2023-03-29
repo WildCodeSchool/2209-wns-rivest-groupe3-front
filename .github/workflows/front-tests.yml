@@ -16,7 +16,7 @@ jobs:
         run: |
           touch .env.back.test
           echo "NODE_ENV=test
-          PORT=5000
+          PORT=5555
           JWT_SECRET_KEY=05165447ad9dc0ee73ebd61faeaf0830
             " >> .env.back.test
       - name: create front env file
