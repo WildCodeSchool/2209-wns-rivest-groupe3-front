@@ -18,6 +18,10 @@ jobs:
           echo "NODE_ENV=test
           PORT=5555
           JWT_SECRET_KEY=05165447ad9dc0ee73ebd61faeaf0830
+          POSTGRES_DB= postgres
+          PGUSER=postgres
+          POSTGRES_PASSWORD=example
+          PGDATA=/var/lib/postgresql/data/pgdata
             " >> .env.back.test
       - name: create front env file
         run: |
