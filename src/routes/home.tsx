@@ -20,7 +20,7 @@ export const Home = () => {
     <>
       <section
         className="hero min-h-screen bg-gradient-to-r from-primary to-neutral text-white"
-        style={{ backgroundImage: `url("src/assets/bg-dark.png")` }}
+        style={{ backgroundImage: `url("bg-dark.png")` }}
       >
         <div className="h-full w-full text-start flex justify-around items-center">
           <div className="max-w-xl space-y-16 mx-auto">
@@ -59,11 +59,7 @@ export const Home = () => {
                 Créer ton espace personnel et afin de disposer de toutes les
                 fonctionnalités nécessaires pour créer et gérer ton blog.
               </p>
-              <img
-                src="src/assets/login.svg"
-                alt="login"
-                className="w-40 h-40 m-auto"
-              />
+              <img src="login.svg" alt="login" className="w-40 h-40 m-auto" />
             </div>
           </div>
           <div className="card w-96 h-96 bg-base-100 shadow-card -rotate-6">
@@ -75,11 +71,7 @@ export const Home = () => {
                 Choisis un thème et un titre pour ton blog puis rédige et
                 alimente-le de contenu: photos, articles, vidéos...
               </p>
-              <img
-                src="src/assets/write.svg"
-                alt="write"
-                className="w-40 h-40 m-auto"
-              />
+              <img src="write.svg" alt="write" className="w-40 h-40 m-auto" />
             </div>
           </div>
           <div className="card w-96 h-96 bg-base-100 shadow-card rotate-6">
@@ -89,11 +81,7 @@ export const Home = () => {
                 Rends ton blog visible via les réseaux sociaux. Les autres
                 utilisateurs pourront te laisser des commentaires.
               </p>
-              <img
-                src="src/assets/share.svg"
-                alt="share"
-                className="w-40 h-40 m-auto"
-              />
+              <img src="share.svg" alt="share" className="w-40 h-40 m-auto" />
             </div>
           </div>
         </article>
