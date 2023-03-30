@@ -10,16 +10,8 @@ interface IStepThree {
 }
 
 const StepThree = ({ handleChange, template }: IStepThree) => {
-  const template1 = [
-    '/src/assets/Template1_1.png',
-    '/src/assets/Template1_2.png',
-    '/src/assets/Template1_3.png',
-  ]
-  const template2 = [
-    '/src/assets/Template2_1.png',
-    '/src/assets/Template2_2.png',
-    '/src/assets/Template2_3.png',
-  ]
+  const template1 = ['/Template1_1.png', '/Template1_2.png', '/Template1_3.png']
+  const template2 = ['/Template2_1.png', '/Template2_2.png', '/Template2_3.png']
 
   const { setTitle, setImages } = useContext(ModalContext)
 
@@ -43,11 +35,7 @@ const StepThree = ({ handleChange, template }: IStepThree) => {
             template === 1 ? 'btn-primary' : 'btn-ghost text-primary'
           }`}
         >
-          <img
-            src="/src/assets/Template1_1.png"
-            alt="template 1"
-            className="w-80"
-          />
+          <img src="/Template1_1.png" alt="template 1" className="w-80" />
           <span className="w-full text-center text-xl">Template 1</span>
           <input
             readOnly
@@ -70,11 +58,7 @@ const StepThree = ({ handleChange, template }: IStepThree) => {
             template === 2 ? 'btn-primary' : 'btn-ghost text-primary'
           }`}
         >
-          <img
-            src="/src/assets/Template2_2.png"
-            alt="template 2"
-            className="w-80"
-          />
+          <img src="/Template2_2.png" alt="template 2" className="w-80" />
           <span className="w-full text-center text-xl">Template 2</span>
           <input
             readOnly

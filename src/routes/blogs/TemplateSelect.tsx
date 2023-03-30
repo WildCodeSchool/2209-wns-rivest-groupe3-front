@@ -15,11 +15,7 @@ const TemplateSelect = ({
           blog.template === 1 ? 'btn-info' : 'btn-ghost'
         }`}
       >
-        <img
-          src="/src/assets/template-1.png"
-          alt="template 1"
-          className="w-24 rounded"
-        />
+        <img src="/template-1.png" alt="template 1" className="w-24 rounded" />
         <span>Template 1</span>
         <input
           className="hidden"
@@ -34,11 +30,7 @@ const TemplateSelect = ({
           blog.template === 2 ? 'btn-info' : 'btn-ghost text-white'
         }`}
       >
-        <img
-          src="/src/assets/template-2.png"
-          alt="template 2"
-          className="w-24 rounded"
-        />
+        <img src="/template-2.png" alt="template 2" className="w-24 rounded" />
         <span>Template 2</span>
         <input
           className="hidden"
