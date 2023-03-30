@@ -9,6 +9,8 @@ services:
       - 5432:5432
     env_file:
       - ../back/.env
+    networks:
+      - production-network
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s
@@ -23,6 +25,8 @@ services:
       - ADMINER_DESIGN=hydra
     ports:
       - 8081:8080
+    networks:
+      - production-network
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +37,8 @@ services:
       - ../back/.env
     ports:
       - 5000:5000
+    networks:
+      - production-network
     command: [sh, -cx, 'npm run build && npm run start']
     depends_on:
       'db':
@@ -65,6 +71,8 @@ services:
     command: [sh, -cx, 'npm run build && npm run start-prod']
     ports:
       - 8000:8000
+    networks:
+      - production-network
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
       interval: 5s
@@ -77,9 +85,14 @@ services:
       - ./.env
     ports:
       - 8080:8080
+    networks:
+      - production-network
     command: [sh, -cx, 'npm run build']
     depends_on:
       'backend':
         condition: service_healthy
       'images':
         condition: service_healthy
+networks:
+  production-network:
+    name: production-network
