@@ -1,12 +1,11 @@
+name: tabas-dev
 services:
-  db:
-    container_name: postgresDB
+  dev-db:
+    container_name: dev-postgresDB
     image: postgres
     restart: always
     volumes:
       - ../back/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     networks:
       - dev-network
     env_file:
@@ -17,8 +16,8 @@ services:
       timeout: 10s
       retries: 15
       start_period: 30s
-  adminer:
-    container_name: adminer
+  dev-adminer:
+    container_name: dev-adminer
     image: adminer
     restart: always
     environment:
@@ -28,10 +27,10 @@ services:
     networks:
       - dev-network
     depends_on:
-      db:
+      dev-db:
         condition: service_healthy
-  backend:
-    container_name: backend
+  dev-backend:
+    container_name: dev-backend
     build:
       context: ../back
       dockerfile: Dockerfile.dev
@@ -45,7 +44,7 @@ services:
     volumes:
       - ../back/src/:/app/src/
     depends_on:
-      'db':
+      'dev-db':
         condition: service_healthy
     healthcheck:
       test:
@@ -65,8 +64,8 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
-  images:
-    container_name: images-service
+  dev-images:
+    container_name: dev-images-service
     env_file:
       - ../images-service/.env
     build: ../images-service
@@ -83,8 +82,8 @@ services:
       timeout: 5s
       retries: 10
 
-  frontend:
-    container_name: frontend
+  dev-frontend:
+    container_name: dev-frontend
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -95,9 +94,9 @@ services:
     volumes:
       - ./src/:/app/src/
     depends_on:
-      'backend':
+      'dev-backend':
         condition: service_healthy
-      'images':
+      'dev-images':
         condition: service_healthy
 networks:
   dev-network:

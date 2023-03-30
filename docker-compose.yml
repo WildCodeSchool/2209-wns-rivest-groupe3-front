@@ -1,3 +1,4 @@
+name: tabas-production
 services:
   db:
     container_name: postgresDB
@@ -5,8 +6,6 @@ services:
     restart: always
     volumes:
       - ../back/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     env_file:
       - ../back/.env
     networks:
@@ -24,7 +23,7 @@ services:
     environment:
       - ADMINER_DESIGN=hydra
     ports:
-      - 8081:8080
+      - 18081:8080
     networks:
       - production-network
     depends_on:
@@ -36,7 +35,7 @@ services:
     env_file:
       - ../back/.env
     ports:
-      - 5000:5000
+      - 15000:5000
     networks:
       - production-network
     command: [sh, -cx, 'npm run build && npm run start']
@@ -70,7 +69,7 @@ services:
       - ../images-service/uploads:/app/uploads
     command: [sh, -cx, 'npm run build && npm run start-prod']
     ports:
-      - 8000:8000
+      - 18000:8000
     networks:
       - production-network
     healthcheck:
@@ -84,7 +83,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - 8080:8080
+      - 18080:8080
     networks:
       - production-network
     command: [sh, -cx, 'npm run build']
