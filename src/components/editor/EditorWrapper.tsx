@@ -1,4 +1,3 @@
-import { useCallback, useRef } from 'react'
 import Image from '@editorjs/image'
 import { createReactEditorJS } from 'react-editor-js'
 

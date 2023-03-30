@@ -9,4 +9,9 @@ export default defineConfig({
     host: true,
   },
   publicDir: 'src/assets',
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
 })
