@@ -86,6 +86,8 @@ services:
       - 18080:8080
     networks:
       - production-network
+    volumes:
+      - ./www/:/app/dist/
     command: [sh, -cx, 'npm run build']
     depends_on:
       'backend':
