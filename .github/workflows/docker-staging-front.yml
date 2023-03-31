@@ -1,0 +1,56 @@
+name: docker-staging-front
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  front-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: create back env file
+        run: |
+          touch .env.back.test
+          echo "NODE_ENV=test
+          PORT=5555
+          JWT_SECRET_KEY=05165447ad9dc0ee73ebd61faeaf0830
+          POSTGRES_DB= postgres
+          PGUSER=postgres
+          POSTGRES_PASSWORD=example
+          PGDATA=/var/lib/postgresql/data/pgdata
+            " >> .env.back.test
+      - name: create front env file
+        run: |
+          touch .env.test
+          echo "VITE_API_URL=http://localhost:5555
+          VITE_IMAGES_URL=http://localhost:8000
+            " >> .env.test
+      - name: Goto front and run tests
+        run: npm i && npm run citest
+  push_to_docker:
+    name: Push Docker image to Docker Hub
+    needs: front-tests
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: '{{defaultContext}}'
+          file: ./Dockerfile.dev
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tabas-front-staging:latest
