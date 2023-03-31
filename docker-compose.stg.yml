@@ -31,7 +31,7 @@ services:
         condition: service_healthy
   stg-backend:
     container_name: stg-backend
-    image: tbiarneix/tabas-back-stg
+    image: tbiarneix/tabas-back-staging
     env_file:
       - ../back/.env.stg
     ports:
@@ -63,8 +63,8 @@ services:
   stg-images:
     container_name: stg-images-service
     env_file:
-      - ../images-service/.env
-    image: tbiarneix/tabas-images-service-stg
+      - ../images-service/.env.stg
+    image: tbiarneix/tabas-images-service-staging
     volumes:
       - ../images-service/uploads:/app/uploads
     command: [sh, -cx, 'npm run build && npm run start-prod']
@@ -79,9 +79,9 @@ services:
       retries: 10
   stg-frontend:
     container_name: stg-frontend
-    image: tbiarneix/tabas-front-stg
+    image: tbiarneix/tabas-front-staging
     env_file:
-      - ./.env
+      - ./.env.stg
     ports:
       - 28080:8080
     networks:
