@@ -1,50 +1,46 @@
-name: tabas-dev
+name: tabas-stg
 services:
-  dev-db:
-    container_name: dev-postgresDB
+  stg-db:
+    container_name: stg-postgresDB
     image: postgres
     restart: always
     volumes:
       - ../back/data:/var/lib/postgresql/data
-    networks:
-      - dev-network
     env_file:
-      - ../back/.env
+      - ../back/.env.stg
+    networks:
+      - stg-network
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s
       timeout: 10s
       retries: 15
       start_period: 30s
-  dev-adminer:
-    container_name: dev-adminer
+  stg-adminer:
+    container_name: stg-adminer
     image: adminer
     restart: always
     environment:
       - ADMINER_DESIGN=hydra
     ports:
-      - 8081:8080
+      - 28081:8080
     networks:
-      - dev-network
+      - stg-network
     depends_on:
-      dev-db:
+      stg-db:
         condition: service_healthy
-  dev-backend:
-    container_name: dev-backend
-    build:
-      context: ../back
-      dockerfile: Dockerfile.dev
+  stg-backend:
+    container_name: stg-backend
+    image: tbiarneix/tabas-back-stg
     env_file:
-      - ../back/.env
+      - ../back/.env.stg
     ports:
-      - 5000:5000
+      - 25000:5000
     networks:
-      - dev-network
-    command: [sh, -cx, 'npm run dev']
-    volumes:
-      - ../back/src/:/app/src/
+      - stg-network
+    command: [sh, -cx, 'npm run build && npm run start']
     depends_on:
-      'dev-db':
+      'stg-db':
         condition: service_healthy
     healthcheck:
       test:
@@ -64,40 +60,40 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
-  dev-images:
-    container_name: dev-images-service
+  stg-images:
+    container_name: stg-images-service
     env_file:
       - ../images-service/.env
-    build: ../images-service
+    image: tbiarneix/tabas-images-service-stg
     volumes:
-      - ../images-service/src:/app/src
       - ../images-service/uploads:/app/uploads
+    command: [sh, -cx, 'npm run build && npm run start-prod']
     ports:
-      - 8000:8000
+      - 28000:8000
     networks:
-      - dev-network
+      - stg-network
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
       interval: 5s
       timeout: 5s
       retries: 10
-
-  dev-frontend:
-    container_name: dev-frontend
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+  stg-frontend:
+    container_name: stg-frontend
+    image: tbiarneix/tabas-front-stg
+    env_file:
+      - ./.env
     ports:
-      - 8080:8080
+      - 28080:8080
     networks:
-      - dev-network
+      - stg-network
     volumes:
-      - ./src/:/app/src/
+      - ./www/:/app/dist/
+    command: [sh, -cx, 'npm run build']
     depends_on:
-      'dev-backend':
+      'stg-backend':
         condition: service_healthy
-      'dev-images':
+      'stg-images':
         condition: service_healthy
 networks:
-  dev-network:
-    name: dev-network
+  stg-network:
+    name: stg-network

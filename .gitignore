@@ -28,4 +28,5 @@ cypress/videos
 *.sln
 *.sw?
 .DS_Store
-.env
+.env*
+!.env.sample

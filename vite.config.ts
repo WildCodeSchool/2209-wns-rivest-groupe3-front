@@ -8,4 +8,10 @@ export default defineConfig({
     port: 8080,
     host: true,
   },
+  publicDir: 'src/assets',
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
 })

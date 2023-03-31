@@ -2,11 +2,13 @@ import { useContext } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 import { NotificationContext } from '../contexts/NotificationContext'
+import Avatar from './Avatar'
+import Logo from './Logo'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserContext)
-  const { message, setMessage } = useContext(NotificationContext)
+  const { setMessage } = useContext(NotificationContext)
   const location = useLocation()
 
   const defaultNavClass =
@@ -36,9 +38,8 @@ const Navbar = () => {
   return (
     <nav className={location.pathname === '/' ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Logo
-        </Link>
+        <Logo />
+
         <Link to="/discover" className="btn btn-ghost normal-case text-xl">
           Découvrir
         </Link>
@@ -63,21 +64,12 @@ const Navbar = () => {
 
         {user && (
           <div className="dropdown dropdown-end text-neutral">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div id="profil-head-avatar" className="w-10 rounded-full">
-                {user.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={`${user.nickname}-profil-picture`}
-                  />
-                ) : (
-                  <img
-                    src={
-                      'https://ocsheriff.gov/sites/ocsd/files/styles/square_270/public/2022-05/John%20Doe_icon.png?h=8a7fc05e&itok=Gv2mcIrT'
-                    }
-                  />
-                )}
-              </div>
+            <label
+              tabIndex={0}
+              id="profil-head-avatar"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <Avatar imgUrl={user.avatar} width="w-10" />
             </label>
             <ul
               tabIndex={0}
