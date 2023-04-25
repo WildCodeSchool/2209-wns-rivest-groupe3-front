@@ -1,46 +1,46 @@
-name: tabas-production
+name: tabas-stg
 services:
-  db:
-    container_name: postgresDB
+  stg-db:
+    container_name: stg-postgresDB
     image: postgres
     restart: always
     volumes:
       - ../back/data:/var/lib/postgresql/data
     env_file:
-      - ../back/.env
+      - ../back/.env.stg
     networks:
-      - production-network
+      - stg-network
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 5s
       timeout: 10s
       retries: 15
       start_period: 30s
-  adminer:
-    container_name: adminer
+  stg-adminer:
+    container_name: stg-adminer
     image: adminer
     restart: always
     environment:
       - ADMINER_DESIGN=hydra
     ports:
-      - 18081:8080
+      - 28081:8080
     networks:
-      - production-network
+      - stg-network
     depends_on:
-      db:
+      stg-db:
         condition: service_healthy
-  backend:
-    container_name: backend
-    image: tbiarneix/tabas-back
+  stg-backend:
+    container_name: stg-backend
+    image: tbiarneix/tabas-back-staging
     env_file:
-      - ../back/.env
+      - ../back/.env.stg
     ports:
-      - 15000:5000
+      - 25000:5000
     networks:
-      - production-network
+      - stg-network
     command: [sh, -cx, 'npm run build && npm run start']
     depends_on:
-      'db':
+      'stg-db':
         condition: service_healthy
     healthcheck:
       test:
@@ -60,40 +60,40 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
-  images:
-    container_name: images-service
+  stg-images:
+    container_name: stg-images-service
     env_file:
-      - ../images-service/.env
-    image: tbiarneix/tabas-images-service
+      - ../images-service/.env.stg
+    image: tbiarneix/tabas-images-service-staging
     volumes:
       - ../images-service/uploads:/app/uploads
     command: [sh, -cx, 'npm run build && npm run start-prod']
     ports:
-      - 18000:8000
+      - 28000:8000
     networks:
-      - production-network
+      - stg-network
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
       interval: 5s
       timeout: 5s
       retries: 10
-  frontend:
-    container_name: frontend
-    image: tbiarneix/tabas-front
+  stg-frontend:
+    container_name: stg-frontend
+    image: tbiarneix/tabas-front-staging
     env_file:
-      - ./.env
+      - ./.env.stg
     ports:
-      - 18080:8080
+      - 28080:8080
     networks:
-      - production-network
+      - stg-network
     volumes:
       - ./www/:/app/dist/
     command: [sh, -cx, 'npm run build']
     depends_on:
-      'backend':
+      'stg-backend':
         condition: service_healthy
-      'images':
+      'stg-images':
         condition: service_healthy
 networks:
-  production-network:
-    name: production-network
+  stg-network:
+    name: stg-network
