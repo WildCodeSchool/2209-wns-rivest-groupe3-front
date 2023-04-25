@@ -4,7 +4,7 @@ import { assert, describe, it, expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { WrappedContextProvider } from './WrappedContextProvider'
 
-import Home from '../src/routes/home'
+import Home from '../src/routes/home/home'
 import Discover from '../src/routes/discover'
 import ListingBlogs from '../src/routes/blogs/ListingBlogs'
 import Articles from '../src/routes/articles'

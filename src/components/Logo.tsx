@@ -7,9 +7,7 @@ const Logo = () => {
         data="/Tabasblog-logo.svg"
         type="image/svg+xml"
         className="h-full pointer-events-none"
-      >
-        <img src="yourfallback.jpg" />
-      </object>
+      />
     </Link>
   )
 }

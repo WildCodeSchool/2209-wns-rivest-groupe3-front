@@ -14,20 +14,20 @@ const Articles = () => {
 
   const [limit] = useState(6)
   const [offset, setOffset] = useState(0)
+  const [searchInput, setSearchInput] = useState<string>('')
+  const [numberOfPages, setNumberOfPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const { loading, error, data, fetchMore } = useQuery(
     GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL,
     {
+      fetchPolicy: 'no-cache',
       variables: {
         limit,
         offset,
       },
     }
   )
-
-  const [searchInput, setSearchInput] = useState<string>('')
-  const [numberOfPages, setNumberOfPages] = useState(1)
-  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (data) {
@@ -39,7 +39,7 @@ const Articles = () => {
     updatePage(currentPage)
   }, [currentPage])
 
-  const updatePage = (page: number) => {
+  function updatePage(page: number) {
     setOffset(limit * page - limit)
     fetchMore({
       variables: {
@@ -52,10 +52,10 @@ const Articles = () => {
     if (error) setMessage({ text: error.message, type: 'error' })
   }, [error])
 
-  if (loading) return <>Loading...</>
+  if (loading) return <div>Loading...</div>
   if (error) return <></>
-
   return (
+    // <div className="bg-red-500 w-full h-screen" />
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
         <h1 className="text-5xl font-bold text-center text-neutral-content">
