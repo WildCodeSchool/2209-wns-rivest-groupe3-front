@@ -55,7 +55,6 @@ const Articles = () => {
   if (loading) return <div>Loading...</div>
   if (error) return <></>
   return (
-    // <div className="bg-red-500 w-full h-screen" />
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
         <h1 className="text-5xl font-bold text-center text-neutral-content">
