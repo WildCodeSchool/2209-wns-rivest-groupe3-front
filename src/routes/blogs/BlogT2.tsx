@@ -5,6 +5,7 @@ import { IPropsBlogTemplate } from '../../utils/interfaces/Interfaces'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import Avatar from '../../components/Avatar'
+import SubscribeBtn from '../../components/buttons/SubscribeBtn'
 
 const BlogT2 = ({
   blog,
@@ -55,7 +56,7 @@ const BlogT2 = ({
                 </button>
               </>
             ) : (
-              <button className="btn btn-outline">Suivre</button>
+              <SubscribeBtn blog={blog} />
             )}
             <button className="btn btn-outline">Partager</button>
           </div>
