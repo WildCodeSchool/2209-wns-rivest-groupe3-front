@@ -159,11 +159,22 @@ export const GET_FIRST_BLOGS_AND_ARTICLES = gql`
       user {
         nickname
       }
+      coverUrl
     }
     getAllArticles(limit: $limit) {
       id
-      title
       slug
+      title
+      blog {
+        id
+        name
+        slug
+        user {
+          nickname
+        }
+      }
+      postedAt
+      createdAt
     }
   }
 `
