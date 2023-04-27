@@ -13,7 +13,7 @@ import { NotificationProvider } from './contexts/NotificationContext'
 import { ModalProvider } from './contexts/ModalContext'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000/',
+  uri: import.meta.env.VITE_API_URL,
 })
 
 const authLink = setContext((_, { headers }) => {

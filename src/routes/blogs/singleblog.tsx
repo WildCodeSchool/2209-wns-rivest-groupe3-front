@@ -8,15 +8,16 @@ import { NotificationContext } from '../../contexts/NotificationContext'
 import { GET_ONE_BLOG } from '../../queries/blogs'
 import EditDrag from './EditDrag'
 import { IBlog } from '../../utils/interfaces/Interfaces'
+import UpdateForm from './UpdateForm'
 
 const Blog = () => {
   const { setMessage } = useContext(NotificationContext)
   const [isEditing, setIsEditing] = useState(false)
   const [blog, setBlog] = useState<IBlog | null>(null)
-
+  
   const { slug } = useParams()
   const navigate = useNavigate()
-
+  
   const editBlog = () => setIsEditing((isEditing) => !isEditing)
   const resetChangements = () => {
     setBlog(data.getBlog)
@@ -27,11 +28,11 @@ const Blog = () => {
   const { loading, error, data } = useQuery(GET_ONE_BLOG, {
     variables: { slug },
   })
-
+  
   useEffect(() => {
     if (data) setBlog(data.getBlog)
   }, [data])
-
+  
   if (loading) return <>Loading...</>
   if (error) {
     setMessage({ text: error.message, type: 'error' })
@@ -42,13 +43,15 @@ const Blog = () => {
     blog && (
       <>
         {isEditing && (
-          <EditDrag
-            slug={slug}
-            blog={blog}
-            closeEdit={editBlog}
-            reset={resetChangements}
-            setBlog={setBlog}
-          />
+          <EditDrag>
+            <UpdateForm
+              slug={slug}
+              blog={blog}
+              closeEdit={editBlog}
+              reset={resetChangements}
+              setBlog={setBlog}
+            />
+          </EditDrag>
         )}
         {blog.template === 2 ? (
           <BlogT2

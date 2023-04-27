@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# cypress
+cypress/screenshots
+cypress/videos
+
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,3 +29,4 @@ dist-ssr
 *.sw?
 .DS_Store
 .env*
+!.env.sample

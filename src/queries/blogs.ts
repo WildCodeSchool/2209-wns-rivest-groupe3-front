@@ -42,6 +42,7 @@ export const GET_ALL_BLOGS_WITH_LIMIT_AND_TOTAL = gql`
       description
       template
       createdAt
+      coverUrl
       user {
         id
         nickname
@@ -60,6 +61,7 @@ export const GET_ONE_BLOG = gql`
       template
       slug
       createdAt
+      coverUrl
       editor: user {
         id
         avatar
@@ -129,6 +131,14 @@ export const UPDATE_BLOG = gql`
   }
 `
 
+export const UPDATE_COVER_IMG = gql`
+  mutation UpdateBlog($slug: String!, $coverUrl: String) {
+    updateBlog(blogSlug: $slug, coverUrl: $coverUrl) {
+      coverUrl
+    }
+  }
+`
+
 export const GET_ALL_SLUGS = gql`
   query GetAllBlogs {
     getAllBlogs {
@@ -149,11 +159,22 @@ export const GET_FIRST_BLOGS_AND_ARTICLES = gql`
       user {
         nickname
       }
+      coverUrl
     }
     getAllArticles(limit: $limit) {
       id
-      title
       slug
+      title
+      blog {
+        id
+        name
+        slug
+        user {
+          nickname
+        }
+      }
+      postedAt
+      createdAt
     }
   }
 `

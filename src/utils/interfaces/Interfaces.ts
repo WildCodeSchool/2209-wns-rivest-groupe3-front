@@ -8,6 +8,7 @@ export interface IBlog {
   template: number
   createdAt: Date
   user: IUser
+  coverUrl: string | null
   articles: IArticle[]
 }
 
@@ -34,6 +35,7 @@ export interface IArticle {
   country: string
   version: number
   articleContent: IArticleContent[]
+  blog?: IBlog
 }
 export interface IArticleContent {
   version: number
