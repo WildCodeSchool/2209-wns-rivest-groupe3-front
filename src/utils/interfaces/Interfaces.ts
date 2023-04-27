@@ -35,6 +35,7 @@ export interface IArticle {
   country: string
   version: number
   articleContent: IArticleContent[]
+  blog?: IBlog
 }
 export interface IArticleContent {
   version: number
