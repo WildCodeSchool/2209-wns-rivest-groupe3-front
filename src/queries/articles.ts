@@ -13,6 +13,7 @@ export const GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL = gql`
           nickname
         }
       }
+      slug
       postedAt
       createdAt
     }
@@ -71,6 +72,7 @@ export const GET_ONE_ARTICLE = gql`
       show
       slug
       title
+      coverUrl
       articleContent {
         version
         id
@@ -117,6 +119,7 @@ export const UPDATE_ARTICLE = gql`
     $articleContent: IContentType!
     $articleId: String!
     $title: String!
+    $coverUrl: String
   ) {
     updateArticle(
       blogId: $blogId
@@ -125,12 +128,14 @@ export const UPDATE_ARTICLE = gql`
       articleContent: $articleContent
       articleId: $articleId
       title: $title
+      coverUrl: $coverUrl
     ) {
       id
       postedAt
       show
       slug
       version
+      coverUrl
       articleContent {
         id
         current

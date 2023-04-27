@@ -40,16 +40,17 @@ const Article = () => {
         <EditableArticle
           blogId={blog.id}
           blogSlug={blog.slug}
+          articleId={article.id}
+          articleCoverUrl={article.coverUrl}
           articleSlug={article.slug}
           articleTitle={article.title}
           articleVersion={article.version}
-          isUpdate={true}
           setEdit={setEdit}
         />
       ) : (
         <>
           {user && user.id === blog.user.id && (
-            <div className="sticky top-8 mr-auto ml-3 flex items-center gap-3 z-10 flex-col -mb-16">
+            <div className="sticky top-8 mr-auto ml-3 flex items-center gap-3 z-10 flex-col -mb-16 bg-white p-4 pt-0">
               <div className="mt-2">
                 <em>Version du contenu de l'article : {article.version}</em>
               </div>
@@ -66,8 +67,19 @@ const Article = () => {
             <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
               {article.title}
             </h1>
+            {article.coverUrl ? (
+              <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+                <img
+                  className="w-full"
+                  src={`${import.meta.env.VITE_IMAGES_URL}${article.coverUrl}`}
+                  alt={`couverture du blog ${name}`}
+                />
+              </figure>
+            ) : (
+              <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+            )}
           </header>
-          <article className="mx-auto max-w-xl">
+          <article className="mx-auto max-w-xl bg-white px-8 bg-opacity-80">
             {article.articleContent[
               article.articleContent.length - 1
             ].content.blocks.map((block, index) => {
