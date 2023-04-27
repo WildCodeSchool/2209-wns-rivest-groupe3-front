@@ -56,8 +56,8 @@ export const CREATE_ARTICLE = gql`
   }
 `
 export const GET_ONE_ARTICLE = gql`
-  query ($slug: String!, $blogSlug: String!) {
-    getOneArticle(slug: $slug, blogSlug: $blogSlug) {
+  query ($slug: String!, $blogSlug: String!, $allVersions: Boolean) {
+    getOneArticle(slug: $slug, blogSlug: $blogSlug, allVersions: $allVersions) {
       id
       postedAt
       show
