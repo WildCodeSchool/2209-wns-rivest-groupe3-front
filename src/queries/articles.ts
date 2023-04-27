@@ -5,6 +5,7 @@ export const GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL = gql`
     getAllArticles(limit: $limit, offset: $offset) {
       id
       title
+      coverUrl
       blog {
         id
         name
