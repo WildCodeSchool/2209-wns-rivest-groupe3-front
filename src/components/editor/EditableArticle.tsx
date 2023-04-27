@@ -5,19 +5,22 @@ import {
   useCallback,
   Dispatch,
   SetStateAction,
-  useEffect,
 } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import type EditorJS from '@editorjs/editorjs'
 import { NotificationContext } from '../../contexts/NotificationContext'
 import { GET_ONE_ARTICLE, UPDATE_ARTICLE } from '../../queries/articles'
 import EditorWrapper from './EditorWrapper'
-import { IArticle } from '../../utils/interfaces/Interfaces'
+import { IArticle, IContentType } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
+import EditorTools from './EditorTools'
+import ImageHandler from '../imagehandler/ImageHandler'
 
 const EditableArticle = ({
   blogId,
   blogSlug,
+  articleId,
+  articleCoverUrl,
   articleSlug,
   articleTitle,
   articleVersion,
@@ -25,19 +28,23 @@ const EditableArticle = ({
 }: {
   blogId: string
   blogSlug: string
+  articleId: string
+  articleVersion: number
+  articleSlug: string
+  articleTitle: string
+  articleCoverUrl?: string
   setEdit: Dispatch<SetStateAction<boolean>>
-  articleSlug?: string
-  articleTitle?: string
-  articleVersion?: number
-  isUpdate?: boolean
 }) => {
   const { setMessage } = useContext(NotificationContext)
   const navigate = useNavigate()
 
   const [title, setTitle] = useState<string>(articleTitle || 'Titre')
-  const [contentVersion, setContentVersion] = useState<number>(
-    articleVersion || 0
+  const [coverUrl, setCoverUrl] = useState<string | null>(
+    articleCoverUrl || null
   )
+  const [contentVersion, setContentVersion] = useState<number>(articleVersion)
+  const [newContentVersion, setNewContentVersion] =
+    useState<number>(articleVersion)
 
   const [updateArticle] = useMutation(UPDATE_ARTICLE)
   const { loading, error, data } = useQuery(GET_ONE_ARTICLE, {
@@ -59,6 +66,7 @@ const EditableArticle = ({
         return
       }
       const savedArticleData = await editorCore.current.save()
+
       try {
         const {
           data: {
@@ -67,13 +75,16 @@ const EditableArticle = ({
         } = await updateArticle({
           variables: {
             blogId,
+            articleId,
             show: publish,
-            version: contentVersion + 1,
+            version: newContentVersion,
             articleContent: savedArticleData,
             title,
+            coverUrl,
           },
         })
         setEdit(false)
+        setContentVersion(newContentVersion)
         navigate(`/blogs/${blogSlug}/${slug}`)
         return
       } catch (error) {
@@ -84,7 +95,7 @@ const EditableArticle = ({
         })
       }
     },
-    [title]
+    [title, coverUrl, newContentVersion]
   )
 
   if (loading) return <div>Loading...</div>
@@ -105,57 +116,46 @@ const EditableArticle = ({
 
     return (
       <>
-        <div className="fixed top-12 left-0 mr-auto ml-3 flex items-center gap-3 z-10 flex-col">
-          <div className="flex items-center gap-3">
-            <button
-              className="btn btn-info mt-10"
-              onClick={() => handleSave({ publish: false })}
-            >
-              {article?.show ? <>Marquer</> : <>Enregistrer</>}
-              <br />
-              comme brouillon
-            </button>
-            <button
-              className="btn btn-primary mt-10"
-              onClick={() => handleSave({ publish: true })}
-            >
-              Publier
-            </button>
-          </div>
-          <div className="flex items-center flex-col">
-            <label htmlFor="title">Titre de l'article</label>
-            <input
-              type="text"
-              className="border border-neutral rounded p-1 text-center"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="mt-2">
-            <em>Version du contenu de l'article : </em>
-            <select
-              name="version"
-              value={contentVersion}
-              onChange={(e) => setContentVersion(parseInt(e.target.value))}
-            >
-              {article.articleContent.map((contentVersion) => (
-                <option key={contentVersion.id} value={contentVersion.version}>
-                  {contentVersion.version}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        <EditorTools
+          handleSave={handleSave}
+          title={title}
+          setTitle={setTitle}
+          isNew={false}
+          contentVersion={contentVersion}
+          article={article}
+          setContentVersion={setContentVersion}
+          coverUrl={coverUrl}
+          setCoverUrl={setCoverUrl}
+          blogId={blogId}
+        />
         <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
             {title}
           </h1>
+          {article.coverUrl ? (
+            <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+              <img
+                className="w-full"
+                src={`${import.meta.env.VITE_IMAGES_URL}${article.coverUrl}`}
+                alt={`couverture du blog ${name}`}
+              />
+            </figure>
+          ) : (
+            <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+          )}
         </header>
-        <EditorWrapper
-          blocks={dataToEdit}
-          handleInitialize={handleInitialize}
-          editorCore={editorCore}
-        />
+        <div
+          onFocus={() => {
+            setNewContentVersion(articleVersion + 1)
+          }}
+          className="bg-white px-8 bg-opacity-80"
+        >
+          <EditorWrapper
+            blocks={dataToEdit}
+            handleInitialize={handleInitialize}
+            editorCore={editorCore}
+          />
+        </div>
       </>
     )
   }

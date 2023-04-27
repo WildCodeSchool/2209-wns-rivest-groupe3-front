@@ -12,6 +12,7 @@ import { NotificationContext } from '../../contexts/NotificationContext'
 import { CREATE_ARTICLE } from '../../queries/articles'
 import EditorWrapper from './EditorWrapper'
 import { useNavigate } from 'react-router-dom'
+import EditorTools from './EditorTools'
 
 const NewEditableArticle = ({
   blogId,
@@ -67,33 +68,12 @@ const NewEditableArticle = ({
 
   return (
     <>
-      <div className="fixed top-12 left-0 mr-auto ml-3 flex items-center gap-3 z-10 flex-col">
-        <div className="flex items-center gap-3">
-          <button
-            className="btn btn-info mt-10"
-            onClick={() => handleSave({ publish: false })}
-          >
-            Enregistrer
-            <br />
-            comme brouillon
-          </button>
-          <button
-            className="btn btn-primary mt-10"
-            onClick={() => handleSave({ publish: true })}
-          >
-            Publier
-          </button>
-        </div>
-        <div className="flex items-center flex-col">
-          <label htmlFor="title">Titre de l'article</label>
-          <input
-            type="text"
-            className="border border-neutral rounded p-1 text-center"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-      </div>
+      <EditorTools
+        handleSave={handleSave}
+        title={title}
+        setTitle={setTitle}
+        isNew={true}
+      />
       <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
         <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {title}
