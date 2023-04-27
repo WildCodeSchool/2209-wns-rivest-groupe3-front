@@ -4,7 +4,6 @@ import { assert, describe, it, expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { WrappedContextProvider } from './WrappedContextProvider'
 
-import Home from '../src/routes/home'
 import Discover from '../src/routes/discover'
 import ListingBlogs from '../src/routes/blogs/ListingBlogs'
 import Articles from '../src/routes/articles'
@@ -13,10 +12,11 @@ import Register from '../src/routes/register'
 import Login from '../src/routes/login'
 import CreateBlog from '../src/routes/createblog'
 import NotFound from '../src/routes/notFound'
+import Hero from '../src/routes/home/Hero'
 
 describe('Test display of the Routes pages', () => {
   it('should render Home component', async () => {
-    render(<WrappedContextProvider children={<Home />} />)
+    render(<WrappedContextProvider children={<Hero />} />)
     expect(
       await screen.findByText('Raconte nous tes aventures !')
     ).toBeInTheDocument()

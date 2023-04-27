@@ -39,9 +39,11 @@ const Navbar = () => {
     <nav className={location.pathname === '/' ? heroNavClass : defaultNavClass}>
       <div className="flex-1">
         <Logo />
-
-        <Link to="/discover" className="btn btn-ghost normal-case text-xl">
-          Découvrir
+        <Link to="/blogs" className="btn btn-ghost normal-case text-xl">
+          Blogs
+        </Link>
+        <Link to="/articles" className="btn btn-ghost normal-case text-xl">
+          Articles
         </Link>
       </div>
       <div className="flex-none gap-2">
