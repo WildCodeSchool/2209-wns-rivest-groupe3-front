@@ -38,7 +38,6 @@ const Blog = () => {
     setMessage({ text: error.message, type: 'error' })
     return <div>Erreur</div>
   }
-  console.log("blog", blog)
 
   return (
     blog && (
