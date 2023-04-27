@@ -10,6 +10,15 @@ export interface IBlog {
   user: IUser
   coverUrl: string | null
   articles: IArticle[]
+  subscriptions: ISubscription[]
+}
+
+export interface ISubscription {
+  id: string;
+  user: {
+    id: string;
+    nickname: string;
+  }
 }
 
 export interface IUser {

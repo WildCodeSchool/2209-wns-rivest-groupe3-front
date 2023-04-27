@@ -72,6 +72,13 @@ export const GET_ONE_BLOG = gql`
           slug
         }
       }
+      subscriptions {
+        id
+        user {
+          id
+          nickname
+        }
+      }
       articles {
         id
         slug
