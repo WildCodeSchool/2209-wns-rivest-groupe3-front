@@ -18,6 +18,17 @@ export const GET_USER = gql`
       createdAt
       city
       avatar
+      blogs {
+        id
+        name
+        slug
+        description
+        createdAt
+        user {
+          nickname
+        }
+        coverUrl
+      }
     }
   }
 `
