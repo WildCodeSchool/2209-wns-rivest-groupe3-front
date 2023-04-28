@@ -9,7 +9,11 @@ const CardT2 = ({ article }: { article: IArticle }) => {
     >
       <figure className="relative w-full overflow-hidden">
         <img
-          src="/Tabasblog-default.png"
+          src={
+            article.coverUrl
+              ? `${import.meta.env.VITE_IMAGES_URL}${article.coverUrl}`
+              : '/Tabasblog-default.png'
+          }
           alt="Shoes"
           className="w-full group-hover:scale-110 transition-all duration-300"
         />
