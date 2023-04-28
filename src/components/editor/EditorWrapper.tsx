@@ -1,8 +1,10 @@
 import Image from '@editorjs/image'
 import { createReactEditorJS } from 'react-editor-js'
+import type EditorJS from '@editorjs/editorjs'
 
 import { EDITOR_JS_TOOLS } from './Tools'
 import { IContentBlock } from '../../utils/interfaces/Interfaces'
+import { useEffect } from 'react'
 
 enum LogLevels {
   VERBOSE = 'VERBOSE',
@@ -14,9 +16,11 @@ enum LogLevels {
 const EditorWrapper = ({
   blocks,
   handleInitialize,
+  editorCore,
 }: {
   blocks: IContentBlock[]
   handleInitialize: (instance: any) => void
+  editorCore: React.MutableRefObject<EditorJS | null>
 }) => {
   const token = localStorage.getItem('token')
   const imageTool = {
@@ -57,6 +61,16 @@ const EditorWrapper = ({
   }
 
   const Editor = createReactEditorJS()
+
+  useEffect(() => {
+    const reloadEditor = async () => {
+      await editorCore.current?.isReady
+      await editorCore.current?.render({ blocks })
+    }
+    if (editorCore.current !== null) {
+      reloadEditor()
+    }
+  }, [blocks])
 
   return (
     <Editor

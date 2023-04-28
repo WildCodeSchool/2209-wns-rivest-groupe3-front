@@ -6,49 +6,55 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import type EditorJS from '@editorjs/editorjs'
 import { NotificationContext } from '../../contexts/NotificationContext'
-import { UserContext } from '../../contexts/UserContext'
-import { CREATE_ARTICLE, UPDATE_ARTICLE } from '../../queries/articles'
+import { GET_ONE_ARTICLE, UPDATE_ARTICLE } from '../../queries/articles'
 import EditorWrapper from './EditorWrapper'
-import { IArticle } from '../../utils/interfaces/Interfaces'
+import { IArticle, IContentType } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
+import EditorTools from './EditorTools'
+import ImageHandler from '../imagehandler/ImageHandler'
 
 const EditableArticle = ({
   blogId,
   blogSlug,
-  articleData,
-  isUpdate,
+  articleId,
+  articleCoverUrl,
+  articleSlug,
+  articleTitle,
+  articleVersion,
   setEdit,
 }: {
   blogId: string
   blogSlug: string
-  articleData?: IArticle
-  isUpdate?: boolean
-  setEdit?: Dispatch<SetStateAction<boolean>>
+  articleId: string
+  articleVersion: number
+  articleSlug: string
+  articleTitle: string
+  articleCoverUrl?: string
+  setEdit: Dispatch<SetStateAction<boolean>>
 }) => {
   const { setMessage } = useContext(NotificationContext)
-  const [createArticle] = useMutation(CREATE_ARTICLE)
-  const [updateArticle] = useMutation(UPDATE_ARTICLE)
   const navigate = useNavigate()
 
-  const dataToEdit =
-    articleData?.articleContent[articleData.articleContent.length - 1].content
-      .blocks || dummyData
+  const [title, setTitle] = useState<string>(articleTitle || 'Titre')
+  const [coverUrl, setCoverUrl] = useState<string | null>(
+    articleCoverUrl || null
+  )
+  const [contentVersion, setContentVersion] = useState<number>(articleVersion)
+  const [newContentVersion, setNewContentVersion] =
+    useState<number>(articleVersion)
 
-  const [title, setTitle] = useState<string>(articleData?.title || 'Titre')
-  const editableTitleElement = useRef<HTMLHeadingElement>(null)
-
-  const updateTitle = (event: string | null) => {
-    if (event !== null) {
-      setTitle(event)
-      if (editableTitleElement.current !== null) {
-        editableTitleElement.current.textContent = event
-      }
-    }
-  }
-
+  const [updateArticle] = useMutation(UPDATE_ARTICLE)
+  const { loading, error, data } = useQuery(GET_ONE_ARTICLE, {
+    variables: {
+      allVersions: true,
+      slug: articleSlug,
+      blogSlug,
+    },
+    fetchPolicy: 'no-cache',
+  })
   const editorCore = useRef<EditorJS | null>(null)
   const handleInitialize = useCallback((instance: any) => {
     editorCore.current = instance
@@ -60,40 +66,27 @@ const EditableArticle = ({
         return
       }
       const savedArticleData = await editorCore.current.save()
+
       try {
-        if (isUpdate && articleData && setEdit) {
-          const {
-            data: {
-              updateArticle: { slug },
-            },
-          } = await updateArticle({
-            variables: {
-              blogId,
-              show: publish,
-              version: articleData.version + 1,
-              articleContent: savedArticleData,
-              articleId: articleData.id,
-              title,
-            },
-          })
-          setEdit(false)
-          navigate(`/blogs/${blogSlug}/${slug}`)
-          return
-        }
         const {
           data: {
-            createArticle: { slug },
+            updateArticle: { slug },
           },
-        } = await createArticle({
+        } = await updateArticle({
           variables: {
             blogId,
-            title: title,
+            articleId,
             show: publish,
-            version: 1,
+            version: newContentVersion,
             articleContent: savedArticleData,
+            title,
+            coverUrl,
           },
         })
+        setEdit(false)
+        setContentVersion(newContentVersion)
         navigate(`/blogs/${blogSlug}/${slug}`)
+        return
       } catch (error) {
         console.error(error)
         setMessage({
@@ -102,54 +95,71 @@ const EditableArticle = ({
         })
       }
     },
-    [title]
+    [title, coverUrl, newContentVersion]
   )
 
-  return (
-    <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-      <div className="sticky top-8 mr-auto ml-3 flex items-center gap-3 z-10 flex-col -mb-16">
-        <div className="flex items-center gap-3">
-          <button
-            className="btn btn-info mt-10"
-            onClick={() => handleSave({ publish: false })}
-          >
-            Enregistrer
-            <br />
-            comme brouillon
-          </button>
-          <button
-            className="btn btn-primary mt-10"
-            onClick={() => handleSave({ publish: true })}
-          >
-            Publier
-          </button>
-        </div>
-        <div className="flex items-center flex-col">
-          <label htmlFor="title">Titre de l'article</label>
-          <input
-            type="text"
-            className="border border-neutral rounded p-1 text-center"
-            value={title}
-            onChange={(e) => updateTitle(e.target.value)}
+  if (loading) return <div>Loading...</div>
+  if (error) {
+    setMessage({
+      text: `Une erreur s'est produite`,
+      type: 'error',
+    })
+    return <>Error</>
+  }
+  if (data) {
+    const { getOneArticle: article }: { getOneArticle: IArticle } = data
+
+    const dataToEdit =
+      article.articleContent.filter(
+        (content) => content.version === contentVersion
+      )[0].content.blocks || dummyData
+
+    return (
+      <>
+        <EditorTools
+          handleSave={handleSave}
+          title={title}
+          setTitle={setTitle}
+          isNew={false}
+          contentVersion={contentVersion}
+          article={article}
+          setContentVersion={setContentVersion}
+          coverUrl={coverUrl}
+          setCoverUrl={setCoverUrl}
+          blogId={blogId}
+        />
+        <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
+          <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
+            {title}
+          </h1>
+          {article.coverUrl ? (
+            <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+              <img
+                className="w-full"
+                src={`${import.meta.env.VITE_IMAGES_URL}${article.coverUrl}`}
+                alt={`couverture du blog ${name}`}
+              />
+            </figure>
+          ) : (
+            <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+          )}
+        </header>
+        <div
+          onFocus={() => {
+            setNewContentVersion(articleVersion + 1)
+          }}
+          className="bg-white px-8 bg-opacity-80"
+        >
+          <EditorWrapper
+            blocks={dataToEdit}
+            handleInitialize={handleInitialize}
+            editorCore={editorCore}
           />
         </div>
-      </div>
-      <header className="m-16 mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
-        <h1
-          className="text-7xl font-bold font-lobster bg-neutral/80 p-2"
-          contentEditable
-          suppressContentEditableWarning={true}
-          onInput={(e) => {
-            updateTitle(e.currentTarget.textContent)
-          }}
-          ref={editableTitleElement}
-        >
-          {title}
-        </h1>
-      </header>
-      <EditorWrapper blocks={dataToEdit} handleInitialize={handleInitialize} />
-    </main>
-  )
+      </>
+    )
+  }
+  return <></>
 }
 
 const dummyData = [
@@ -157,7 +167,7 @@ const dummyData = [
     id: 'oUq2g_tl8y',
     type: 'header',
     data: {
-      text: 'Editor.JS',
+      text: 'Chapitre 1',
       level: 1,
     },
   },
@@ -165,7 +175,7 @@ const dummyData = [
     id: 'zbGZFPM-iI',
     type: 'paragraph',
     data: {
-      text: 'Editor.js is now out of date... 😭\nSo we are going to build our own ! 🚀\nStart by editing me, or add a new block by clicking the + button below..',
+      text: 'Votre histoire commence ici... Commencez par effacer ou éditer ce contenu... ✍️',
     },
   },
 ]

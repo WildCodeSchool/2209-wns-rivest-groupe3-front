@@ -5,6 +5,7 @@ export const GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL = gql`
     getAllArticles(limit: $limit, offset: $offset) {
       id
       title
+      coverUrl
       blog {
         id
         name
@@ -13,6 +14,7 @@ export const GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL = gql`
           nickname
         }
       }
+      slug
       postedAt
       createdAt
     }
@@ -64,13 +66,14 @@ export const CREATE_ARTICLE = gql`
   }
 `
 export const GET_ONE_ARTICLE = gql`
-  query ($slug: String!, $blogSlug: String!) {
-    getOneArticle(slug: $slug, blogSlug: $blogSlug) {
+  query ($slug: String!, $blogSlug: String!, $allVersions: Boolean) {
+    getOneArticle(slug: $slug, blogSlug: $blogSlug, allVersions: $allVersions) {
       id
       postedAt
       show
       slug
       title
+      coverUrl
       articleContent {
         version
         id
@@ -117,6 +120,7 @@ export const UPDATE_ARTICLE = gql`
     $articleContent: IContentType!
     $articleId: String!
     $title: String!
+    $coverUrl: String
   ) {
     updateArticle(
       blogId: $blogId
@@ -125,12 +129,14 @@ export const UPDATE_ARTICLE = gql`
       articleContent: $articleContent
       articleId: $articleId
       title: $title
+      coverUrl: $coverUrl
     ) {
       id
       postedAt
       show
       slug
       version
+      coverUrl
       articleContent {
         id
         current
