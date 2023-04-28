@@ -83,6 +83,7 @@ export const GET_ONE_BLOG = gql`
         id
         slug
         title
+        coverUrl
         articleContent {
           id
           content {

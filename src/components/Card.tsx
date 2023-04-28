@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from '../utils/formatDate'
 import { IArticle, IBlog } from '../utils/interfaces/Interfaces'
 
 const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
@@ -9,9 +9,12 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
       : article
       ? `/blogs/${article?.blog?.slug}/${article.slug}`
       : '#',
-    img: blog && blog.coverUrl
-      ? `${import.meta.env.VITE_IMAGES_URL}${blog.coverUrl}`
-      : '/Tabasblog-default.png',
+    img:
+      blog && blog.coverUrl
+        ? `${import.meta.env.VITE_IMAGES_URL}${blog.coverUrl}`
+        : article?.coverUrl
+        ? `${import.meta.env.VITE_IMAGES_URL}${article.coverUrl}`
+        : '/Tabasblog-default.png',
     title: blog?.name || article?.title || '',
     description: blog?.description || 'Aucune description disponible.',
     createdAt: blog

@@ -39,6 +39,7 @@ export interface IArticle {
   title: string
   slug: string
   blogId: string
+  coverUrl: string
   createdAt: Date
   postedAt: Date
   show: boolean
