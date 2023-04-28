@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import Avatar from '../../components/Avatar'
 import StaticPagination from '../../components/buttons/StaticPagination'
+import SubscribeBtn from '../../components/buttons/SubscribeBtn'
 import CardT2 from '../../components/CardT2'
 import SearchBar from '../../components/inputs/SearchBar'
 import { UserContext } from '../../contexts/UserContext'
@@ -49,10 +50,6 @@ const BlogT1 = ({
             <p className="text-xl">
               {editor.description ?? 'Aucune description'}
             </p>
-            <div className="flex gap-2">
-              <button className="btn btn-outline">Suivre</button>
-              <button className="btn btn-outline">Partager</button>
-            </div>
           </div>
         </aside>
         <article className="flex flex-col items-center w-full">
@@ -71,7 +68,7 @@ const BlogT1 = ({
                 </button>
               </div>
             ) : (
-              <button className="btn btn-outline">Suivre</button>
+              <SubscribeBtn blog={blog} />
             )}
           </nav>
           <div className="space-y-4 p-4 pr-0">
