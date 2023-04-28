@@ -31,6 +31,7 @@ export interface IUser {
   avatar?: string
   createdAt?: Date
   lastLogin?: Date
+  blogs: IBlog[]
 }
 
 export interface IArticle {
