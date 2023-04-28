@@ -83,7 +83,7 @@ const BlogT2 = ({
             <Avatar imgUrl={editor.avatar} width="w-80" />
           </div>
           <div className="space-y-4 max-w-2xl">
-            <h2 className="font-lobster text-5xl">{editor.nickname}</h2>
+            <a href={`/profile/${editor.id}`} className="font-lobster text-5xl hover:text-secondary">{editor.nickname}</a>
             <p className="text-3xl">
               {editor.description ?? 'Aucune description'}
             </p>

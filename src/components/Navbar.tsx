@@ -80,7 +80,7 @@ const Navbar = () => {
               <li>
                 <Link
                   id="profil-head-link"
-                  to="/profile"
+                  to={`/profile/${user.id}`}
                   className="justify-between"
                 >
                   Voir le profil
