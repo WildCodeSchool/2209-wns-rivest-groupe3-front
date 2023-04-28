@@ -25,7 +25,6 @@ const Profile = () => {
 
   if (loading) return <p>Chargement...</p>
   if (error) return <p>Erreur lors de la récupération de l'utilisateur </p>
-  - console.log("user", data?.getOneUser)
   return (
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profil</h1>
