@@ -33,7 +33,7 @@ const BlogT1 = ({
             />
           </figure>
         ) : (
-          <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+          <div className="absolute -z-10 bg-primary/5 w-full h-full" />
         )}
         <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {name}
@@ -41,7 +41,7 @@ const BlogT1 = ({
         <p className="max-w-2xl bg-neutral/80 p-2 prose">{blogDescription}</p>
       </header>
       <section className="flex justify-between items-start w-full max-w-screen-2xl relative">
-        <aside className="w-96 h-full p-8 bg-gray-300 rounded-md sticky top-16">
+        <aside className="w-96 h-full p-8 bg-primary/5 rounded-md sticky top-16">
           <div className="flex flex-col justify-center items-center h-full w-full gap-8">
             <div className="avatar">
               <Avatar imgUrl={editor.avatar} width="w-80" />

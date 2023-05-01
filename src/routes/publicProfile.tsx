@@ -38,13 +38,13 @@ const PublicProfile = () => {
         <section className="py-16 bg-gradient-to-r from-primary to-black w-full flex">
           <div className="flex justify-center items-center w-full gap-24">
             <div className="avatar">
-              <Avatar imgUrl={profile.avatar} width="w-80" />
+              <Avatar imgUrl={profile.avatar} width="w-80" border='border-8' />
             </div>
             <div className="flex flex-col items-start gap-8 max-w-2xl text-white">
               <h1 className="text-5xl font-bold text-center">
                 Profil de {profile.nickname}
               </h1>
-              <p className="text-3xl">
+              <p className="text-xl">
                 {profile.description ?? 'Aucune description pour le moment'}
               </p>
 

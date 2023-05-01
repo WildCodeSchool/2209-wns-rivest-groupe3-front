@@ -76,7 +76,7 @@ const Article = () => {
                 />
               </figure>
             ) : (
-              <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+              <div className="absolute -z-10 bg-primary/5 w-full h-full" />
             )}
           </header>
           <article className="mx-auto max-w-xl bg-white px-8 bg-opacity-80">

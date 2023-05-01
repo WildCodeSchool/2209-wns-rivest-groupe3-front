@@ -34,6 +34,10 @@
     U+FEFF, U+FFFD;
 }
 
+body {
+  @apply relative
+}
+
 .btn-primary,
 .btn-secondary,
 .btn-square,

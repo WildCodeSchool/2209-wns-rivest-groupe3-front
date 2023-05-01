@@ -37,7 +37,7 @@ const BlogT2 = ({
               />
             </figure>
           ) : (
-            <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+            <div className="absolute -z-10 bg-primary/5 w-full h-full" />
           )}
         </header>
         <nav className="navbar bg-base-100 justify-between">
@@ -77,7 +77,7 @@ const BlogT2 = ({
         </section>
         {articles.length !== 0 && <StaticPagination />}
       </main>
-      <section className="py-16 bg-gray-300 w-full flex">
+      <section className="py-16 bg-primary/5 w-full flex">
         <div className="flex justify-center items-center w-full gap-24">
           <div className="avatar">
             <Avatar imgUrl={editor.avatar} width="w-80" />

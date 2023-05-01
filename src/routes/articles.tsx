@@ -58,7 +58,7 @@ const Articles = () => {
     return (
       <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-neutral-content">
+          <h1 className="text-7xl font-bold text-center">
             Articles
           </h1>
         </header>
@@ -67,21 +67,17 @@ const Articles = () => {
   if (error) {
     return (
       <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-        <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-neutral-content">
-            Articles
-          </h1>
-        </header>
+        <h1 className="text-7xl font-bold font-lobster text-center">
+          Articles
+        </h1>
       </main>
     )
   }
   return (
-    <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-      <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-        <h1 className="text-5xl font-bold text-center text-neutral-content">
+    <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8 py-16">
+        <h1 className="text-7xl font-bold font-lobster text-center">
           Articles
         </h1>
-      </header>
       <div className="flex justify-between w-full items-center">
         <SearchBar setSearchInput={setSearchInput} />
         <div className="dropdown dropdown-end">
