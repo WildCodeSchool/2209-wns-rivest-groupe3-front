@@ -18,6 +18,7 @@ const Article = () => {
       slug,
       blogSlug,
     },
+    fetchPolicy: 'cache-and-network',
   })
 
   if (loading) return <div>Loading...</div>

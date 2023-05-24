@@ -67,6 +67,11 @@ const EditableArticle = ({
       }
       const savedArticleData = await editorCore.current.save()
 
+      const versionToStore =
+        newContentVersion !== articleVersion
+          ? newContentVersion
+          : contentVersion
+
       try {
         const {
           data: {
@@ -77,14 +82,14 @@ const EditableArticle = ({
             blogId,
             articleId,
             show: publish,
-            version: newContentVersion,
+            version: versionToStore,
             articleContent: savedArticleData,
             title,
             coverUrl,
           },
         })
         setEdit(false)
-        setContentVersion(newContentVersion)
+        setContentVersion(versionToStore)
         navigate(`/blogs/${blogSlug}/${slug}`)
         return
       } catch (error) {
@@ -95,7 +100,7 @@ const EditableArticle = ({
         })
       }
     },
-    [title, coverUrl, newContentVersion]
+    [title, coverUrl, newContentVersion, contentVersion]
   )
 
   if (loading) return <div>Loading...</div>
@@ -127,6 +132,8 @@ const EditableArticle = ({
           coverUrl={coverUrl}
           setCoverUrl={setCoverUrl}
           blogId={blogId}
+          setNewContentVersion={setNewContentVersion}
+          // setEdit={setEdit}
         />
         <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
@@ -144,12 +151,7 @@ const EditableArticle = ({
             <div className="absolute -z-10 bg-gray-300 w-full h-full" />
           )}
         </header>
-        <div
-          onFocus={() => {
-            setNewContentVersion(articleVersion + 1)
-          }}
-          className="bg-white px-8 bg-opacity-80"
-        >
+        <div className="bg-white px-8 bg-opacity-80">
           <EditorWrapper
             blocks={dataToEdit}
             handleInitialize={handleInitialize}

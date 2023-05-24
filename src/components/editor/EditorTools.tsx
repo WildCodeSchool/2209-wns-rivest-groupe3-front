@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { IArticle } from '../../utils/interfaces/Interfaces'
 import ImageHandler from '../imagehandler/ImageHandler'
 
@@ -13,6 +13,7 @@ const EditorTools = ({
   coverUrl,
   setCoverUrl,
   blogId,
+  setNewContentVersion,
 }: {
   handleSave: ({ publish }: { publish: boolean }) => void
   title: string
@@ -24,7 +25,9 @@ const EditorTools = ({
   coverUrl?: string | null
   setCoverUrl?: Dispatch<SetStateAction<string | null>>
   blogId?: string
+  setNewContentVersion?: Dispatch<SetStateAction<number>>
 }) => {
+  const [versionToDisplay, setVersionToDisplay] = useState(contentVersion)
   return (
     <div className="fixed top-12 left-0 mr-auto ml-3 flex items-center gap-3 z-10 flex-col bg-white px-8">
       <div className="flex items-center gap-3">
@@ -54,26 +57,52 @@ const EditorTools = ({
       </div>
 
       {!isNew &&
+        versionToDisplay !== undefined &&
         article !== undefined &&
         setContentVersion !== undefined &&
-        setCoverUrl !== undefined && (
+        setCoverUrl !== undefined &&
+        setNewContentVersion !== undefined && (
           <>
             <div className="mt-2">
               <em>Version du contenu de l'article : </em>
-              <select
-                name="version"
-                value={contentVersion}
-                onChange={(e) => setContentVersion(parseInt(e.target.value))}
+              {versionToDisplay >
+              Math.max(
+                ...article.articleContent.map((content) => content.version)
+              ) ? (
+                <span>{versionToDisplay}</span>
+              ) : (
+                <select
+                  name="version"
+                  value={contentVersion}
+                  onChange={(e) => setContentVersion(parseInt(e.target.value))}
+                >
+                  {article.articleContent.map((articleContentVersions) => (
+                    <option
+                      key={articleContentVersions.id}
+                      value={articleContentVersions.version}
+                    >
+                      {articleContentVersions.version}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                className="btn btn-primary mt-10"
+                onClick={() => {
+                  const newVersionNumber =
+                    Math.max(
+                      ...article.articleContent.map(
+                        (content) => content.version
+                      )
+                    ) + 1
+                  setNewContentVersion(newVersionNumber)
+                  setVersionToDisplay(newVersionNumber)
+                }}
               >
-                {article.articleContent.map((articleContentVersions) => (
-                  <option
-                    key={articleContentVersions.id}
-                    value={articleContentVersions.version}
-                  >
-                    {articleContentVersions.version}
-                  </option>
-                ))}
-              </select>
+                Créer une nouvelle version
+              </button>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-3">Image de couverture :</h3>
