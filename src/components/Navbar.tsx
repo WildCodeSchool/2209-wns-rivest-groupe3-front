@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`navbar w-full justify-between  top-0 z-50 ${
+        className={`navbar w-full justify-between top-0 z-50 ${
           location.pathname === '/'
             ? 'bg-transparent text-white absolute'
             : 'bg-white text-neutral fixed'
@@ -57,7 +57,7 @@ const Navbar = () => {
           setIsMenuOpen={setIsMenuOpen}
         />
       </nav>
-      {isMenuOpen && <MobileMenu user={user} />}
+      {isMenuOpen && <MobileMenu user={user} setIsMenuOpen={setIsMenuOpen} />}
     </>
   )
 }

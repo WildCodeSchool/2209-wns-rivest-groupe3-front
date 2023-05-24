@@ -17,13 +17,13 @@ const Hero = () => {
 
   return (
     <section
-      className="group/hero hero h-screen bg-gradient-to-r from-primary to-neutral text-white bg-fixed"
+      className="group/hero hero h-screen overflow-x-hidden px-4 bg-gradient-to-r from-primary to-neutral text-white bg-fixed pt-16 md:pt-0"
       style={{ backgroundImage: `url("bg-dark.png")` }}
     >
       <div className="h-full w-full text-start flex justify-around items-center">
         <div className="max-w-xl space-y-8 mx-auto">
           <h1
-            className={`text-7xl font-bold font-lobster transition-opacity duration-1000 ease-in-out ${
+            className={`text-5xl md:text-7xl font-bold font-lobster transition-opacity duration-1000 ease-in-out ${
               h1Visible ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -31,7 +31,7 @@ const Hero = () => {
           </h1>
           <div
             className={`h-px transition-width duration-1000 ease-in-out ${
-              dividerVisible ? 'w-96' : 'w-0'
+              dividerVisible ? 'w-full max-w-sm' : 'w-0'
             } bg-white`}
           />
           <p
@@ -47,14 +47,14 @@ const Hero = () => {
           </p>
           <Link
             to="./createblog"
-            className={`btn btn-secondary w-96 transition-opacity duration-1000 ease-in-out ${
+            className={`btn btn-secondary w-full max-w-sm transition-opacity duration-1000 ease-in-out ${
               buttonVisible ? 'opacity-100' : 'opacity-0'
             }`}
           >
             Crée ton blog
           </Link>
         </div>
-        <div className="relative w-1/2 h-full overflow-hidden">
+        <div className="hidden md:flex relative md:w-1/2 h-full overflow-hidden">
           <IframeHero />
         </div>
       </div>

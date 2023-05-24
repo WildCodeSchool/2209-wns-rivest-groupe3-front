@@ -89,20 +89,20 @@ const UserInformations = ({
         </div>
         <div className="w-full md:w-1/2">
           <h2 className="card-title">Pseudo</h2>
-          <p className="mb-6">{userInformations?.nickname}</p>
+          <p className="mb-6">{userInformations?.nickname || "Non communiqué"}</p>
           <h2 className="card-title">Prénom</h2>
-          <p className="mb-6">{userInformations?.firstName}</p>
+          <p className="mb-6">{userInformations?.firstName || "Non communiqué"}</p>
           <h2 className="card-title">Nom</h2>
-          <p className="mb-6">{userInformations?.lastName}</p>
+          <p className="mb-6">{userInformations?.lastName || "Non communiqué"}</p>
           <h2 className="card-title">Ville</h2>
-          <p className="mb-6">{userInformations?.city}</p>
+          <p className="mb-6">{userInformations?.city || "Non communiquée"}</p>
           <h2 className="card-title">Presentation</h2>
-          <p className="mb-6">{userInformations?.description}</p>
+          <p className="mb-6">{userInformations?.description || "Aucune présentation pour le moment"}</p>
           <h2 className="card-title">Email</h2>
-          <p className="mb-6">{userInformations?.email}</p>
+          <p className="mb-6">{userInformations?.email || "Non communiqué"}</p>
         </div>
       </div>
-      <div className="flex justify-center gap-4 mt-12">
+      <div className="flex flex-col md:flex-row justify-center gap-4 mt-12">
         <button
           id="edit-profile-button"
           className="btn btn-primary text-white"

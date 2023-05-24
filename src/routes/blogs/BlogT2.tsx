@@ -22,16 +22,16 @@ const BlogT2 = ({
   const [searchInput, setSearchInput] = useState('')
   return (
     <>
-      <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-        <header className="relative h-96 w-full m-auto flex flex-col justify-center items-center text-white gap-4">
+      <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8 py-8">
+        <header className="relative w-full m-auto flex flex-col justify-center items-center text-white gap-4 py-8">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
             {name}
           </h1>
           <p className="max-w-2xl bg-neutral/80 p-2 prose">{blogDescription}</p>
           {coverUrl ? (
-            <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+            <figure className="absolute -z-10 h-full w-full overflow-hidden flex justify-center items-center">
               <img
-                className="w-full"
+                className="object-cover min-w-full min-h-full"
                 src={`${import.meta.env.VITE_IMAGES_URL}${coverUrl}`}
                 alt={`couverture du blog ${name}`}
               />
@@ -40,12 +40,12 @@ const BlogT2 = ({
             <div className="absolute -z-10 bg-primary/5 w-full h-full" />
           )}
         </header>
-        <nav className="navbar bg-base-100 justify-between">
-          <div className="flex gap-2">
+        <nav className="flex flex-col md:flex-row bg-base-100 justify-between">
+          <div className="flex flex-col md:flex-row gap-2">
             <button className="btn btn-outline">Filtre</button>
             <SearchBar setSearchInput={setSearchInput} />
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col md:flex-row gap-2">
             {editor.id === user?.id ? (
               <>
                 <button className="btn btn-info" onClick={editBlog}>
@@ -62,7 +62,7 @@ const BlogT2 = ({
           </div>
         </nav>
         <h2 className="text-5xl font-bold font-lobster ">Articles</h2>
-        <section className="w-full flex justify-center gap-8">
+        <section className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-8">
           {articles.length ? (
             articles
               .filter((article) =>
@@ -78,7 +78,7 @@ const BlogT2 = ({
         {articles.length !== 0 && <StaticPagination />}
       </main>
       <section className="py-16 bg-primary/5 w-full flex">
-        <div className="flex justify-center items-center w-full gap-24">
+        <div className="flex flex-col md:flex-row justify-center items-center w-full gap-24">
           <div className="avatar">
             <Avatar imgUrl={editor.avatar} width="w-80" />
           </div>

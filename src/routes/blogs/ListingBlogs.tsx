@@ -64,7 +64,7 @@ const ListingBlogs = () => {
         </h1>
       <div className="flex justify-between w-full items-center">
         <SearchBar setSearchInput={setSearchInput} />
-        <div className="dropdown dropdown-end">
+        {/* <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn m-1">
             Filter
           </label>
@@ -79,9 +79,9 @@ const ListingBlogs = () => {
               <a>Item 2</a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
-      <section className="w-full grid grid-cols-3 grid-row-3 gap-8">
+      <section className="w-full grid md:grid-cols-2 lg:grid-cols-3 grid-row-3 gap-8">
         {data.getAllBlogs
           .filter((blog: IBlog) =>
             blog.name.toLowerCase().includes(searchInput)

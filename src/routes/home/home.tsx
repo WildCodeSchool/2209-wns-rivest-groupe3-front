@@ -46,7 +46,7 @@ export const Home = () => {
   return (
     <>
       <Hero />
-      <section className="flex flex-col items-center justify-center py-16">
+      <section className="flex flex-col items-center justify-center md:py-16">
         {sections.map((section, key) => (
           <HomeSection
             order={key}

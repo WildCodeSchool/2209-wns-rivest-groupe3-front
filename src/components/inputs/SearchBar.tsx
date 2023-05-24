@@ -9,12 +9,12 @@ const SearchBar = ({
   }
 
   return (
-    <div className="form-control">
-      <div className="input-group">
+    <div className="form-control w-full max-w-sm mx-auto md:mx-0">
+      <div className="input-group w-full">
         <input
           type="text"
           placeholder="Recherche..."
-          className="input input-bordered"
+          className="input input-bordered w-full"
           onChange={handleSearch}
         />
         <button className="btn btn-square">

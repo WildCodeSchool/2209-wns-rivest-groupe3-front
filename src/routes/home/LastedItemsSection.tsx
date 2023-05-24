@@ -19,18 +19,27 @@ const LastedItemsSection = ({
 }: IProps) => {
   return (
     <section
-      className={`md:p-16 group/section flex flex-col items-center justify-center gap-8 ${bgColor}`}
+      className={`md:p-16 group/section flex flex-col items-center justify-center gap-4 md:gap-8 ${bgColor} py-8`}
     >
-      <h2 className="text-5xl font-lobster font-bold text-center">{title}</h2>
-      <div className="h-px w-0 group-hover/section:w-96 bg-neutral transition-all duration-1000" />
-      <p className="text-3xl text-center max-w-lg">{content}</p>
-      <article className="md:flex justify-center items-stretch gap-16 my-4">
+      <h2 className="text-3xl md:text-5xl font-lobster font-bold md:text-center px-8">
+        {title}
+      </h2>
+      <div className='w-full px-8'>
+        <div className="h-px w-0 group-hover/section:w-full max-w-sm bg-neutral transition-all duration-1000 md:mx-auto" />
+      </div>
+      <p className="text-xl md:text-3xl md:text-center max-w-lg px-8">
+        {content}
+      </p>
+      <article className="flex flex-col md:flex-row justify-center md:items-stretch gap-8 md:gap-16 my-4">
         {blogs &&
           blogs.map((blog: any) => {
             return <PolaroidCard key={blog.id} blog={blog} />
           })}
       </article>
-      <Link to={link} className="link link-hover font-lobster underline text-3xl hover:text-secondary transition-all duration-300">
+      <Link
+        to={link}
+        className="link link-hover font-lobster underline text-3xl hover:text-secondary transition-all duration-300"
+      >
         Voir plus
       </Link>
     </section>

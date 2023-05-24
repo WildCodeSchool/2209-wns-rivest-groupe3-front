@@ -31,7 +31,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
         to={item.slug}
         className="w-full max-w-lg group card bg-base-100 shadow-card m-auto cursor-pointer transition-all duration-300 h-full"
       >
-        <figure className="relative w-full h-80 overflow-hidden">
+        <figure className="relative w-full h-48 md:h-80 lg:h-48 xl:h-80 overflow-hidden">
           <img
             src={item.img}
             alt="Shoes"
@@ -45,11 +45,11 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
           <h2 className="card-title font-lobster text-3xl group-hover:text-secondary transition-all duration-300">
             {item.title}
           </h2>
-          <div className="w-full flex gap-2 justify-start">
+          {/* <div className="w-full flex gap-2 justify-start">
             <span className="badge">#asie</span>
             <span className="badge">#UK</span>
             <span className="badge">#paysBasque</span>
-          </div>
+          </div> */}
           <div className="h-48 w-full overflow-hidden relative">
             <div className="absolute top-1/2 w-full h-1/2 bg-gradient-to-b from-transparent to-white" />
             <p>{item.description}</p>

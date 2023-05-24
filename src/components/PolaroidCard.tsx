@@ -14,10 +14,10 @@ const PolaroidCard = ({ blog }: { blog: IBlog }) => {
   return (
     <Link
       to={item.slug}
-      className="w-full max-w-lg group card bg-base-100 shadow-card m-auto cursor-pointer transition-all duration-300 h-full"
+      className="w-full flex flex-col items-center group bg-base-100 shadow-card m-auto cursor-pointer transition-all duration-300 h-full"
     >
-      <div className="aspect-square h-96 p-4">
-        <figure className="relative h-full w-full overflow-hidden">
+      <div className="p-4">
+        <figure className="relative aspect-square h-full max-h-96 w-full overflow-hidden">
           <img
             src={item.img}
             alt={item.title}
@@ -25,9 +25,9 @@ const PolaroidCard = ({ blog }: { blog: IBlog }) => {
           />
         </figure>
       </div>
-      <h2 className="mb-4 font-lobster text-3xl group-hover:text-secondary text-center transition-all duration-300">
+      <span className="w-60 md:w-full mx-auto mb-4 px-2 break-words font-lobster text-xl md:text-3xl group-hover:text-secondary text-center transition-all duration-300">
         {item.title}
-      </h2>
+      </span>
     </Link>
   )
 }
