@@ -34,7 +34,7 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
         <figure className="relative w-full h-48 md:h-80 lg:h-48 xl:h-80 overflow-hidden">
           <img
             src={item.img}
-            alt="Shoes"
+            alt={item.title}
             className="min-w-full min-h-full object-cover group-hover:scale-110 transition-all duration-300"
           />
           {/* <span className="absolute right-0 bottom-0 bg-primary text-white p-2">

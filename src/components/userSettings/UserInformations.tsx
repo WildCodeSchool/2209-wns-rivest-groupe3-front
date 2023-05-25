@@ -77,7 +77,7 @@ const UserInformations = ({
 
   return (
     <>
-      <h1 className="text-5xl font-bold text-center mb-16">Mes informations</h1>
+      <h1 className="text-5xl font-bold font-lobster text-center mb-16">Mes informations</h1>
       <div className="flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex flex-col justify-center items-center gap-8">
           <span className="font-bold text-3xl">Avatar</span>

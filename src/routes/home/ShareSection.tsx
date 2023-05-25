@@ -66,7 +66,6 @@ const ShareSection: React.FC = () => {
         Rends ton blog visible via les réseaux sociaux. Les autres utilisateurs
         pourront te laisser des commentaires.
       </p>
-      <button className="btn btn-secondary">Creer mon blog</button>
       <div className="w-full hidden md:flex absolute min-h-screen">
         {avatars.map((avatar, index) => (
           <img

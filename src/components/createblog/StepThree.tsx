@@ -28,7 +28,7 @@ const StepThree = ({ handleChange, template }: IStepThree) => {
   }
 
   return (
-    <section className="flex justify-center items-center flex-col w-full my-10">
+    <section className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
       <div className="flex justify-center gap-2 text-white mx-auto w-full">
         <label
           className={`flex flex-col justify-start gap-6 font-bold cursor-pointer bg-ghost rounded py-12 px-6 ${
