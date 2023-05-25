@@ -13,7 +13,7 @@ import UserSettings from './routes/userSettings'
 import Register from './routes/register'
 import Toaster from './components/Toaster'
 import { NotificationContext } from './contexts/NotificationContext'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import Modal from './components/Modal'
 import ScrollToTop from './utils/ScrollToTop'
 import PublicProfile from './routes/publicProfile'
@@ -27,6 +27,7 @@ function App() {
       <Modal />
 
       <Navbar />
+      <main className='min-h-screen'>
       {message && <Toaster />}
       <Routes>
         <Route element={<Home />} path="/" />
@@ -41,7 +42,7 @@ function App() {
         <Route element={<CreateBlog />} path="/createblog" />
         <Route element={<NotFound />} path="*" />
       </Routes>
-
+      </main>
       <Footer />
       {message && <Toaster />}
     </BrowserRouter>

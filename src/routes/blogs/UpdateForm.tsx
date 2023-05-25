@@ -124,10 +124,10 @@ const UpdateForm = ({
       />
       <TemplateSelect blog={blog} setBlog={setBlog} />
       <div className="flex justify-around gap-2 w-full">
-        <button type="submit" className="btn btn-info">
+        <button type="submit" className="btn btn-info w-1/2">
           Sauvegarder
         </button>
-        <button type="button" className="btn btn-secondary" onClick={reset}>
+        <button type="button" className="btn btn-secondary w-1/2" onClick={reset}>
           Annuler
         </button>
       </div>

@@ -34,6 +34,14 @@
     U+FEFF, U+FFFD;
 }
 
+* {
+  /* box-shadow: 0 0 0 3px red inset; */
+}
+
+body {
+  @apply relative scrollbar
+}
+
 .btn-primary,
 .btn-secondary,
 .btn-square,
@@ -51,10 +59,6 @@
 
 .card {
   @apply rounded-md;
-}
-
-body {
-  @apply scrollbar;
 }
 
 .shadow-card {

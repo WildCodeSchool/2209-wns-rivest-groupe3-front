@@ -58,64 +58,46 @@ const Articles = () => {
     return (
       <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-neutral-content">
-            Articles
-          </h1>
+          <h1 className="text-7xl font-bold text-center">Articles</h1>
         </header>
       </main>
     )
   if (error) {
     return (
       <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-        <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-          <h1 className="text-5xl font-bold text-center text-neutral-content">
-            Articles
-          </h1>
-        </header>
+        <h1 className="text-7xl font-bold font-lobster text-center">
+          Articles
+        </h1>
       </main>
     )
   }
   return (
-    <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-      <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
-        <h1 className="text-5xl font-bold text-center text-neutral-content">
+    <main className="relative">
+      <img
+        src="/texture-3.png"
+        className="hidden md:flex absolute left-0 -bottom-8 w-full opacity-50"
+      />
+      <section className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8 py-16">
+        <h1 className="text-7xl font-bold font-lobster text-center">
           Articles
         </h1>
-      </header>
-      <div className="flex justify-between w-full items-center">
-        <SearchBar setSearchInput={setSearchInput} />
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn m-1">
-            Filter
-          </label>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Item 2</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <section className="w-full grid grid-cols-3 grid-row-3 gap-8">
-        {data.getAllArticles
-          .filter((article: IArticleCard) =>
-            article.title.toLowerCase().includes(searchInput)
-          )
-          .map((article: any) => {
-            return <Card key={article.id} article={article} />
-          })}
-      </section>
+        <SearchBar setSearchInput={setSearchInput} isCenter />
+        <article className="w-full grid md:grid-cols-2 lg:grid-cols-3 grid-row-3 gap-8">
+          {data.getAllArticles
+            .filter((article: IArticleCard) =>
+              article.title.toLowerCase().includes(searchInput)
+            )
+            .map((article: any) => {
+              return <Card key={article.id} article={article} />
+            })}
+        </article>
 
-      <Pagination
-        numberOfPages={numberOfPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+        <Pagination
+          numberOfPages={numberOfPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </section>
     </main>
   )
 }

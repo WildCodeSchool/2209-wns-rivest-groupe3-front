@@ -11,7 +11,7 @@ const TemplateSelect = ({
   return (
     <div className="flex justify-between gap-2 text-white mx-auto w-full">
       <label
-        className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer rounded py-2 px-6 w-1/2 ${
+        className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer rounded py-2 px-6 w-1/2 max-w-xs ${
           blog.template === 1 ? 'btn-info' : 'btn-ghost'
         }`}
       >
@@ -26,7 +26,7 @@ const TemplateSelect = ({
         />
       </label>
       <label
-        className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer bg-ghost rounded py-2 px-6 w-1/2 ${
+        className={`flex flex-col justify-start items-center gap-2 font-bold cursor-pointer bg-ghost rounded py-2 px-6 w-1/2 max-w-xs ${
           blog.template === 2 ? 'btn-info' : 'btn-ghost text-white'
         }`}
       >
