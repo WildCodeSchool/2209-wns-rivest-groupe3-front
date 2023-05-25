@@ -7,7 +7,7 @@ import { GET_ALL_ARTICLES_WITH_LIMIT_AND_TOTAL } from '../queries/articles'
 import Pagination from '../components/buttons/Pagination'
 import Card from '../components/Card'
 import SearchBar from '../components/inputs/SearchBar'
-import { IArticleCard } from '../utils/interfaces/Interfaces'
+import { IArticle, IArticleCard } from '../utils/interfaces/Interfaces'
 
 const Articles = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -87,8 +87,8 @@ const Articles = () => {
             .filter((article: IArticleCard) =>
               article.title.toLowerCase().includes(searchInput)
             )
-            .map((article: any) => {
-              return <Card key={article.id} article={article} />
+            .map((article: IArticle, key: number) => {
+              return <Card key={key} article={article} />
             })}
         </article>
 

@@ -33,10 +33,10 @@ const Pagination = ({
         «
       </button>
 
-      {pages.map((page) => {
+      {pages.map((page, key) => {
         return (
           <button
-            key={page}
+            key={key}
             className={currentPage === page ? 'btn btn-info' : 'btn'}
             onClick={() => {
               setCurrentPage(page)

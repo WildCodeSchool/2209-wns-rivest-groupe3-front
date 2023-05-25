@@ -65,8 +65,8 @@ const BlogT2 = ({
               .filter((article) =>
                 article.title.toLowerCase().includes(searchInput)
               )
-              .map((article) => (
-                <Card key={article.id} article={article} />
+              .map((article, key) => (
+                <Card key={key} article={article} />
               ))}
           </section>
         ) : (

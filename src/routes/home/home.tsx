@@ -49,6 +49,7 @@ export const Home = () => {
       <section className="flex flex-col items-center justify-center md:py-16">
         {sections.map((section, key) => (
           <HomeSection
+            key={key}
             order={key}
             title={section.title}
             content={section.content}

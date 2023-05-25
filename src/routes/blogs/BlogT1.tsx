@@ -83,7 +83,7 @@ const BlogT1 = ({
                 .filter((article) =>
                   article.title.toLowerCase().includes(searchInput)
                 )
-                .map((article) => <CardT2 key={article.id} article={article} />)
+                .map((article, key) => <CardT2 key={key} article={article} />)
             ) : (
               <span className="text-3xl my-24">
                 Aucun article disponible pour le moment

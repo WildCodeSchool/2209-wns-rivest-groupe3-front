@@ -32,8 +32,8 @@ const LastedItemsSection = ({
       </p>
       <article className="flex flex-col md:flex-row justify-center md:items-stretch gap-8 md:gap-16 my-4">
         {blogs &&
-          blogs.map((blog: any) => {
-            return <PolaroidCard key={blog.id} blog={blog} />
+          blogs.map((blog: any, key: number) => {
+            return <PolaroidCard key={key} blog={blog} />
           })}
       </article>
       <Link

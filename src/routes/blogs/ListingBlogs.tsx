@@ -73,8 +73,8 @@ const ListingBlogs = () => {
             .filter((blog: IBlog) =>
               blog.name.toLowerCase().includes(searchInput)
             )
-            .map((blog: IBlog) => (
-              <div className="w-fit mx-auto">
+            .map((blog: IBlog, key: number) => (
+              <div className="w-fit mx-auto" key={key}>
                 <PolaroidCard key={blog.id} blog={blog} />
               </div>
             ))}

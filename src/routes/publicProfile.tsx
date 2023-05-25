@@ -79,7 +79,7 @@ const PublicProfile = () => {
           {profile.blogs.length ? (
             <article className="grid md:grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-16 md:px-2">
               {profile.blogs.map((blog, key) => (
-                <Card blog={blog} />
+                <Card key={key} blog={blog} />
               ))}
             </article>
           ) : (
