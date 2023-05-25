@@ -78,7 +78,6 @@ const UpdateImage = ({
           },
         }
       )
-      console.log(data)
       await updateBackendUrlImg(data.filename)
     } catch (err) {
       console.error(err)
