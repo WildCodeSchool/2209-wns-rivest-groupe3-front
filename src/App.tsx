@@ -27,24 +27,23 @@ function App() {
       <Modal />
 
       <Navbar />
-      <main className='min-h-screen'>
-      {message && <Toaster />}
-      <Routes>
-        <Route element={<Home />} path="/" />
-        <Route element={<Discover />} path="/discover" />
-        <Route element={<Blogs />} path="/blogs/*" />
-        <Route element={<Articles />} path="/articles" />
-        <Route element={<Profile />} path="/profile" />
-        <Route element={<PublicProfile />} path="/profile/:profileId" />
-        <Route element={<UserSettings />} path="/settings" />
-        <Route element={<Register />} path="/register" />
-        <Route element={<Login />} path="/login" />
-        <Route element={<CreateBlog />} path="/createblog" />
-        <Route element={<NotFound />} path="*" />
-      </Routes>
+      <main className="min-h-screen">
+        {message && <Toaster />}
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Discover />} path="/discover" />
+          <Route element={<Blogs />} path="/blogs/*" />
+          <Route element={<Articles />} path="/articles" />
+          <Route element={<Profile />} path="/profile" />
+          <Route element={<PublicProfile />} path="/profile/:profileId" />
+          <Route element={<UserSettings />} path="/settings" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<Login />} path="/login" />
+          <Route element={<CreateBlog />} path="/createblog" />
+          <Route element={<NotFound />} path="*" />
+        </Routes>
       </main>
       <Footer />
-      {message && <Toaster />}
     </BrowserRouter>
   )
 }
