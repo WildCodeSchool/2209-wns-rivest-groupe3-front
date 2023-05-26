@@ -133,7 +133,6 @@ const EditableArticle = ({
           setCoverUrl={setCoverUrl}
           blogId={blogId}
           setNewContentVersion={setNewContentVersion}
-          setEdit={setEdit}
         />
         <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">

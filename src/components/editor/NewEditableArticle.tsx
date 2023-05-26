@@ -83,6 +83,7 @@ const NewEditableArticle = ({
         blocks={dataToEdit}
         handleInitialize={handleInitialize}
         editorCore={editorCore}
+        uploadUrl=""
       />
     </>
   )
