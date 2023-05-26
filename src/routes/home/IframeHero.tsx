@@ -11,7 +11,7 @@ const IframeHero = () => {
   return (
     <iframe
       ref={iframeRef}
-      className={`${
+      className={`hidden md:flex ${
         isLoading ? 'opacity-0' : 'opacity-1'
       } transition-all duration-1000`}
       src="https://my.spline.design/untitled-18ba1390b53bebdecb84a2fb59aca0ec/"

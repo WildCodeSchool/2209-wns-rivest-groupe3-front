@@ -6,6 +6,9 @@ import { useContext, useState } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import Avatar from '../../components/Avatar'
 import SubscribeBtn from '../../components/buttons/SubscribeBtn'
+import ShareBtn from '../../components/buttons/ShareBtn'
+import AddArticleBtn from '../../components/buttons/AddArticleBtn'
+import EditBlogBtn from '../../components/buttons/EditBlogBtn'
 
 const BlogT2 = ({
   blog,
@@ -22,74 +25,75 @@ const BlogT2 = ({
   const [searchInput, setSearchInput] = useState('')
   return (
     <>
-      <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-        <header className="relative h-96 w-full m-auto flex flex-col justify-center items-center text-white gap-4">
-          <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
+      <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-4 py-8">
+        <header className="relative w-full mx-auto flex flex-col justify-center items-center text-white gap-4 py-8">
+          <h1 className="text-5xl md:text-7xl text-center font-bold font-lobster bg-neutral/80 p-2">
             {name}
           </h1>
           <p className="max-w-2xl bg-neutral/80 p-2 prose">{blogDescription}</p>
           {coverUrl ? (
-            <figure className="absolute -z-10 h-96 w-full overflow-hidden flex justify-center items-center">
+            <figure className="absolute -z-10 h-full w-full overflow-hidden flex justify-center items-center">
               <img
-                className="w-full"
+                className="object-cover min-w-full min-h-full"
                 src={`${import.meta.env.VITE_IMAGES_URL}${coverUrl}`}
                 alt={`couverture du blog ${name}`}
               />
             </figure>
           ) : (
-            <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+            <div className="absolute -z-10 bg-primary/5 w-full h-full" />
           )}
         </header>
-        <nav className="navbar bg-base-100 justify-between">
-          <div className="flex gap-2">
-            <button className="btn btn-outline">Filtre</button>
+        <nav className="w-full flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
+          <div className="w-full max-w-xs lg:max-w-lg xl:max-w-xl">
             <SearchBar setSearchInput={setSearchInput} />
           </div>
-          <div className="flex gap-2">
+          <div className="flex sm:justify-end items-center gap-4 sm:gap-2 sm:ml-auto">
             {editor.id === user?.id ? (
               <>
-                <button className="btn btn-info" onClick={editBlog}>
-                  Modifier
-                </button>
-                <button className="btn btn-info" onClick={addArticle}>
-                  Ajouter un article
-                </button>
+                <AddArticleBtn addArticle={addArticle} />
+                <EditBlogBtn editBlog={editBlog} />
               </>
             ) : (
               <SubscribeBtn blog={blog} />
             )}
-            <button className="btn btn-outline">Partager</button>
+            <ShareBtn />
           </div>
         </nav>
-        <h2 className="text-5xl font-bold font-lobster ">Articles</h2>
-        <section className="w-full flex justify-center gap-8">
-          {articles.length ? (
-            articles
+        {articles.length ? (
+          <section className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-8 sm:gap-2 sm:px-2 md:px-0">
+            {articles
               .filter((article) =>
                 article.title.toLowerCase().includes(searchInput)
               )
-              .map((article) => <Card key={article.id} article={article} />)
-          ) : (
-            <span className="text-3xl my-24">
-              Aucun article disponible pour le moment
-            </span>
-          )}
-        </section>
+              .map((article, key) => (
+                <Card key={key} article={article} />
+              ))}
+          </section>
+        ) : (
+          <span className="text-xl md:text-3xl m-auto px-2">
+            Aucun article disponible pour le moment
+          </span>
+        )}
         {articles.length !== 0 && <StaticPagination />}
       </main>
-      <section className="py-16 bg-gray-300 w-full flex">
-        <div className="flex justify-center items-center w-full gap-24">
+      <aside className="py-16 bg-primary/10 w-full flex">
+        <div className="flex flex-col md:flex-row justify-center items-center w-full gap-4 md:gap-24">
           <div className="avatar">
-            <Avatar imgUrl={editor.avatar} width="w-80" />
+            <Avatar imgUrl={editor.avatar} width="w-60 md:w-80" />
           </div>
-          <div className="space-y-4 max-w-2xl">
-            <a href={`/profile/${editor.id}`} className="font-lobster text-5xl hover:text-secondary">{editor.nickname}</a>
-            <p className="text-3xl">
+          <div className="flex flex-col items-center gap-4 max-w-2xl">
+            <a
+              href={`/profile/${editor.id}`}
+              className="font-lobster text-3xl md:text-5xl hover:text-secondary"
+            >
+              {editor.nickname}
+            </a>
+            <p className="text-xl md:text-3xl">
               {editor.description ?? 'Aucune description'}
             </p>
           </div>
         </div>
-      </section>
+      </aside>
     </>
   )
 }

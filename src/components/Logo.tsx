@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Logo = () => {
   return (
-    <Link to="/" className="btn btn-ghost normal-case text-xl">
+    <Link to="/" className="w-16 md:w-32 hover:scale-110 hover:-rotate-3 transition-all duration-300">
       <object
         data="/Tabasblog-logo.svg"
         type="image/svg+xml"
