@@ -7,6 +7,8 @@ import { useContext, useState } from 'react'
 import { UserContext } from '../../../contexts/UserContext'
 import EditableArticle from '../../../components/editor/EditableArticle'
 import { NotificationContext } from '../../../contexts/NotificationContext'
+import Comments from './comments/Comments'
+// import AddComment from './comments/AddComment'
 
 const Article = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -34,6 +36,10 @@ const Article = () => {
     getOneArticle: article,
     getBlog: blog,
   }: { getOneArticle: IArticle; getBlog: IBlog } = data
+
+  const articleId = "zieufhziufeb"
+
+  console.log(data)
 
   return (
     <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
@@ -87,6 +93,11 @@ const Article = () => {
               return outputData(block, index)
             })}
           </article>
+          <div className="flex-end border-2 bg-white p-6 w-4/6">
+            <h2 className='text-3xl font-bold font-lobster pb-6'>Commentaires</h2>
+            <Comments />
+            {/* <AddComment articleId={articleId} /> */}
+          </div>
         </>
       )}
     </main>
