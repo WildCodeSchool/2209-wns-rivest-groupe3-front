@@ -14,10 +14,10 @@ export interface IBlog {
 }
 
 export interface ISubscription {
-  id: string;
+  id: string
   user: {
-    id: string;
-    nickname: string;
+    id: string
+    nickname: string
   }
 }
 
@@ -64,7 +64,18 @@ export interface IContentBlock {
   type: string
   data: IContentBlockData
 }
-export interface IContentBlockData {
+export interface IContentBlockDataItemImageFile {
+  url: string
+}
+
+export interface IContentBlockDataItemImage {
+  caption?: string
+  file?: IContentBlockDataItemImageFile
+  stretched?: boolean
+  withBackground?: boolean
+  withBorder?: boolean
+}
+export interface IContentBlockData extends IContentBlockDataItemImage {
   text?: string
   level?: number
   style?: string

@@ -177,11 +177,7 @@ const UpdateImage = ({
           </button>
         </div>
       ) : (
-        <button
-          type="button"
-          className="btn btn-secondary w-2/5"
-          onClick={deleteImg}
-        >
+        <button type="button" className="btn btn-secondary" onClick={deleteImg}>
           Supprimer
         </button>
       )}

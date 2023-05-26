@@ -62,10 +62,10 @@ services:
           '--data',
           '{"query":"query { __typename }"}',
         ]
-      interval: 5s
+      interval: 10s
       timeout: 10s
       retries: 10
-      start_period: 10s
+      start_period: 30s
   dev-images:
     container_name: dev-images-service
     env_file:

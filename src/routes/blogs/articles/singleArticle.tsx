@@ -37,7 +37,7 @@ const Article = () => {
 
   return (
     <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
-      {edit ? (
+      {user && user.id === blog.user.id ? (
         <EditableArticle
           blogId={blog.id}
           blogSlug={blog.slug}
@@ -50,20 +50,6 @@ const Article = () => {
         />
       ) : (
         <>
-          {user && user.id === blog.user.id && (
-            <div className="sticky top-8 mr-auto ml-3 flex items-center gap-3 z-10 flex-col -mb-16 bg-white p-4 pt-0">
-              <div className="mt-2">
-                <em>Version du contenu de l'article : {article.version}</em>
-              </div>
-              <button
-                className="btn btn-primary mt-1"
-                onClick={() => setEdit(!edit)}
-              >
-                Editer
-              </button>
-            </div>
-          )}
-
           <header className="m-16 w-full flex flex-col justify-center items-center text-white gap-4">
             <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
               {article.title}
