@@ -41,7 +41,9 @@ const outputData = (block: IContentBlock, index: number) => {
           throw new Error('Header level must be specified')
       }
     case 'image':
-      return <img key={index} src={block.data.url} alt={block.data.alt} />
+      return (
+        <img key={index} src={block.data.file?.url} alt={block.data.caption} />
+      )
     case 'list':
       switch (block.data.style) {
         case 'unordered':
