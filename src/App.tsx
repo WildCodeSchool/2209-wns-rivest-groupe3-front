@@ -17,9 +17,12 @@ import { useContext } from 'react'
 import Modal from './components/Modal'
 import ScrollToTop from './utils/ScrollToTop'
 import PublicProfile from './routes/publicProfile'
+import ErrorComponent from './components/ErrorComponent'
+import { ErrorContext } from './contexts/ErrorContext'
 
 function App() {
   const { message } = useContext(NotificationContext)
+  const { error } = useContext(ErrorContext)
 
   return (
     <BrowserRouter>
@@ -29,19 +32,23 @@ function App() {
       <Navbar />
       <main className="min-h-screen">
         {message && <Toaster />}
-        <Routes>
-          <Route element={<Home />} path="/" />
-          <Route element={<Discover />} path="/discover" />
-          <Route element={<Blogs />} path="/blogs/*" />
-          <Route element={<Articles />} path="/articles" />
-          <Route element={<Profile />} path="/profile" />
-          <Route element={<PublicProfile />} path="/profile/:profileId" />
-          <Route element={<UserSettings />} path="/settings" />
-          <Route element={<Register />} path="/register" />
-          <Route element={<Login />} path="/login" />
-          <Route element={<CreateBlog />} path="/createblog" />
-          <Route element={<NotFound />} path="*" />
-        </Routes>
+        {error ? (
+          <ErrorComponent error={error} />
+        ) : (
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Discover />} path="/discover" />
+            <Route element={<Blogs />} path="/blogs/*" />
+            <Route element={<Articles />} path="/articles" />
+            <Route element={<Profile />} path="/profile" />
+            <Route element={<PublicProfile />} path="/profile/:profileId" />
+            <Route element={<UserSettings />} path="/settings" />
+            <Route element={<Register />} path="/register" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<CreateBlog />} path="/createblog" />
+            <Route element={<NotFound />} path="*" />
+          </Routes>
+        )}
       </main>
       <Footer />
     </BrowserRouter>
