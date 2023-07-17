@@ -8,7 +8,7 @@ import { NotificationContext } from '../contexts/NotificationContext'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginFormProps } from '../components/inputs/inputsInterfaces'
-import { loginSchema } from '../utils/schemaValidation'
+import { loginSchema } from '../utils/userRegisterValidation'
 import PasswordInput from '../components/inputs/PasswordInput'
 import { GET_TOKEN } from '../queries/user'
 

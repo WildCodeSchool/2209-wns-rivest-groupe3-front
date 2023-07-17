@@ -9,3 +9,7 @@ export interface LoginFormProps {
   email: string
   password: string
 }
+
+export interface CreateCommentProps {
+  content: string
+}
