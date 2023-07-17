@@ -5,6 +5,8 @@ import { NotificationContext } from '../../contexts/NotificationContext'
 import { UserContext } from '../../contexts/UserContext'
 import { GET_ONE_BLOG } from '../../queries/blogs'
 import { IBlog } from '../../utils/interfaces/Interfaces'
+import { AiOutlineBell } from 'react-icons/ai'
+import { BiBellOff } from 'react-icons/bi'
 
 const SUBSCRIBE_TO_A_BLOG = gql`
   mutation SubscribeToBlog($blogId: String!) {
@@ -105,12 +107,20 @@ const SubscribeBtn = ({ blog }: { blog: IBlog }) => {
   }
 
   return subscription ? (
-    <button className="btn btn-info" onClick={unsubscribe}>
-      Ne plus suivre
+    <button
+      className="btn btn-info flex items-center gap-2 w-12 aspect-square p-2 sm:w-fit sm:aspect-auto sm:px-4"
+      onClick={unsubscribe}
+    >
+      <BiBellOff size={'1.5rem'} />
+      <span className="hidden lg:flex">Ne plus suivre</span>
     </button>
   ) : (
-    <button className="btn btn-outline" onClick={subscribe}>
-      Suivre
+    <button
+      className="btn btn-outline flex items-center gap-2 w-12 aspect-square p-2 sm:w-fit sm:aspect-auto sm:px-4"
+      onClick={subscribe}
+    >
+      <AiOutlineBell size={'1.5rem'} />
+      <span className="hidden lg:flex">Suivre</span>
     </button>
   )
 }

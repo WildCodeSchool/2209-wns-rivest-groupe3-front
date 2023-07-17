@@ -14,7 +14,6 @@ import EditorWrapper from './EditorWrapper'
 import { IArticle, IContentType } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
 import EditorTools from './EditorTools'
-import ImageHandler from '../imagehandler/ImageHandler'
 
 const EditableArticle = ({
   blogId,
@@ -66,6 +65,7 @@ const EditableArticle = ({
         return
       }
       const savedArticleData = await editorCore.current.save()
+      console.log(savedArticleData)
 
       const versionToStore =
         newContentVersion !== articleVersion
@@ -133,7 +133,6 @@ const EditableArticle = ({
           setCoverUrl={setCoverUrl}
           blogId={blogId}
           setNewContentVersion={setNewContentVersion}
-          // setEdit={setEdit}
         />
         <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
@@ -148,7 +147,7 @@ const EditableArticle = ({
               />
             </figure>
           ) : (
-            <div className="absolute -z-10 bg-gray-300 w-full h-full" />
+            <div className="absolute -z-10 bg-primary/5 w-full h-full" />
           )}
         </header>
         <div className="bg-white px-8 bg-opacity-80">
@@ -156,6 +155,7 @@ const EditableArticle = ({
             blocks={dataToEdit}
             handleInitialize={handleInitialize}
             editorCore={editorCore}
+            uploadUrl={`/upload/blog/${blogId}/article/${articleId}`}
           />
         </div>
       </>

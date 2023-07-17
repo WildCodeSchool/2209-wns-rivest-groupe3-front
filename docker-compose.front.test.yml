@@ -20,7 +20,7 @@ services:
 
   backend-test:
     container_name: backend-test
-    image: tbiarneix/tabas-back:latest
+    image: tbiarneix/tabas-back-staging:latest
     env_file:
       - .env.back.test
     ports:
@@ -43,10 +43,10 @@ services:
           '--data',
           '{"query":"query { __typename }"}',
         ]
-      interval: 5s
+      interval: 10s
       timeout: 10s
       retries: 10
-      start_period: 10s
+      start_period: 20s
 
   frontend-test:
     container_name: frontend-test

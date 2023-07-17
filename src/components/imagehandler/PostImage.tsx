@@ -53,7 +53,6 @@ const PostImage = ({
           },
         }
       )
-      console.log(data)
       await updateBackendUrlImg(data.filename)
       setSelectedImage({ ...selectedImage, imageUrl: data.filename })
     } catch (err) {
