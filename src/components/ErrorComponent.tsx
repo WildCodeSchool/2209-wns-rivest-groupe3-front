@@ -5,7 +5,6 @@ import { ErrorContext } from '../contexts/ErrorContext'
 
 const ErrorComponent = ({ error }: { error: any }) => {
   const { setError } = useContext(ErrorContext)
-  console.log(error.message)
 
   const navigate = useNavigate()
   return (
