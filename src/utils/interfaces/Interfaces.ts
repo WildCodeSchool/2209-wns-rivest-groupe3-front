@@ -46,6 +46,7 @@ export interface IArticle {
   country: string
   version: number
   articleContent: IArticleContent[]
+  comments: IComment[]
   blog?: IBlog
 }
 export interface IArticleContent {
@@ -53,6 +54,14 @@ export interface IArticleContent {
   id: string
   current: boolean
   content: IContentType
+}
+
+export interface IComment {
+  id: string
+  content: string
+  createdAt: Date
+  updatedAt: Date
+  user: IUser
 }
 export interface IContentType extends OutputData {
   time: number
