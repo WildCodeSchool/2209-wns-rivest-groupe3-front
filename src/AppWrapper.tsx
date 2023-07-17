@@ -19,11 +19,9 @@ function AppWrapper() {
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.forEach((error) => {
-        console.error(error)
-        // console.error(
-        //   `[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`
-        // )
-        setError(error)
+        console.error(
+          `[GraphQL error]: Message: ${error.message}, Location: ${error.locations}, Path: ${error.path}`
+        )
       })
     if (networkError) console.error(`[Network error]: ${networkError}`)
   })
