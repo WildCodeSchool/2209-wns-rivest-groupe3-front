@@ -10,6 +10,6 @@ export interface LoginFormProps {
   password: string
 }
 
-export interface CreatCommentProps {
+export interface CreateCommentProps {
   content: string
 }

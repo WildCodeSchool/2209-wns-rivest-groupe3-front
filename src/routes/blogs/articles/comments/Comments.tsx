@@ -5,11 +5,12 @@ import { NotificationContext } from '../../../../contexts/NotificationContext'
 import { GET_ALL_COMMENTS_OF_AN_ARTICLE } from '../../../../queries/comments'
 import { IArticle } from '../../../../utils/interfaces/Interfaces'
 import { formatDate } from '../../../../utils/formatDate'
+import DeleteComment from './DeleteComment'
 
 const Comments = () => {
   const { setMessage } = useContext(NotificationContext)
   const { slug, blogSlug } = useParams()
-  
+
   const { loading, error, data } = useQuery(GET_ALL_COMMENTS_OF_AN_ARTICLE, {
     variables: {
       blogSlug,
@@ -47,14 +48,12 @@ const Comments = () => {
           <p className="p-3">{comment.content}</p>
           <div className="flex justify-between items-start p-3">
             <p className="font-bold font-lobster">{comment.user.nickname}</p>
-            <div>
-              <p className="text-xs italic">
-                Créé le : {formatDate(comment.createdAt)}
-              </p>
-              <p className="text-xs italic">
-                Mis à jour le : {formatDate(comment.updatedAt)}
-              </p>
+            <div className="flex justify-between items-start p-1">
+              <p className="text-xs italic">{formatDate(comment.createdAt)}</p>
             </div>
+          </div>
+          <div className="flex justify-end">
+            <DeleteComment commentId={comment.id} authorId={comment.user.id} />
           </div>
         </div>
       ))}
