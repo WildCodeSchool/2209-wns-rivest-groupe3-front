@@ -8,6 +8,7 @@ import Pagination from '../components/buttons/Pagination'
 import Card from '../components/Card'
 import SearchBar from '../components/inputs/SearchBar'
 import { IArticle, IArticleCard } from '../utils/interfaces/Interfaces'
+import ErrorComponent from '../components/ErrorComponent'
 
 const Articles = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -36,12 +37,6 @@ const Articles = () => {
   }, [data])
 
   useEffect(() => {
-    if (error) {
-      setMessage({ text: error.message, type: 'error' })
-    }
-  }, [error])
-
-  useEffect(() => {
     updatePage(currentPage)
   }, [currentPage])
 
@@ -65,9 +60,7 @@ const Articles = () => {
   if (error) {
     return (
       <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
-        <h1 className="text-7xl font-bold font-lobster text-center">
-          Articles
-        </h1>
+        <ErrorComponent error={error} />
       </main>
     )
   }

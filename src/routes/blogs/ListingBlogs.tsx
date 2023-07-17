@@ -10,6 +10,7 @@ import Pagination from '../../components/buttons/Pagination'
 import Card from '../../components/Card'
 import SearchBar from '../../components/inputs/SearchBar'
 import PolaroidCard from '../../components/PolaroidCard'
+import ErrorComponent from '../../components/ErrorComponent'
 
 const ListingBlogs = () => {
   const { setMessage } = useContext(NotificationContext)
@@ -54,9 +55,9 @@ const ListingBlogs = () => {
     if (error) setMessage({ text: error.message, type: 'error' })
   }, [error])
 
-  if (loading) return <>Loading...</>
+  if (loading) return <>Chargement...</>
 
-  if (error) return <></>
+  if (error) return <ErrorComponent error={error} />
 
   return (
     <main className="relative">

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { useContext } from 'react'
+import ErrorComponent from '../../components/ErrorComponent'
 import { NotificationContext } from '../../contexts/NotificationContext'
 import { GET_FIRST_BLOGS_AND_ARTICLES } from '../../queries/blogs'
 import Hero from './Hero'
@@ -37,10 +38,10 @@ export const Home = () => {
     },
   ]
 
-  if (loading) return <>Loading...</>
+  if (loading) return <>Chargement...</>
   if (error) {
     setMessage({ text: error.message, type: 'error' })
-    return <></>
+    return <ErrorComponent error={error} />
   }
 
   return (

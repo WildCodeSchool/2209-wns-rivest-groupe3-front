@@ -1,6 +1,7 @@
 import Image from '@editorjs/image'
 import { createReactEditorJS } from 'react-editor-js'
 import type EditorJS from '@editorjs/editorjs'
+import { EditorCore } from '@react-editor-js/core'
 
 import { EDITOR_JS_TOOLS } from './Tools'
 import { IContentBlock } from '../../utils/interfaces/Interfaces'
@@ -21,7 +22,7 @@ const EditorWrapper = ({
   uploadUrl,
 }: {
   blocks: IContentBlock[]
-  handleInitialize: (instance: any) => void
+  handleInitialize: (instance: EditorCore) => void
   editorCore: React.MutableRefObject<EditorJS | null>
   uploadUrl: string
 }) => {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 
-interface IMessage {
+export interface IMessage {
   text: string
   type: 'success' | 'error' | 'info' | 'warn'
 }

@@ -7,6 +7,7 @@ import { GET_FIRST_BLOGS_AND_ARTICLES } from '../queries/blogs'
 
 import Card from '../components/Card'
 import { IArticle, IBlog } from '../utils/interfaces/Interfaces'
+import ErrorComponent from '../components/ErrorComponent'
 
 const Discover = () => {
   const { loading, error, data } = useQuery(GET_FIRST_BLOGS_AND_ARTICLES, {
@@ -21,8 +22,8 @@ const Discover = () => {
     if (error) setMessage({ text: error.message, type: 'error' })
   }, [error])
 
-  if (loading) return <>Loading...</>
-  if (error) return <></>
+  if (loading) return <>Chargement...</>
+  if (error) return <ErrorComponent error={error} />
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
