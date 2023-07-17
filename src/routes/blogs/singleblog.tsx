@@ -7,6 +7,7 @@ import { GET_ONE_BLOG } from '../../queries/blogs'
 import EditDrag from './EditDrag'
 import { IBlog } from '../../utils/interfaces/Interfaces'
 import UpdateForm from './UpdateForm'
+import ErrorComponent from '../../components/ErrorComponent'
 
 const Blog = () => {
   const [isEditing, setIsEditing] = useState(false)
@@ -22,7 +23,7 @@ const Blog = () => {
   }
   const addArticle = () => navigate(`_`)
 
-  const { loading, data } = useQuery(GET_ONE_BLOG, {
+  const { loading, data, error } = useQuery(GET_ONE_BLOG, {
     variables: { slug },
   })
 
@@ -31,6 +32,12 @@ const Blog = () => {
   }, [data])
 
   if (loading) return <>Chargement...</>
+  if (error)
+    return (
+      <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+        <ErrorComponent error={error} />
+      </main>
+    )
 
   return (
     blog && (

@@ -37,12 +37,6 @@ const Articles = () => {
   }, [data])
 
   useEffect(() => {
-    if (error) {
-      setMessage({ text: error.message, type: 'error' })
-    }
-  }, [error])
-
-  useEffect(() => {
     updatePage(currentPage)
   }, [currentPage])
 
