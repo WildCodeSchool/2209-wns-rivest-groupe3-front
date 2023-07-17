@@ -14,6 +14,7 @@ import EditorWrapper from './EditorWrapper'
 import { IArticle, IContentType } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
 import EditorTools from './EditorTools'
+import ErrorComponent from '../ErrorComponent'
 
 const EditableArticle = ({
   blogId,
@@ -65,8 +66,6 @@ const EditableArticle = ({
         return
       }
       const savedArticleData = await editorCore.current.save()
-      console.log(savedArticleData)
-
       const versionToStore =
         newContentVersion !== articleVersion
           ? newContentVersion
@@ -103,13 +102,13 @@ const EditableArticle = ({
     [title, coverUrl, newContentVersion, contentVersion]
   )
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <div>Chargement...</div>
   if (error) {
     setMessage({
       text: `Une erreur s'est produite`,
       type: 'error',
     })
-    return <>Error</>
+    return <ErrorComponent error={error} />
   }
   if (data) {
     const { getOneArticle: article }: { getOneArticle: IArticle } = data

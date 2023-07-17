@@ -8,6 +8,7 @@ import { GET_USER } from '../queries/user'
 import Card from '../components/Card'
 import Avatar from '../components/Avatar'
 import { IUser } from '../utils/interfaces/Interfaces'
+import ErrorComponent from '../components/ErrorComponent'
 
 const PublicProfile = () => {
   const { user } = useContext<IUserContext>(UserContext)
@@ -28,7 +29,12 @@ const PublicProfile = () => {
   }
 
   if (loading) return <p>Chargement...</p>
-  if (error) return <p>Erreur lors de la récupération de l'utilisateur </p>
+  if (error)
+    return (
+      <ErrorComponent
+        error={{ message: "Erreur lors de la récupération de l'utilisateur" }}
+      />
+    )
 
   const profile: IUser = data.getOneUser || null
 

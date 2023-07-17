@@ -5,6 +5,7 @@ import { ErrorContext } from '../contexts/ErrorContext'
 
 const ErrorComponent = ({ error }: { error: any }) => {
   const { setError } = useContext(ErrorContext)
+  console.log(error.message)
 
   const navigate = useNavigate()
   return (
@@ -16,7 +17,7 @@ const ErrorComponent = ({ error }: { error: any }) => {
       <h3 className="text-3xl font-bold mt-5 text-center">{error.message}</h3>
       <button
         type="button"
-        className="btn btn-secondary mx-auto mt-4"
+        className="btn btn-primary mx-auto mt-4"
         onClick={() => {
           setError(null)
           navigate('/')

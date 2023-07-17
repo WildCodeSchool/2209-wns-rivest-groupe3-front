@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
+import ErrorComponent from '../components/ErrorComponent'
 
 const NotFound = () => {
   return (
@@ -6,12 +7,7 @@ const NotFound = () => {
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">404 not found</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-          <Link className="btn btn-primary" to="/">Go back home</Link>
+          <ErrorComponent error={{ message: 'Cette page est introuvable' }} />
         </div>
       </div>
     </div>

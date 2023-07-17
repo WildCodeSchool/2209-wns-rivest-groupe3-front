@@ -6,14 +6,12 @@ import outputData from '../../../utils/ouputContentBlocks'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../../contexts/UserContext'
 import EditableArticle from '../../../components/editor/EditableArticle'
-import { NotificationContext } from '../../../contexts/NotificationContext'
 
 const Article = () => {
-  const { setMessage } = useContext(NotificationContext)
   const { slug, blogSlug } = useParams()
   const { user } = useContext(UserContext)
   const [edit, setEdit] = useState(false)
-  const { loading, error, data } = useQuery(GET_ONE_ARTICLE, {
+  const { loading, data } = useQuery(GET_ONE_ARTICLE, {
     variables: {
       slug,
       blogSlug,
@@ -21,14 +19,7 @@ const Article = () => {
     fetchPolicy: 'cache-and-network',
   })
 
-  if (loading) return <div>Loading...</div>
-  if (error) {
-    setMessage({
-      text: `Une erreur s'est produite`,
-      type: 'error',
-    })
-    return <>Error</>
-  }
+  if (loading) return <div>Chargement...</div>
 
   const {
     getOneArticle: article,
