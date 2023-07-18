@@ -7,9 +7,10 @@ import ErrorComponent from '../../../components/ErrorComponent'
 
 const ArticleEditor = () => {
   const { blogSlug } = useParams()
+
   const { loading, data, error } = useQuery(GET_ONE_BLOG, {
     variables: {
-      blogSlug,
+      slug: blogSlug,
     },
     fetchPolicy: 'cache-and-network',
   })
@@ -23,9 +24,7 @@ const ArticleEditor = () => {
     )
 
   const {
-    data: {
-      getBlog: { id: blogId },
-    },
+    getBlog: { id: blogId },
   } = data
   return (
     <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
