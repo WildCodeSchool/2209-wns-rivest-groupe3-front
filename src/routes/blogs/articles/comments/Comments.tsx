@@ -28,14 +28,16 @@ const Comments = () => {
     return <>Error</>
   }
 
-  const { getOneArticle: article }: { getOneArticle: IArticle } = data
+  const {
+    getOneArticleComments: { comments },
+  }: { getOneArticleComments: IArticle } = data
 
-  if (article.comments.length === 0) {
+  if (comments === undefined || comments.length === 0) {
     return (
       <div>
         <p>
-          Cet article ne contient pas encore de commentaire. Vouslez-vous être
-          la première personne à donner votre avis ?
+          Cet article ne contient pas encore de commentaire. Voulez-vous être la
+          première personne à donner votre avis ?
         </p>
       </div>
     )
@@ -43,7 +45,7 @@ const Comments = () => {
 
   return (
     <div>
-      {article.comments?.map((comment) => (
+      {comments?.map((comment) => (
         <div key={comment.id} className="border-2 p-2 mb-5">
           <p className="p-3">{comment.content}</p>
           <div className="flex justify-between items-start p-3">

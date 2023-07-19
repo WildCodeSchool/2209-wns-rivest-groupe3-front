@@ -40,7 +40,7 @@ const PublicProfile = () => {
 
   return (
     profile && (
-      <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <div className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <section className="py-16 bg-gradient-to-r from-primary to-black w-full flex">
           <div className="flex flex-col md:flex-row justify-center items-center w-full gap-8 md:gap-16 lg:gap-24">
             <div className="avatar">
@@ -92,7 +92,7 @@ const PublicProfile = () => {
             <span>Aucun blog pour le moment</span>
           )}
         </section>
-      </main>
+      </div>
     )
   )
 }

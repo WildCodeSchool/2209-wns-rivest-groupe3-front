@@ -25,7 +25,7 @@ const BlogT2 = ({
   const [searchInput, setSearchInput] = useState('')
   return (
     <>
-      <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-4 py-8">
+      <div className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-4 py-8">
         <header className="relative w-full mx-auto flex flex-col justify-center items-center text-white gap-4 py-8">
           <h1 className="text-5xl md:text-7xl text-center font-bold font-lobster bg-neutral/80 p-2">
             {name}
@@ -75,7 +75,7 @@ const BlogT2 = ({
           </span>
         )}
         {articles.length !== 0 && <StaticPagination />}
-      </main>
+      </div>
       <aside className="py-16 bg-primary/10 w-full flex">
         <div className="flex flex-col md:flex-row justify-center items-center w-full gap-4 md:gap-24">
           <div className="avatar">

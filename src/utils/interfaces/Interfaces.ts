@@ -46,7 +46,7 @@ export interface IArticle {
   country: string
   version: number
   articleContent: IArticleContent[]
-  comments: IComment[]
+  comments?: IComment[]
   blog?: IBlog
 }
 export interface IArticleContent {

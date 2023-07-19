@@ -31,7 +31,6 @@ function App() {
 
       <Navbar />
       <main className="min-h-screen">
-        {message && <Toaster />}
         {error ? (
           <ErrorComponent error={error} />
         ) : (
@@ -49,6 +48,7 @@ function App() {
             <Route element={<NotFound />} path="*" />
           </Routes>
         )}
+        {message && <Toaster />}
       </main>
       <Footer />
     </BrowserRouter>

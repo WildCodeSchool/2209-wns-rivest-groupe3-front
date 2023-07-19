@@ -34,9 +34,9 @@ const Blog = () => {
   if (loading) return <>Chargement...</>
   if (error)
     return (
-      <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <div className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <ErrorComponent error={error} />
-      </main>
+      </div>
     )
 
   return (

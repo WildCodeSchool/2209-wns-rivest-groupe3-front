@@ -60,7 +60,7 @@ const ListingBlogs = () => {
   if (error) return <ErrorComponent error={error} />
 
   return (
-    <main className="relative">
+    <div className="relative">
       <img
         src="/tache-right.png"
         alt="tâche"
@@ -87,7 +87,7 @@ const ListingBlogs = () => {
           setCurrentPage={setCurrentPage}
         />
       </section>
-    </main>
+    </div>
   )
 }
 
