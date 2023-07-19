@@ -166,3 +166,8 @@ export const UPDATE_ARTICLE = gql`
     }
   }
 `
+export const DELETE_ARTICLE = gql`
+  mutation DeleteArticle($articleId: String!, $blogId: String!) {
+    deleteArticle(articleId: $articleId, blogId: $blogId)
+  }
+`

@@ -25,7 +25,7 @@ const BlogT1 = ({
 
   const [searchInput, setSearchInput] = useState('')
   return (
-    <main className="relative min-h-screen w-full mx-auto mt-8 md:my-8 flex flex-col items-center md:gap-8">
+    <div className="relative min-h-screen w-full mx-auto mt-8 md:my-8 flex flex-col items-center md:gap-8">
       <header className="relative w-full max-w-screen-2xl mx-auto flex flex-col justify-center items-center text-white gap-4 py-8 mt-8">
         <h1 className="text-5xl md:text-7xl font-bold font-lobster bg-neutral/80 p-2">
           {name}
@@ -73,7 +73,7 @@ const BlogT1 = ({
               )}
               <ShareBtn />
             </div>
-          <div className="w-full sm:w-80 xl:w-5/12 md:w-full lg:max-w-lg xl:max-w-xl">
+            <div className="w-full sm:w-80 xl:w-5/12 md:w-full lg:max-w-lg xl:max-w-xl">
               <SearchBar setSearchInput={setSearchInput} />
             </div>
           </nav>
@@ -93,7 +93,7 @@ const BlogT1 = ({
           <StaticPagination />
         </article>
       </section>
-    </main>
+    </div>
   )
 }
 
