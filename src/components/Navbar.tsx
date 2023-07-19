@@ -1,69 +1,64 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
+import BurgerBtn from './buttons/BurgerBtn'
+import Logo from './Logo'
+import MobileMenu from './MobileMenu'
+import ProfilDropdown from './ProfilDropdown'
 
 const Navbar = () => {
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    setUser(null)
-  }
+  const location = useLocation()
 
   return (
-    <nav className="navbar bg-base-100 w-full justify-between">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl">
-          Logo
-        </Link>
-        <Link to="/discover" className="btn btn-ghost normal-case text-xl">
-          Découvrir
-        </Link>
-      </div>
-      <div className="flex-none gap-2">
-        {user ? (
-          <span className="text-xl font-bold">{user.nickname}</span>
-        ) : (
-          <>
-            <Link to="/register" className="btn btn-ghost">
-              Inscription
-            </Link>
-            <Link to="/login" className="btn">
-              Connexion
-            </Link>
-          </>
-        )}
+    <>
+      <nav
+        className={`navbar w-full justify-between top-0 z-50 ${
+          location.pathname === '/'
+            ? 'bg-transparent text-white absolute'
+            : 'bg-white text-neutral fixed'
+        }`}
+      >
+        <Logo />
+        <div className="hidden md:flex flex-1">
+          <Link to="/blogs" className="btn btn-ghost normal-case text-xl">
+            Blogs
+          </Link>
+          <Link to="/articles" className="btn btn-ghost normal-case text-xl">
+            Articles
+          </Link>
+        </div>
+        <div className="hidden md:flex gap-2">
+          {user ? (
+            <span className="text-xl font-bold mr-2">{user.nickname}</span>
+          ) : (
+            <>
+              <Link
+                id="inscription-head-link"
+                to="/register"
+                className="btn btn-ghost"
+              >
+                Inscription
+              </Link>
+              <Link id="login-head-link" to="/login" className="btn">
+                Connexion
+              </Link>
+            </>
+          )}
 
-        {user && (
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
-              </div>
-            </label>
-            <ul
-              tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <button className="btn btn-secondary" onClick={logout}>
-                  Déconnexion
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
-    </nav>
+          {user && <ProfilDropdown user={user} />}
+        </div>
+        <BurgerBtn
+          burgerColor={
+            location.pathname === '/' ? 'text-white' : 'text-primary'
+          }
+          setIsMenuOpen={setIsMenuOpen}
+        />
+      </nav>
+      {isMenuOpen && <MobileMenu user={user} setIsMenuOpen={setIsMenuOpen} />}
+    </>
   )
 }
 

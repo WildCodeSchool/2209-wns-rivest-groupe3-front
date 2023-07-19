@@ -1,0 +1,99 @@
+name: tabas-production
+services:
+  db:
+    container_name: postgresDB
+    image: postgres
+    restart: always
+    volumes:
+      - ../back/data:/var/lib/postgresql/data
+    env_file:
+      - ../back/.env
+    networks:
+      - production-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 5s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DESIGN=hydra
+    ports:
+      - 18081:8080
+    networks:
+      - production-network
+    depends_on:
+      db:
+        condition: service_healthy
+  backend:
+    container_name: backend
+    image: tbiarneix/tabas-back
+    env_file:
+      - ../back/.env
+    ports:
+      - 15000:5000
+    networks:
+      - production-network
+    command: [sh, -cx, 'npm run build && npm run start']
+    depends_on:
+      'db':
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--request',
+          'POST',
+          '--header',
+          "'content-type: application/json'",
+          '--url',
+          'http://localhost:5000/',
+          '--data',
+          '{"query":"query { __typename }"}',
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+  images:
+    container_name: images-service
+    env_file:
+      - ../images-service/.env
+    image: tbiarneix/tabas-images-service
+    volumes:
+      - ../images-service/uploads:/app/uploads
+    command: [sh, -cx, 'npm run build && npm run start-prod']
+    ports:
+      - 18000:8000
+    networks:
+      - production-network
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  frontend:
+    container_name: frontend
+    image: tbiarneix/tabas-front
+    env_file:
+      - ./.env
+    ports:
+      - 18080:8080
+    networks:
+      - production-network
+    volumes:
+      - ./www/:/app/dist/
+    command: [sh, -cx, 'npm run build']
+    depends_on:
+      'backend':
+        condition: service_healthy
+      'images':
+        condition: service_healthy
+networks:
+  production-network:
+    name: production-network

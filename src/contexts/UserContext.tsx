@@ -1,34 +1,44 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 
-interface IUser {
-  id: number
+export interface IUser {
+  id?: string
   nickname: string
   email: string
   lastName: string
   firstName: string
-  lastLogin: string
+  lastLogin: Date
   description: string
-  createdAt: string
+  city: string
+  avatar: string
+  createdAt: Date
 }
 
-interface IUserContext {
+export interface IUserContext {
   user: IUser | null
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
+  isCreatingBlog: boolean
+  setIsCreatingBlog: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const UserContext = createContext<IUserContext>({
   user: null,
   setUser: () => {},
+  isCreatingBlog: false,
+  setIsCreatingBlog: () => {},
 })
 
-const localUser = localStorage.getItem('user')
-  ? JSON.parse(localStorage.getItem('user') as string)
-  : null
+const stringUser = localStorage.getItem('user')
+
+const localUser: IUser | undefined = stringUser && JSON.parse(stringUser)
 
 export const UserProvider = ({ children }: { children: JSX.Element }) => {
   const [user, setUser] = useState<IUser | null>(localUser || null)
+  const [isCreatingBlog, setIsCreatingBlog] = useState(false)
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, isCreatingBlog, setIsCreatingBlog }}
+    >
       {children}
     </UserContext.Provider>
   )

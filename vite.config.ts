@@ -3,9 +3,15 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react()],
-    server: {
-        port: 8080,
-        host: true,
+  plugins: [react()],
+  server: {
+    port: 8080,
+    host: true,
+  },
+  publicDir: 'src/assets',
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
     },
+  },
 })

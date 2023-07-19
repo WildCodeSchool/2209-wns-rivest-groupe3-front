@@ -1,0 +1,99 @@
+name: tabas-stg
+services:
+  stg-db:
+    container_name: stg-postgresDB
+    image: postgres
+    restart: always
+    volumes:
+      - ../back/data:/var/lib/postgresql/data
+    env_file:
+      - ../back/.env.stg
+    networks:
+      - stg-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 5s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
+  stg-adminer:
+    container_name: stg-adminer
+    image: adminer
+    restart: always
+    environment:
+      - ADMINER_DESIGN=hydra
+    ports:
+      - 28081:8080
+    networks:
+      - stg-network
+    depends_on:
+      stg-db:
+        condition: service_healthy
+  stg-backend:
+    container_name: stg-backend
+    image: tbiarneix/tabas-back-staging
+    env_file:
+      - ../back/.env.stg
+    ports:
+      - 25000:5000
+    networks:
+      - stg-network
+    command: [sh, -cx, 'npm run build && npm run start']
+    depends_on:
+      'stg-db':
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'curl',
+          '--request',
+          'POST',
+          '--header',
+          "'content-type: application/json'",
+          '--url',
+          'http://localhost:5000/',
+          '--data',
+          '{"query":"query { __typename }"}',
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+  stg-images:
+    container_name: stg-images-service
+    env_file:
+      - ../images-service/.env.stg
+    image: tbiarneix/tabas-images-service-staging
+    volumes:
+      - ../images-service/uploads:/app/uploads
+    command: [sh, -cx, 'npm run build && npm run start-prod']
+    ports:
+      - 28000:8000
+    networks:
+      - stg-network
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:8000' || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  stg-frontend:
+    container_name: stg-frontend
+    image: tbiarneix/tabas-front-staging
+    env_file:
+      - ./.env.stg
+    ports:
+      - 28080:8080
+    networks:
+      - stg-network
+    volumes:
+      - ./www/:/app/dist/
+    command: [sh, -cx, 'npm run build']
+    depends_on:
+      'stg-backend':
+        condition: service_healthy
+      'stg-images':
+        condition: service_healthy
+networks:
+  stg-network:
+    name: stg-network
