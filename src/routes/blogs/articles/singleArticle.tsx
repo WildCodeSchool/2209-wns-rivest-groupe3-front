@@ -38,16 +38,25 @@ const Article = () => {
   return (
     <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
       {user && user.id === blog.user.id ? (
-        <EditableArticle
-          blogId={blog.id}
-          blogSlug={blog.slug}
-          articleId={article.id}
-          articleCoverUrl={article.coverUrl}
-          articleSlug={article.slug}
-          articleTitle={article.title}
-          articleVersion={article.version}
-          setEdit={setEdit}
-        />
+        <>
+          <EditableArticle
+            blogId={blog.id}
+            blogSlug={blog.slug}
+            articleId={article.id}
+            articleCoverUrl={article.coverUrl}
+            articleSlug={article.slug}
+            articleTitle={article.title}
+            articleVersion={article.version}
+            setEdit={setEdit}
+          />
+          <div className="flex-end border-2 bg-white p-6 w-4/6">
+            <h2 className="text-3xl font-bold font-lobster pb-6">
+              Commentaires
+            </h2>
+            <Comments />
+            <AddComment articleId={data.getOneArticle.id} />
+          </div>
+        </>
       ) : (
         <>
           <header className="m-16 w-full flex flex-col justify-center items-center text-white gap-4">
