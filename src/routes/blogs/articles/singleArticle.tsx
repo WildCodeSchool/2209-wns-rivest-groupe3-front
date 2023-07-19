@@ -13,7 +13,6 @@ import ErrorComponent from '../../../components/ErrorComponent'
 const Article = () => {
   const { slug, blogSlug } = useParams()
   const { user } = useContext(UserContext)
-  const [edit, setEdit] = useState(false)
   const { loading, data, error } = useQuery(GET_ONE_ARTICLE, {
     variables: {
       slug,
@@ -25,9 +24,9 @@ const Article = () => {
   if (loading) return <div>Chargement...</div>
   if (error)
     return (
-      <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <div className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <ErrorComponent error={error} />
-      </main>
+      </div>
     )
 
   const {
@@ -36,7 +35,7 @@ const Article = () => {
   }: { getOneArticle: IArticle; getBlog: IBlog } = data
 
   return (
-    <main className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
+    <div className="relative min-h-screen w-full max-w-screen-2xl mx-auto my-16 flex flex-col items-center gap-8">
       {user && user.id === blog.user.id ? (
         <>
           <EditableArticle
@@ -47,7 +46,6 @@ const Article = () => {
             articleSlug={article.slug}
             articleTitle={article.title}
             articleVersion={article.version}
-            setEdit={setEdit}
           />
           <div className="flex-end border-2 bg-white p-6 w-4/6">
             <h2 className="text-3xl font-bold font-lobster pb-6">
@@ -91,7 +89,7 @@ const Article = () => {
           </div>
         </>
       )}
-    </main>
+    </div>
   )
 }
 

@@ -26,7 +26,7 @@ const Discover = () => {
   if (error) return <ErrorComponent error={error} />
 
   return (
-    <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+    <div className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <section className="py-16 flex flex-col items-center justify-center gap-16">
         <h2 className="text-5xl font-bold text-center">
           Blogs les plus récents
@@ -53,7 +53,7 @@ const Discover = () => {
           Voir plus
         </Link>
       </section>
-    </main>
+    </div>
   )
 }
 

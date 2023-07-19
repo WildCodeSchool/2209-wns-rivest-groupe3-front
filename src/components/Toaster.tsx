@@ -47,7 +47,7 @@ const Toaster = () => {
   }
 
   return (
-    <div className="toast z-100">
+    <div className="toast z-[1000]">
       <div className={innerDivClass}>
         <p>{message.text}</p>
       </div>

@@ -43,7 +43,7 @@ const UserSettings = () => {
     )
 
   return (
-    <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+    <div className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <div
         className={
           showUserInformations === true ? 'flex flex-col w-4/5 mb-4' : 'hidden'
@@ -78,7 +78,7 @@ const UserSettings = () => {
           setShowEditPasswordForm={setShowEditPasswordForm}
         />
       </div>
-    </main>
+    </div>
   )
 }
 

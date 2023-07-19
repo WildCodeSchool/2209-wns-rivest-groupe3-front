@@ -51,21 +51,21 @@ const Articles = () => {
 
   if (loading)
     return (
-      <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <div className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <header className="h-96 w-full m-auto bg-[url('https://placeimg.com/1000/800/arch')] flex justify-center items-center">
           <h1 className="text-7xl font-bold text-center">Articles</h1>
         </header>
-      </main>
+      </div>
     )
   if (error) {
     return (
-      <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
+      <div className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
         <ErrorComponent error={error} />
-      </main>
+      </div>
     )
   }
   return (
-    <main className="relative">
+    <div className="relative">
       <img
         src="/texture-3.png"
         className="hidden md:flex absolute left-0 -bottom-8 w-full opacity-50"
@@ -91,7 +91,7 @@ const Articles = () => {
           setCurrentPage={setCurrentPage}
         />
       </section>
-    </main>
+    </div>
   )
 }
 

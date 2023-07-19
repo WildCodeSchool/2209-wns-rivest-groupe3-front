@@ -15,8 +15,8 @@ export const CREATE_COMMENT = gql`
   }
 `
 export const GET_ALL_COMMENTS_OF_AN_ARTICLE = gql`
-  query GetOneArticle($blogSlug: String!, $slug: String!) {
-    getOneArticle(blogSlug: $blogSlug, slug: $slug) {
+  query getOneArticleComments($blogSlug: String!, $slug: String!) {
+    getOneArticleComments(blogSlug: $blogSlug, slug: $slug) {
       id
       comments {
         id

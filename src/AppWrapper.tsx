@@ -8,14 +8,9 @@ import {
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 
-import { useContext } from 'react'
-
 import App from './App'
-import { ErrorContext } from './contexts/ErrorContext'
 
 function AppWrapper() {
-  const { setError } = useContext(ErrorContext)
-
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.forEach((error) => {

@@ -9,12 +9,17 @@ import {
 import { useMutation, useQuery } from '@apollo/client'
 import type EditorJS from '@editorjs/editorjs'
 import { NotificationContext } from '../../contexts/NotificationContext'
-import { GET_ONE_ARTICLE, UPDATE_ARTICLE } from '../../queries/articles'
+import {
+  DELETE_ARTICLE,
+  GET_ONE_ARTICLE,
+  UPDATE_ARTICLE,
+} from '../../queries/articles'
 import EditorWrapper from './EditorWrapper'
-import { IArticle, IContentType } from '../../utils/interfaces/Interfaces'
+import { IArticle } from '../../utils/interfaces/Interfaces'
 import { useNavigate } from 'react-router-dom'
 import EditorTools from './EditorTools'
 import ErrorComponent from '../ErrorComponent'
+import { TbEditCircle } from 'react-icons/tb'
 
 const EditableArticle = ({
   blogId,
@@ -24,7 +29,6 @@ const EditableArticle = ({
   articleSlug,
   articleTitle,
   articleVersion,
-  setEdit,
 }: {
   blogId: string
   blogSlug: string
@@ -33,11 +37,11 @@ const EditableArticle = ({
   articleSlug: string
   articleTitle: string
   articleCoverUrl?: string
-  setEdit: Dispatch<SetStateAction<boolean>>
 }) => {
   const { setMessage } = useContext(NotificationContext)
   const navigate = useNavigate()
 
+  const [showTools, setShowTools] = useState(false)
   const [title, setTitle] = useState<string>(articleTitle || 'Titre')
   const [coverUrl, setCoverUrl] = useState<string | null>(
     articleCoverUrl || null
@@ -47,6 +51,8 @@ const EditableArticle = ({
     useState<number>(articleVersion)
 
   const [updateArticle] = useMutation(UPDATE_ARTICLE)
+  const [deleteArticle] = useMutation(DELETE_ARTICLE)
+
   const { loading, error, data } = useQuery(GET_ONE_ARTICLE, {
     variables: {
       allVersions: true,
@@ -87,12 +93,16 @@ const EditableArticle = ({
             coverUrl,
           },
         })
-        setEdit(false)
+        setShowTools(false)
         setContentVersion(versionToStore)
-        navigate(`/blogs/${blogSlug}/${slug}`)
+        setMessage({
+          text: 'Article enregistré avec succès',
+          type: 'success',
+        })
         return
       } catch (error) {
         console.error(error)
+        setShowTools(false)
         setMessage({
           text: `Une erreur s'est produite`,
           type: 'error',
@@ -113,26 +123,58 @@ const EditableArticle = ({
   if (data) {
     const { getOneArticle: article }: { getOneArticle: IArticle } = data
 
-    const dataToEdit =
-      article.articleContent.filter(
-        (content) => content.version === contentVersion
-      )[0].content.blocks || dummyData
+    const handleDelete = async () => {
+      const confirm = window.confirm(
+        'Cette action est irréversible\nÊtes-vous sûr?'
+      )
+      if (confirm) {
+        try {
+          await deleteArticle({
+            variables: {
+              articleId: article.id,
+              blogId,
+            },
+          })
+          navigate(`/blogs/${blogSlug}`)
+        } catch (error) {
+          setMessage({
+            text: `Une erreur s'est produite`,
+            type: 'error',
+          })
+        }
+      }
+    }
 
+    const dataToEdit = article.articleContent.filter(
+      (content) => content.version === contentVersion
+    )[0].content.blocks
     return (
       <>
-        <EditorTools
-          handleSave={handleSave}
-          title={title}
-          setTitle={setTitle}
-          isNew={false}
-          contentVersion={contentVersion}
-          article={article}
-          setContentVersion={setContentVersion}
-          coverUrl={coverUrl}
-          setCoverUrl={setCoverUrl}
-          blogId={blogId}
-          setNewContentVersion={setNewContentVersion}
-        />
+        {!showTools ? (
+          <div
+            onClick={() => setShowTools(true)}
+            className="fixed top-50 mt-2 left-10  flex items-center cursor-pointer gap-3 z-10 flex-col bg-white px-8 border py-2 rounded-md shadow-md"
+          >
+            <TbEditCircle size={'1.5rem'} />
+          </div>
+        ) : (
+          <EditorTools
+            handleSave={handleSave}
+            title={title}
+            setTitle={setTitle}
+            isNew={false}
+            contentVersion={contentVersion}
+            article={article}
+            setContentVersion={setContentVersion}
+            coverUrl={coverUrl}
+            setCoverUrl={setCoverUrl}
+            blogId={blogId}
+            setNewContentVersion={setNewContentVersion}
+            setShowTools={setShowTools}
+            handleDelete={handleDelete}
+          />
+        )}
+
         <header className="mt-0 w-full flex flex-col justify-center items-center text-white gap-4">
           <h1 className="text-7xl font-bold font-lobster bg-neutral/80 p-2">
             {title}
@@ -162,23 +204,5 @@ const EditableArticle = ({
   }
   return <></>
 }
-
-const dummyData = [
-  {
-    id: 'oUq2g_tl8y',
-    type: 'header',
-    data: {
-      text: 'Chapitre 1',
-      level: 1,
-    },
-  },
-  {
-    id: 'zbGZFPM-iI',
-    type: 'paragraph',
-    data: {
-      text: 'Votre histoire commence ici... Commencez par effacer ou éditer ce contenu... ✍️',
-    },
-  },
-]
 
 export default EditableArticle
