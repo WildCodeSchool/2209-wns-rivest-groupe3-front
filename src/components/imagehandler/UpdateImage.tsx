@@ -78,7 +78,6 @@ const UpdateImage = ({
           },
         }
       )
-      console.log(data)
       await updateBackendUrlImg(data.filename)
     } catch (err) {
       console.error(err)
@@ -135,7 +134,7 @@ const UpdateImage = ({
         </div>
         <figure
           className={`${
-            type === 'avatar' ? 'w-96 aspect-square rounded-full' : 'w-48 h-24'
+            type === 'avatar' ? 'w-full max-w-sm aspect-square rounded-full' : 'w-48 h-24'
           } overflow-hidden flex justify-center items-center border border-white`}
         >
           {selectedImage.preview ? (
@@ -177,11 +176,7 @@ const UpdateImage = ({
           </button>
         </div>
       ) : (
-        <button
-          type="button"
-          className="btn btn-secondary w-2/5"
-          onClick={deleteImg}
-        >
+        <button type="button" className="btn btn-secondary" onClick={deleteImg}>
           Supprimer
         </button>
       )}

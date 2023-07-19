@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ErrorComponent from '../../components/ErrorComponent'
 import ImageHandler from '../../components/imagehandler/ImageHandler'
 import { NotificationContext } from '../../contexts/NotificationContext'
 import {
@@ -89,11 +90,11 @@ const UpdateForm = ({
         console.error(err)
       })
   }
-  
-  if (loading) return <>Loading...</>
+
+  if (loading) return <>Chargement...</>
   if (error) {
     setMessage({ text: error.message, type: 'error' })
-    return <div>Erreur</div>
+    return <ErrorComponent error={error} />
   }
 
   const initialsBlogs: { dataSlugs: string[]; dataNames: string[] } = {
@@ -115,7 +116,7 @@ const UpdateForm = ({
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <BlogDetailsForm blog={blog} blogs={blogs} setBlog={setBlog} />
-      <span className='text-white font-bold block'>Image de couverture :</span>
+      <span className="text-white font-bold block">Image de couverture :</span>
       <ImageHandler
         type="cover"
         imgUrl={coverUrl}
@@ -124,10 +125,14 @@ const UpdateForm = ({
       />
       <TemplateSelect blog={blog} setBlog={setBlog} />
       <div className="flex justify-around gap-2 w-full">
-        <button type="submit" className="btn btn-info">
+        <button type="submit" className="btn btn-info w-1/2">
           Sauvegarder
         </button>
-        <button type="button" className="btn btn-secondary" onClick={reset}>
+        <button
+          type="button"
+          className="btn btn-secondary w-1/2"
+          onClick={reset}
+        >
           Annuler
         </button>
       </div>

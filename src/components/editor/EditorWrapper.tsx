@@ -1,8 +1,12 @@
 import Image from '@editorjs/image'
 import { createReactEditorJS } from 'react-editor-js'
+import type EditorJS from '@editorjs/editorjs'
+import { EditorCore } from '@react-editor-js/core'
 
 import { EDITOR_JS_TOOLS } from './Tools'
 import { IContentBlock } from '../../utils/interfaces/Interfaces'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 enum LogLevels {
   VERBOSE = 'VERBOSE',
@@ -14,9 +18,13 @@ enum LogLevels {
 const EditorWrapper = ({
   blocks,
   handleInitialize,
+  editorCore,
+  uploadUrl,
 }: {
   blocks: IContentBlock[]
-  handleInitialize: (instance: any) => void
+  handleInitialize: (instance: EditorCore) => void
+  editorCore: React.MutableRefObject<EditorJS | null>
+  uploadUrl: string
 }) => {
   const token = localStorage.getItem('token')
   const imageTool = {
@@ -28,22 +36,22 @@ const EditorWrapper = ({
         uploader: {
           async uploadByFile(file: any) {
             try {
-              const response = await fetch(
-                '/upload/blog/:blog/article/:article',
+              const formData = new FormData()
+              formData.append('file', file)
+              const { data } = await axios.post(
+                `${import.meta.env.VITE_IMAGES_URL}${uploadUrl}`,
+                formData,
                 {
-                  method: 'POST',
-                  body: file,
                   headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${token}`,
+                    Authorization: token,
                   },
                 }
               )
-              const { filename } = await response.json()
+              const { filename } = data
               return {
                 success: 1,
                 file: {
-                  url: filename,
+                  url: `${import.meta.env.VITE_IMAGES_URL}${filename}`,
                 },
               }
             } catch (error) {
@@ -57,6 +65,16 @@ const EditorWrapper = ({
   }
 
   const Editor = createReactEditorJS()
+
+  useEffect(() => {
+    const reloadEditor = async () => {
+      await editorCore.current?.isReady
+      await editorCore.current?.render({ blocks })
+    }
+    if (editorCore.current !== null) {
+      reloadEditor()
+    }
+  }, [blocks])
 
   return (
     <Editor

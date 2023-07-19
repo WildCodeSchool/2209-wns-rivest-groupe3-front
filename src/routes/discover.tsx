@@ -6,6 +6,8 @@ import { NotificationContext } from '../contexts/NotificationContext'
 import { GET_FIRST_BLOGS_AND_ARTICLES } from '../queries/blogs'
 
 import Card from '../components/Card'
+import { IArticle, IBlog } from '../utils/interfaces/Interfaces'
+import ErrorComponent from '../components/ErrorComponent'
 
 const Discover = () => {
   const { loading, error, data } = useQuery(GET_FIRST_BLOGS_AND_ARTICLES, {
@@ -20,8 +22,8 @@ const Discover = () => {
     if (error) setMessage({ text: error.message, type: 'error' })
   }, [error])
 
-  if (loading) return <>Loading...</>
-  if (error) return <></>
+  if (loading) return <>Chargement...</>
+  if (error) return <ErrorComponent error={error} />
 
   return (
     <main className="min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
@@ -30,8 +32,8 @@ const Discover = () => {
           Blogs les plus récents
         </h2>
         <article className="flex justify-center items-center gap-16">
-          {data.getAllBlogs.map((blog: any) => {
-            return <Card key={blog.id} blog={blog} />
+          {data.getAllBlogs.map((blog: IBlog, key: number) => {
+            return <Card key={key} blog={blog} />
           })}
         </article>
         <Link to="/blogs" className="link link-hover text-xl">
@@ -43,8 +45,8 @@ const Discover = () => {
           Articles les plus récents
         </h2>
         <article className="flex justify-center items-center gap-16">
-          {data.getAllArticles.map((article: any) => {
-            return <Card key={article.id} article={article} />
+          {data.getAllArticles.map((article: IArticle, key: number) => {
+            return <Card key={key} article={article} />
           })}
         </article>
         <Link to="/articles" className="link link-hover text-xl">

@@ -31,7 +31,7 @@ const EditDrag = ({ children }: { children: JSX.Element }) => {
 
   return (
     <div
-      className="w-96 bg-primary rounded-md fixed cursor-move z-50 p-4"
+      className="w-screen md:w-96 bg-primary rounded-md fixed cursor-move z-50 p-4 max-h-screen overflow-y-auto"
       style={{ left: position.x, top: position.y }}
       onMouseDown={handleMouseDown}
     >

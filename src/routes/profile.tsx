@@ -7,6 +7,7 @@ import { GET_USER } from '../queries/user'
 
 import Card from '../components/Card'
 import Avatar from '../components/Avatar'
+import ErrorComponent from '../components/ErrorComponent'
 
 const Profile = () => {
   const { user } = useContext<IUserContext>(UserContext)
@@ -24,14 +25,18 @@ const Profile = () => {
   }
 
   if (loading) return <p>Chargement...</p>
-  if (error) return <p>Erreur lors de la récupération de l'utilisateur </p>
-
+  if (error)
+    return (
+      <ErrorComponent
+        error={{ message: "Erreur lors de la récupération de l'utilisateur" }}
+      />
+    )
   return (
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">
       <h1 className="text-5xl font-bold text-center">Profil</h1>
       <section className="flex flex-col md:flex-row mt-12 p-6 shadow-lg rounded-lg min-w-full gap-8">
         <div className="w-full md:w-1/4 m-auto">
-          <Avatar imgUrl={data.getOneUser.avatar}/>
+          <Avatar imgUrl={data.getOneUser.avatar} />
         </div>
         <div className="w-full md:w-1/2">
           <h2 className="card-title">Pseudo</h2>

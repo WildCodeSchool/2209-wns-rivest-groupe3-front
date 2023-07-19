@@ -72,10 +72,18 @@ export const GET_ONE_BLOG = gql`
           slug
         }
       }
+      subscriptions {
+        id
+        user {
+          id
+          nickname
+        }
+      }
       articles {
         id
         slug
         title
+        coverUrl
         articleContent {
           id
           content {
@@ -159,11 +167,22 @@ export const GET_FIRST_BLOGS_AND_ARTICLES = gql`
       user {
         nickname
       }
+      coverUrl
     }
     getAllArticles(limit: $limit) {
       id
-      title
       slug
+      title
+      blog {
+        id
+        name
+        slug
+        user {
+          nickname
+        }
+      }
+      postedAt
+      createdAt
     }
   }
 `

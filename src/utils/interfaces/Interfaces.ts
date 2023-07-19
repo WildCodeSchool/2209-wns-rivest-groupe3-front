@@ -10,6 +10,15 @@ export interface IBlog {
   user: IUser
   coverUrl: string | null
   articles: IArticle[]
+  subscriptions: ISubscription[]
+}
+
+export interface ISubscription {
+  id: string
+  user: {
+    id: string
+    nickname: string
+  }
 }
 
 export interface IUser {
@@ -22,6 +31,7 @@ export interface IUser {
   avatar?: string
   createdAt?: Date
   lastLogin?: Date
+  blogs: IBlog[]
 }
 
 export interface IArticle {
@@ -29,18 +39,29 @@ export interface IArticle {
   title: string
   slug: string
   blogId: string
+  coverUrl: string
   createdAt: Date
   postedAt: Date
   show: boolean
   country: string
   version: number
   articleContent: IArticleContent[]
+  comments: IComment[]
+  blog?: IBlog
 }
 export interface IArticleContent {
   version: number
   id: string
   current: boolean
   content: IContentType
+}
+
+export interface IComment {
+  id: string
+  content: string
+  createdAt: Date
+  updatedAt: Date
+  user: IUser
 }
 export interface IContentType extends OutputData {
   time: number
@@ -52,7 +73,18 @@ export interface IContentBlock {
   type: string
   data: IContentBlockData
 }
-export interface IContentBlockData {
+export interface IContentBlockDataItemImageFile {
+  url: string
+}
+
+export interface IContentBlockDataItemImage {
+  caption?: string
+  file?: IContentBlockDataItemImageFile
+  stretched?: boolean
+  withBackground?: boolean
+  withBorder?: boolean
+}
+export interface IContentBlockData extends IContentBlockDataItemImage {
   text?: string
   level?: number
   style?: string

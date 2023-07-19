@@ -109,8 +109,8 @@ const CreateBlog = () => {
   }
 
   return (
-    <section className="min-h-screen max-w-screen flex justify-center items-center flex-col m-8">
-      <article className="flex justify-center items-center w-5/6 flex-col">
+    <section className="min-h-screen max-w-screen-lg flex flex-col justify-between items-center mx-auto pt-16">
+      <article className="w-full flex justify-center items-center flex-col gap-4 md:gap-16 px-4 md:pt-16 lg:pt-24">
         <ProgressionBar step={step} />
 
         {step === 1 && <Register />}
@@ -121,12 +121,12 @@ const CreateBlog = () => {
           <StepThree handleChange={handleChange} template={newBlog.template} />
         )}
 
-        <div className="group flex w-full justify-end">
-          {step !== 3 ? (
+        <div className="group flex w-full justify-end gap-4 mb-8">
+          {step === 2 ? (
             <button className="btn" onClick={() => changeStep('next')}>
               Etape suivante
             </button>
-          ) : (
+          ) : step === 3 ? (
             <>
               <button
                 className="btn btn-ghost"
@@ -138,7 +138,7 @@ const CreateBlog = () => {
                 Voir mon blog
               </div>
             </>
-          )}
+          ) : null}
         </div>
       </article>
     </section>

@@ -1,13 +1,15 @@
 const Avatar = ({
   imgUrl,
   width = 'w-96',
+  border = 'border',
 }: {
   imgUrl: string | null | undefined
   width?: string
+  border?: string
 }) => {
   const url = `${import.meta.env.VITE_IMAGES_URL}${imgUrl}`
   return (
-    <figure className={`${width} aspect-square rounded-full overflow-hidden flex justify-center items-center border border-white`}>
+    <figure className={`${width} aspect-square rounded-full overflow-hidden flex justify-center items-center ${border} border-white`}>
       {imgUrl ? (
         <img
           src={url}

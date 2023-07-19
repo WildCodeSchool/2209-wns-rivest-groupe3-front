@@ -5,6 +5,7 @@ import { IUserContext } from '../contexts/UserContext'
 import UserInformations from '../components/userSettings/UserInformations'
 import EditUserForm from '../components/userSettings/EditUserForm'
 import EditPasswordForm from '../components/userSettings/EditPassword'
+import ErrorComponent from '../components/ErrorComponent'
 
 export const GET_USER = gql`
   query GetOneUser($getOneUserId: String!) {
@@ -34,7 +35,12 @@ const UserSettings = () => {
   })
 
   if (loading) return <p>Chargement...</p>
-  if (error) return <p>Erreur lors de la récupération de l'utilisateur </p>
+  if (error)
+    return (
+      <ErrorComponent
+        error={{ message: "Erreur lors de la récupération de l'utilisateur" }}
+      />
+    )
 
   return (
     <main className="py-16 min-h-screen w-full max-w-screen-2xl mx-auto my-8 flex flex-col items-center gap-8">

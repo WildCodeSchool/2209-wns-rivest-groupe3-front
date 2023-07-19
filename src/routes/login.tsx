@@ -8,7 +8,7 @@ import { NotificationContext } from '../contexts/NotificationContext'
 import { FieldValues, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginFormProps } from '../components/inputs/inputsInterfaces'
-import { loginSchema } from '../utils/schemaValidation'
+import { loginSchema } from '../utils/userRegisterValidation'
 import PasswordInput from '../components/inputs/PasswordInput'
 import { GET_TOKEN } from '../queries/user'
 
@@ -58,11 +58,12 @@ const Login = () => {
   }
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Connexion</h1>
-          <p className="py-6">
+    <div className="group hero min-h-screen bg-primary/10 mt-16 lg:mt-0">
+      <div className="w-full max-w-screen-xl flex flex-col lg:flex-row-reverse justify-around items-center gap-8 py-8">
+        <div className="text-center lg:text-left max-w-screen-sm space-y-4 md:space-y-8 px-4">
+          <h1 className="text-5xl font-bold">Déjà inscrit ? Connectez-vous !</h1>
+          <div className="hidden lg:flex h-px w-0 group-hover:w-full max-w-sm bg-primary transition-all duration-1000" />
+          <p className='hidden sm:flex'>
             Bienvenue sur notre application ! Pour accéder à toutes les
             fonctionnalités, veuillez vous connecter en utilisant vos
             identifiants de connexion. Si vous n'avez pas encore de compte, vous
@@ -71,7 +72,7 @@ const Login = () => {
             expérience sur notre application !
           </p>
         </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-article bg-base-100 card-body">
+        <div className="card flex-shrink-0 w-full max-w-sm bg-base-100 card-body">
           <form>
             <label className="form-control">
               <span className="label label-text">Email</span>

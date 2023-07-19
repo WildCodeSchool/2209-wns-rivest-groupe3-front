@@ -10,6 +10,7 @@ import {
   userPasswordSchema,
 } from '../../utils/userPasswordValidation'
 import PasswordInput from '../inputs/PasswordInput'
+import ErrorComponent from '../ErrorComponent'
 
 const DELETE_USER = gql`
   mutation DeleteUser($password: String!) {
@@ -61,7 +62,8 @@ const DeleteUser = () => {
   }
 
   if (loading) return <p>Chargement...</p>
-  if (error) return <p>Erreur lors de l'action </p>
+  if (error)
+    return <ErrorComponent error={{ message: "Erreur lors de l'action" }} />
 
   return (
     <>
