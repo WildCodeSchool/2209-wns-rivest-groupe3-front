@@ -166,6 +166,26 @@ export const UPDATE_ARTICLE = gql`
     }
   }
 `
+
+export const UPDATE_ARTICLE_COVER_IMG = gql`
+  mutation UpdateArticle(
+    $blogId: String!
+    $articleId: String!
+    $title: String!
+    $version: Float!
+    $coverUrl: String!
+  ) {
+    updateArticle(
+      blogId: $blogId
+      articleId: $articleId
+      title: $title
+      version: $version
+      coverUrl: $coverUrl
+    ) {
+      coverUrl
+    }
+  }
+`
 export const DELETE_ARTICLE = gql`
   mutation DeleteArticle($articleId: String!, $blogId: String!) {
     deleteArticle(articleId: $articleId, blogId: $blogId)

@@ -1,8 +1,14 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useContext, useState } from 'react'
 import { IArticle } from '../../utils/interfaces/Interfaces'
 import ImageHandler from '../imagehandler/ImageHandler'
 import { TbEditCircle } from 'react-icons/tb'
 import { CgClose } from 'react-icons/cg'
+import { useMutation } from '@apollo/client'
+import {
+  GET_ONE_ARTICLE,
+  UPDATE_ARTICLE_COVER_IMG,
+} from '../../queries/articles'
+import { NotificationContext } from '../../contexts/NotificationContext'
 
 const EditorTools = ({
   handleSave,
@@ -34,6 +40,40 @@ const EditorTools = ({
   handleDelete?: () => void
 }) => {
   const [versionToDisplay, setVersionToDisplay] = useState(contentVersion)
+  const { setMessage } = useContext(NotificationContext)
+
+  const [updateCoverImg] = useMutation(UPDATE_ARTICLE_COVER_IMG, {
+    refetchQueries: [
+      {
+        query: GET_ONE_ARTICLE,
+        variables: { slug: article?.slug, blogSlug: article?.blog?.slug },
+      },
+    ],
+  })
+  const updateCoverUrl = async (coverUrl: string | null) => {
+    try {
+      await updateCoverImg({
+        variables: {
+          blogId,
+          articleId: article?.id,
+          coverUrl: coverUrl,
+          title,
+          version: versionToDisplay,
+        },
+      })
+      setCoverUrl !== undefined && setCoverUrl(coverUrl)
+      setMessage({
+        text: `Votre image de couverture a été mis à jour avec succès !`,
+        type: 'success',
+      })
+    } catch (err) {
+      setMessage({
+        text: `Impossible de mettre à jour votre image de couverture. ${err}.`,
+        type: 'error',
+      })
+      console.error(err)
+    }
+  }
 
   return (
     <div className="fixed top-50 mt-2 left-10  flex items-center gap-3 z-10 flex-col bg-white px-8 border py-2 rounded-md shadow-md">
@@ -134,9 +174,7 @@ const EditorTools = ({
                 imgUrl={coverUrl}
                 articleId={article.id}
                 blogId={blogId}
-                updateBackendUrlImg={async (imageUrl) => {
-                  await setCoverUrl(imageUrl)
-                }}
+                updateBackendUrlImg={updateCoverUrl}
               />
             </div>
           </>
