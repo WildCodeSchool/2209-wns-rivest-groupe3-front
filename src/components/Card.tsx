@@ -4,11 +4,7 @@ import { IArticle, IBlog } from '../utils/interfaces/Interfaces'
 
 const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
   const item = {
-    slug: blog
-      ? `/blogs/${blog.slug}`
-      : article
-      ? `/blogs/${article?.blog?.slug}/${article.slug}`
-      : '#',
+    slug: blog ? `/blogs/${blog.slug}` : article ? `${article.slug}` : '#',
     img:
       blog && blog.coverUrl
         ? `${import.meta.env.VITE_IMAGES_URL}${blog.coverUrl}`
@@ -24,7 +20,6 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
       : null,
     userName: blog?.user.nickname || article?.blog?.user.nickname,
   }
-
   if (blog || article)
     return (
       <Link
@@ -37,19 +32,11 @@ const Card = ({ blog, article }: { blog?: IBlog; article?: IArticle }) => {
             alt={item.title}
             className="min-w-full min-h-full object-cover group-hover:scale-110 transition-all duration-300"
           />
-          {/* <span className="absolute right-0 bottom-0 bg-primary text-white p-2">
-            5 commentaires
-          </span> */}
         </figure>
         <div className="card-body p-2 sm:p-4 h-80">
           <h2 className="card-title font-lobster text-3xl group-hover:text-secondary transition-all duration-300">
             {item.title}
           </h2>
-          {/* <div className="w-full flex gap-2 justify-start">
-            <span className="badge">#asie</span>
-            <span className="badge">#UK</span>
-            <span className="badge">#paysBasque</span>
-          </div> */}
           <div className="h-48 w-full overflow-hidden relative">
             <div className="absolute top-1/2 w-full h-1/2 bg-gradient-to-b from-transparent to-white" />
             <p>{item.description}</p>
