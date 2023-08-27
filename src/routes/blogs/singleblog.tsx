@@ -59,7 +59,7 @@ const Blog = () => {
             addArticle={addArticle}
             blog={blog}
             articles={data.getBlog.articles}
-            editor={data.getBlog.editor}
+            editor={data.getBlog.user}
           />
         ) : (
           <BlogT1
@@ -67,7 +67,7 @@ const Blog = () => {
             addArticle={addArticle}
             blog={blog}
             articles={data.getBlog.articles}
-            editor={data.getBlog.editor}
+            editor={data.getBlog.user}
           />
         )}
       </>

@@ -62,7 +62,7 @@ export const GET_ONE_BLOG = gql`
       slug
       createdAt
       coverUrl
-      editor: user {
+      user {
         id
         avatar
         nickname
