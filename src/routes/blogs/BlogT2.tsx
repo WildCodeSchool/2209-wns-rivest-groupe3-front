@@ -66,7 +66,7 @@ const BlogT2 = ({
                 article.title.toLowerCase().includes(searchInput)
               )
               .map((article, key) => (
-                <Card key={key} article={article} />
+                <Card key={key} article={article} blog={blog} />
               ))}
           </section>
         ) : (
