@@ -37,6 +37,12 @@ const outputData = (block: IContentBlock, index: number) => {
               {block.data.text}
             </h5>
           )
+        case 6:
+          return (
+            <h6 key={index} className="font-bold font-lobster mt-5">
+              {block.data.text}
+            </h6>
+          )
         default:
           throw new Error('Header level must be specified')
       }
