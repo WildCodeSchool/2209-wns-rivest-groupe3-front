@@ -53,7 +53,7 @@ const EditableArticle = ({
   const [updateArticle] = useMutation(UPDATE_ARTICLE)
   const [deleteArticle] = useMutation(DELETE_ARTICLE)
 
-  const { loading, error, data } = useQuery(GET_ONE_ARTICLE, {
+  const { loading, error, data, refetch } = useQuery(GET_ONE_ARTICLE, {
     variables: {
       allVersions: true,
       slug: articleSlug,
@@ -78,11 +78,7 @@ const EditableArticle = ({
           : contentVersion
 
       try {
-        const {
-          data: {
-            updateArticle: { slug },
-          },
-        } = await updateArticle({
+        await updateArticle({
           variables: {
             blogId,
             articleId,
@@ -144,10 +140,19 @@ const EditableArticle = ({
         }
       }
     }
-
     const dataToEdit = article.articleContent.filter(
       (content) => content.version === contentVersion
-    )[0].content.blocks
+    )
+
+    if (!dataToEdit.length) {
+      refetch({
+        allVersions: true,
+        slug: articleSlug,
+        blogSlug,
+      })
+      return <div>Chargement...</div>
+    }
+
     return (
       <>
         {!showTools ? (
@@ -193,7 +198,7 @@ const EditableArticle = ({
         </header>
         <div className="bg-white px-8 bg-opacity-80">
           <EditorWrapper
-            blocks={dataToEdit}
+            blocks={dataToEdit[0].content.blocks}
             handleInitialize={handleInitialize}
             editorCore={editorCore}
             uploadUrl={`/upload/blog/${blogId}/article/${articleId}`}

@@ -68,8 +68,8 @@ const EditorWrapper = ({
 
   useEffect(() => {
     const reloadEditor = async () => {
-      await editorCore.current?.isReady
-      await editorCore.current?.render({ blocks })
+      const isReady = await editorCore.current?.isReady
+      isReady && (await editorCore.current?.render({ blocks }))
     }
     if (editorCore.current !== null) {
       reloadEditor()
