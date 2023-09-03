@@ -1,11 +1,4 @@
-import {
-  useContext,
-  useState,
-  useRef,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { useContext, useState, useRef, useCallback } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import type EditorJS from '@editorjs/editorjs'
 import { NotificationContext } from '../../contexts/NotificationContext'
@@ -47,6 +40,7 @@ const EditableArticle = ({
     articleCoverUrl || null
   )
   const [contentVersion, setContentVersion] = useState<number>(articleVersion)
+
   const [newContentVersion, setNewContentVersion] =
     useState<number>(articleVersion)
 
